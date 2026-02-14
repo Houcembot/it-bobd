@@ -1,0 +1,11 @@
+Titre,URL,Description
+"OBD2 for Arduino | Elektor Magazine",https://www.elektormagazine.com/labs/obd2-for-arduino,"Informations sur l'utilisation de l'OBD2 avec Arduino, y compris des détails sur l'affichage et le rafraîchissement des données."
+"Arduino OBD-II Carputer - Ben Walters",https://bpwalters.com/blog/arduino-obd-carputer/,"Projet de carputer basé sur Arduino et OBD-II, mentionnant Freematics pour le hardware."
+"Custom OBD II Gauge in With OEM Look using arduino - duino",https://duino4projects.com/custom-obd-ii-gauge-oem-look-using-arduino/,"Projet de jauge OBD-II personnalisée avec affichage OLED et communication via carte STN1110/ELM327."
+"IoT4Car - Arduino Project Hub",https://create.arduino.cc/projecthub/frankzhao/iot4car-1b07f1,"Projet IoT pour voiture utilisant Arduino, connexion à Freeboard.io pour le tableau de bord."
+"GitHub - rvmiller89/arduino_obd: Arduino OBD-II Interface",https://github.com/rvmiller89/arduino_obd,"Dépôt GitHub pour une interface OBD-II Arduino, avec un lien vers un blog détaillé."
+"r/arduino on Reddit: [Help] Arduino and OBD2?",https://www.reddit.com/r/arduino/comments/14hb95s/help_arduino_and_obd2/,"Discussion sur Reddit concernant l'aide pour connecter Arduino et OBD2, mentionnant l'installation des bibliothèques nécessaires."
+"Arduino",https://docs.arduino.cc/libraries/obd2/,"Documentation officielle Arduino sur les bibliothèques OBD2, expliquant comment étendre les fonctionnalités de l'environnement."
+"GitHub - stanleyhuangyc/ArduinoOBD: OBD-II library and sketches for Arduino",https://github.com/stanleyhuangyc/ArduinoOBD,"Bibliothèque et exemples de code pour l'OBD-II avec Arduino sur GitHub."
+"My home-brew Arduino OBD-II connection kit - Hardware Development - Arduino Forum",https://forum.arduino.cc/t/my-home-brew-arduino-obd-ii-connection-kit/93017,"Discussion sur le forum Arduino concernant un kit de connexion OBD-II fait maison."
+"OBD-II Arduino Car Information Display | Koncha Tech",http://konchatech.blogspot.com/2014/02/obd-ii-arduino-car-information-display.html,"Projet d'affichage d'informations de voiture OBD-II via Arduino, mentionnant des défis de tension."

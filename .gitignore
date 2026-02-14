@@ -1,0 +1,9 @@
+# OpenClaw specifics
+memory/
+.openclaw/
+BOOTSTRAP.md
+install.sh
+
+# OS files
+.DS_Store
+Thumbs.db
