@@ -5,37 +5,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapport Complet d'Étude de Marché - It bobd</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1, h2, h3 { color: #0056b3; }
-        h1 { border-bottom: 2px solid #0056b3; padding-bottom: 10px; margin-bottom: 20px; }
-        h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 30px; }
-        strong { color: #0056b3; }
-        ul { list-style-type: disc; margin-left: 20px; }
-        blockquote { border-left: 4px solid #ccc; padding-left: 15px; margin: 15px 0; color: #555; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .placeholder { background-color: #e0e0e0; padding: 10px; margin: 15px 0; border-left: 5px solid #ff9800; }
-        a { color: #007bff; text-decoration: none; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; text-align: center; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 40px; color: #2980b9; }
+        strong { color: #2980b9; }
+        ul { list-style-type: square; margin-left: 20px; }
+        blockquote { border-left: 5px solid #3498db; padding: 15px 25px; margin: 20px 0; background-color: #f0f7fd; font-style: italic; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .chart-container { position: relative; margin: 40px auto; height: 400px; width: 100%; max-width: 800px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
         a:hover { text-decoration: underline; }
+        .card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 8px; margin: 10px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Rapport Complet d'Étude de Marché - It bobd</h1>
-        <h3>3. Proposition de Prix Basée sur les Coûts, la Valeur Perçue et le Positionnement</h3><p>Étant donné l'absence d'informations spécifiques sur les coûts de fabrication d'It bobd, cette proposition de prix se basera sur une estimation de la valeur perçue, le positionnement sur le marché par rapport à la concurrence et les modèles de prix courants pour des produits technologiques similaires dans l'automobile.</p><p><strong>Facteurs Clés à Considérer :</strong></p><p>1.  <strong>Valeur Perçue :</strong></p><ul><li><strong>Sécurité accrue :</strong> La capacité à détecter et potentiellement atténuer les émotions négatives du conducteur (stress, colère, fatigue) a une valeur intrinsèque élevée liée à la prévention des accidents.</li><li><strong>Confort émotionnel et bien-être :</strong> La dimension "compagnon émotionnel" offre un avantage unique en termes de réduction du stress routier, d'amélioration de l'humeur et de création d'une expérience de conduite plus agréable et personnalisée.</li><li><strong>Innovation technologique :</strong> Un robot émotionnel basé sur l'IA est perçu comme une technologie de pointe, ce qui justifie un prix premium.</li><li><strong>Personnalisation et adaptabilité :</strong> La capacité d'It bobd à apprendre et à s'adapter aux préférences individuelles du conducteur augmente sa valeur à long terme.</li><li><strong>Engagement :</strong> Une interface robotique physique et interactive peut offrir un niveau d'engagement supérieur à une simple application logicielle.</li></ul><p>2.  <strong>Positionnement sur le Marché :</strong></p><ul><li><strong>Segment Premium/Innovant :</strong> Compte tenu de l'aspect IA émotionnelle avancée et robotique, It bobd devrait se positionner comme un produit innovant et haut de gamme.</li><li><strong>Différenciation :</strong> Le prix doit refléter la proposition de valeur unique d'It bobd, qui va au-delà des systèmes de surveillance basiques ou des assistants vocaux standards. Il combine l'aspect "compagnon" des robots de divertissement avec la sophistication de la détection émotionnelle des DMS.</li></ul><p>3.  <strong>Analyse Concurrentielle (Implications sur le Prix) :</strong></p><ul><li><strong>Compagnons Robots Similaires :</strong> Les produits comme Blazexel, Dasai Mochi, Poki, ou MetaSoul semblent viser un marché de gadgets ou d'accessoires. Leurs prix peuvent varier de quelques dizaines à quelques centaines d'euros. It bobd, avec une IA émotionnelle plus profonde, devrait se positionner au-dessus de la fourchette basse de ces produits.</li><li><strong>Systèmes DMS Avancés :</strong> Les solutions de Smart Eye, Affectiva, etc., sont souvent des technologies B2B intégrées directement par les constructeurs automobiles. Leurs coûts sont intégrés au prix global du véhicule, rendant une comparaison directe difficile. Cependant, la complexité de leur technologie suggère une valeur R&D et d'ingénierie élevée, ce qui appuie un prix premium pour un produit de consommation utilisant une technologie similaire.</li></ul><p><strong>Modèles de Prix Possibles :</strong></p><ul><li><strong>Prix Unique (One-time Purchase) :</strong> Le plus simple pour le consommateur.</li><li><strong>Prix Unique + Abonnement (pour fonctionnalités avancées/mises à jour) :</strong> Permet un prix d'entrée plus bas tout en générant des revenus récurrents pour le développement et la maintenance de l'IA.</li></ul><hr><p><strong>Proposition de Fourchette de Prix (Estimation) :</strong></p><p>Compte tenu de la valeur perçue élevée (sécurité, bien-être émotionnel, innovation) et d'un positionnement premium, je propose la fourchette suivante pour un prix de vente au détail :</p><ul><li><strong>Option 1 : Prix Unique Premium</strong></li><li><strong>350 € - 600 €</strong></li><li>*Justification:* Ce prix positionne It bobd comme un accessoire automobile haut de gamme, comparable à des systèmes d'infodivertissement avancés ou à des dashcams de qualité supérieure avec des fonctionnalités IA. Il reflète la technologie complexe de détection émotionnelle et l'aspect robotique physique.</li></ul><ul><li><strong>Option 2 : Prix d'Entrée + Abonnement</strong></li><li><strong>Prix de l'appareil : 200 € - 350 €</strong></li><li><strong>Abonnement mensuel : 5 € - 15 €</strong> (pour des fonctionnalités comme : mises à jour personnalisées d'humeur, rapports de bien-être du conducteur, intégrations avancées, nouvelles "personnalités" du robot, etc.)</li><li>*Justification:* Cette option rend le produit plus accessible à l'achat initial et permet de monétiser les services et le développement continu de l'IA. L'abonnement met en avant la nature "vivante" et évolutive d'It bobd.</li></ul><p><strong>Recommandation Préliminaire :</strong></p><p>L'<strong>Option 2 (Prix d'Entrée + Abonnement)</strong> semble la plus pertinente pour It bobd. Elle permet de :</p><p>1.  <strong>Réduire la barrière à l'entrée</strong> pour les consommateurs.</p><p>2.  <strong>Créer une relation continue</strong> avec le client et offrir des mises à jour régulières de l'IA et de nouvelles fonctionnalités.</p><p>3.  <strong>Valoriser la dimension "service" et "évolution"</strong> du compagnon émotionnel.</p><p>4.  <strong>Assurer des revenus récurrents</strong> pour le maintien et l'amélioration de la plateforme IA.</p><p>Le prix exact au sein de ces fourchettes dépendra fortement des coûts de production réels, des marges souhaitées et de la stratégie marketing finale.</p><hr><h3>4. Fiche Consommateur Cible</h3><p>Pour "It bobd", le consommateur cible serait principalement un conducteur soucieux de son bien-être, de sa sécurité et de son expérience de conduite, et ouvert aux nouvelles technologies.</p><p><strong>Nom du Persona :</strong> Clara, la Conductrice Connectée et Consciencieuse</p><p><strong>Âge :</strong> 28-45 ans</p><p><strong>Statut Professionnel :</strong> Professionnel actif (cadre, freelance, petite entreprise), utilise sa voiture quotidiennement pour les trajets domicile-travail, les rendez-vous professionnels ou les déplacements personnels.</p><p><strong>Revenu :</strong> Revenu disponible moyen à élevé, capable d'investir dans des accessoires automobiles de qualité supérieure.</p><p><strong>Caractéristiques Démographiques :</strong></p><ul><li><strong>Résidence :</strong> Zones urbaines et périurbaines, où le trafic et le stress de la conduite sont plus élevés.</li><li><strong>Véhicule :</strong> Possède une voiture récente ou relativement moderne, équipée de technologies d'infodivertissement, mais cherche des améliorations personnalisées.</li></ul><p><strong>Psychographie et Comportements :</strong></p><ul><li><strong>Technophile avertie :</strong> Aime les gadgets et les innovations technologiques, est à l'aise avec les assistants vocaux (Siri, Google Assistant, Alexa) et les objets connectés. Est ouverte à l'idée d'un robot compagnon.</li><li><strong>Conscience du bien-être :</strong> Se soucie de son niveau de stress, de son humeur et de sa santé mentale. Cherche des moyens d'améliorer son quotidien et de réduire l'impact négatif du stress.</li><li><strong>Souci de la sécurité :</strong> Comprend l'importance d'une conduite attentive et sécuritaire. Apprécierait un système qui aide à maintenir un état émotionnel optimal au volant.</li><li><strong>Personnalisation :</strong> Aime les produits qui s'adaptent à ses besoins et préférences individuels. Valorise une expérience utilisateur unique et sur mesure.</li><li><strong>Sentiment de solitude/Besoin de compagnie (potentiel) :</strong> Peut être une personne qui passe beaucoup de temps seule dans sa voiture et apprécierait une présence interactive.</li><li><strong>Conducteur engagé :</strong> Voit sa voiture comme plus qu'un simple moyen de transport; c'est un espace personnel où le confort et l'expérience sont importants.</li><li><strong>Early Adopter :</strong> Est souvent parmi les premiers à essayer de nouvelles technologies qui promettent d'améliorer sa vie.</li></ul><p><strong>Besoins et Douleurs (que It bobd peut résoudre) :</strong></p><ul><li><strong>Stress au volant :</strong> Embouteillages, retards, conduite agressive d'autres usagers.</li><li><strong>Fatigue et manque de concentration :</strong> Surtout lors de longs trajets ou après une journée de travail éreintante.</li><li><strong>Ennui ou solitude :</strong> Pendant les trajets solitaires.</li><li><strong>Manque de soutien émotionnel :</strong> En l'absence de passagers.</li><li><strong>Recherche d'une expérience de conduite plus agréable et moins monotone.</strong></li><li><strong>Désir de se sentir plus en sécurité</strong> grâce à une vigilance émotionnelle accrue.</li></ul><p><strong>Comment It bobd lui parle :</strong></p><ul><li>"Imaginez un compagnon qui comprend votre humeur sur la route et vous aide à rester calme et serein."</li><li>"Transformez vos trajets quotidiens en une expérience plus agréable et engageante."</li><li>"Votre bien-être et votre sécurité sont notre priorité. Laissez It bobd veiller sur vous."</li><li>"Un assistant intelligent qui s'adapte à vous, pas l'inverse."</li></ul><p><strong>Canaux de Marketing Préférés :</strong></p><ul><li>Blogs et magazines spécialisés automobile et technologie.</li><li>Réseaux sociaux (Instagram, Facebook, LinkedIn) avec du contenu engageant et des démonstrations.</li><li>Influenceurs tech et lifestyle qui testent des produits innovants.</li><li>Salons automobiles et événements tech.</li><li>Partenariats avec des constructeurs automobiles ou des fournisseurs de services de bien-être.</li></ul><p>Ce persona aidera à orienter le développement du produit, le marketing et les ventes pour maximiser son attrait auprès du public cible.</p><hr><h3>5. Synthèse Commerciale Fiable</h3><p><strong>Titre du Projet :</strong> It bobd - Le Compagnon Émotionnel Intelligent pour la Voiture</p><p><strong>Concept :</strong> It bobd est un robot émotionnel intelligent conçu pour être un compagnon interactif et empathique dans la voiture. Il détecte l'état émotionnel du conducteur (stress, fatigue, colère, joie) et fournit un soutien proactif et des interactions personnalisées pour améliorer le bien-être, la sécurité et l'expérience de conduite globale.</p><p><strong>1. Analyse de la Demande Internationale :</strong></p><ul><li><strong>Marché en forte croissance :</strong> Le marché global de l'IA émotionnelle est en pleine expansion (estimé entre 4,4 et 10,8 milliards USD d'ici 2030-2033), avec un segment spécifique de l'intelligence émotionnelle dans les véhicules qui a déjà dépassé 1 milliard USD en 2023 et affiche une croissance annuelle composée (CAGR) d'environ 16,5% jusqu'en 2032.</li><li><strong>Besoins des consommateurs :</strong> Les conducteurs sont de plus en plus confrontés au stress routier, à la fatigue et à la solitude. Il existe un besoin clair pour des solutions qui non seulement surveillent l'état du conducteur mais offrent également un soutien émotionnel actif. La détection des émotions du conducteur est également cruciale pour la sécurité routière et gagne en importance dans les systèmes de surveillance des conducteurs (DMS).</li><li><strong>Marché des robots compagnons :</strong> Le marché plus large des robots compagnons basés sur l'IA est projeté à 94,2 milliards USD d'ici 2034, indiquant un intérêt général pour ce type de technologies.</li></ul><p><strong>2. Étude Concurrentielle :</strong></p><ul><li><strong>Concurrence Directe (Robots Compagnons In-Car) :</strong> Des produits comme Blazexel Smart Robot, Dasai Mochi Car Robot, SIXSPEED's Poki et MetaSoul existent, offrant diverses formes d'interactions et d'expressions. It bobd devra se différencier par la profondeur de son IA émotionnelle, la pertinence de ses interventions proactives et la qualité de son expérience utilisateur.</li><li><strong>Concurrence Indirecte (Systèmes DMS et IA Émotionnelle Automobile) :</strong> Des acteurs majeurs comme Smart Eye (avec Affectiva), Seeing Machines, Eyeris Technologies, Xperi Corporation, Cerence Inc. et Promwad proposent des technologies avancées de détection de l'état du conducteur (y compris les émotions) principalement pour les constructeurs automobiles (B2B) et axées sur la sécurité. Ces solutions définissent le standard technologique en matière de détection émotionnelle. It bobd peut se distinguer en étant un produit orienté *consommateur* (B2C) axé sur le *compagnon émotionnel* plutôt que la simple surveillance, tout en intégrant une technologie de détection robuste.</li></ul><p><strong>3. Proposition de Prix :</strong></p><ul><li><strong>Recommandation :</strong> Un modèle hybride avec un prix d'achat initial pour l'appareil et un abonnement mensuel pour les fonctionnalités IA avancées, les mises à jour et la personnalisation.</li><li><strong>Prix Appareil : 200 € - 350 €</strong></li><li><strong>Abonnement Mensuel : 5 € - 15 €</strong></li><li><strong>Justification :</strong> Ce modèle rend le produit accessible, assure des revenus récurrents pour le développement continu de l'IA et valorise la proposition de service à long terme d'It bobd. Le positionnement est premium mais justifié par l'innovation et la valeur ajoutée unique.</li></ul><p><strong>4. Fiche Consommateur Cible :</strong></p><ul><li><strong>Persona :</strong> "Clara, la Conductrice Connectée et Consciencieuse."</li><li><strong>Profil :</strong> 28-45 ans, professionnel actif, revenu moyen à élevé, technophile, soucieuse de son bien-être et de sa sécurité au volant. Elle cherche à réduire le stress, améliorer son humeur et personnaliser son expérience de conduite.</li><li><strong>Points de Douleur :</strong> Stress au volant, fatigue, ennui, solitude, recherche d'une meilleure sécurité et d'une expérience de conduite plus agréable.</li></ul><p><strong>5. Avantages Concurrentiels Clés d'It bobd :</strong></p><ul><li><strong>IA Émotionnelle Avancée :</strong> Détection nuancée et adaptation proactive aux émotions du conducteur.</li><li><strong>Expérience de Compagnon Véritable :</strong> Interactions personnalisées, empathiques et engageantes allant au-delà de simples alertes.</li><li><strong>Form Factor Robotique Physique :</strong> Offre une présence tangible et un sentiment de connexion plus fort qu'une application.</li><li><strong>Focus B2C :</strong> Conception et marketing axés sur l'utilisateur final et son bien-être personnel.</li></ul><p><strong>Conclusion Commerciale :</strong></p><p>Le projet It bobd se positionne sur un marché porteur et en forte croissance, répondant à des besoins réels des conducteurs en matière de bien-être émotionnel et de sécurité. Malgré une concurrence existante, notamment des systèmes DMS sophistiqués et des robots compagnons plus basiques, It bobd a l'opportunité de créer une niche distincte en offrant une combinaison unique d'IA émotionnelle avancée, d'un expérience de compagnon physique et d'une orientation client forte. La stratégie de prix hybride (appareil + abonnement) est recommandée pour maximiser l'adoption et la valeur à long terme.</p>
-        <div class="placeholder">
-            <h3>Placeholder pour Schémas Graphiques</h3>
-            <p>Ici, des schémas graphiques pourraient être insérés pour visualiser les données clés de l'étude, par exemple :</p>
+        <h1>Rapport Stratégique : Projet It bobd</h1>
+
+        <h2>📈 Analyse du Marché International</h2>
+        <p>Le marché de l'IA émotionnelle est en pleine explosion, porté par un besoin croissant de sécurité et de personnalisation dans l'automobile.</p>
+        
+        <div class="chart-container">
+            <canvas id="marketGrowthChart"></canvas>
+        </div>
+
+        <h3>3. Proposition de Prix et Positionnement</h3>
+        <p>It bobd se situe dans un "sweet spot" entre les gadgets purement décoratifs et les systèmes de sécurité industriels complexes.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <canvas id="pricingComparisonChart"></canvas>
+            </div>
+            <div class="card">
+                <canvas id="valueRadarChart"></canvas>
+            </div>
+        </div>
+
+        <p>Étant donné l'absence d'informations spécifiques sur les coûts de fabrication d'It bobd, cette proposition de prix se basera sur une estimation de la valeur perçue, le positionnement sur le marché par rapport à la concurrence et les modèles de prix courants pour des produits technologiques similaires dans l'automobile.</p>
+
+        <h3>Facteurs Clés à Considérer</h3>
+        <div class="card">
+            <strong>1. Valeur Perçue :</strong>
             <ul>
-                <li>Graphique de la croissance du marché de l'IA émotionnelle automobile.</li>
-                <li>Diagramme de positionnement des concurrents.</li>
-                <li>Infographie de la fiche persona Clara.</li>
+                <li><strong>Sécurité accrue :</strong> Détection et atténuation du stress/fatigue (prévention accidents).</li>
+                <li><strong>Confort émotionnel :</strong> Réduction du stress routier et amélioration de l'humeur.</li>
+                <li><strong>Innovation technologique :</strong> IA de pointe et interface robotique physique.</li>
+                <li><strong>Personnalisation :</strong> Apprentissage des préférences individuelles.</li>
             </ul>
         </div>
+
+        <div class="card">
+            <strong>2. Positionnement sur le Marché :</strong>
+            <p>Segment Premium/Innovant : Différenciation par la profondeur de l'IA émotionnelle comparée aux assistants vocaux standards ou gadgets JDM.</p>
+        </div>
+
+        <h2>💰 Stratégie de Prix Estimée</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Prix Matériel</th>
+                    <th>Abonnement (Services IA)</th>
+                    <th>Cible</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Premium One-Shot</strong></td>
+                    <td>350 € - 600 €</td>
+                    <td>Inclus (limité)</td>
+                    <td>Early Adopters, High Income</td>
+                </tr>
+                <tr>
+                    <td><strong>Hybride (Recommandé)</strong></td>
+                    <td>200 € - 350 €</td>
+                    <td>5 € - 15 € / mois</td>
+                    <td>Conducteurs quotidiens connectés</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>👤 Fiche Consommateur Cible (Persona)</h2>
+        <blockquote>
+            <strong>Clara, la Conductrice Consciencieuse (28-45 ans)</strong><br>
+            Professionnelle active, urbaine, technophile. Elle cherche à transformer ses trajets stressants en moments de sérénité et de sécurité.
+        </blockquote>
+
+        <h2>🔗 Analyse Concurrentielle & Démos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Type</th>
+                    <th>Lien Démo YouTube</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Niko Robot</strong></td>
+                    <td>Gadget JDM</td>
+                    <td><a href="https://www.youtube.com/watch?v=aqZAKYZjyQA" target="_blank">Voir la review</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Dasai Mochi</strong></td>
+                    <td>Drift Culture</td>
+                    <td><a href="https://www.youtube.com/watch?v=iYb299i7Q10" target="_blank">Voir la démo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Smart Eye / Affectiva</strong></td>
+                    <td>DMS Sécurité (B2B)</td>
+                    <td><a href="https://www.youtube.com/watch?v=1K5_yRkP8kE" target="_blank">Technologie DMS</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Seeing Machines</strong></td>
+                    <td>Fatigue Monitoring</td>
+                    <td><a href="https://www.youtube.com/watch?v=DndWfJ_yW88" target="_blank">Eye Tracking</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🏁 Conclusion Commerciale</h2>
+        <p>Le projet <strong>It bobd</strong> a l'opportunité de créer une niche distincte en offrant une combinaison unique d'IA émotionnelle avancée, d'une expérience de compagnon physique et d'une orientation client forte (B2C).</p>
     </div>
+
+    <script>
+        // 1. Market Growth Chart
+        const ctxMarket = document.getElementById('marketGrowthChart').getContext('2d');
+        new Chart(ctxMarket, {
+            type: 'line',
+            data: {
+                labels: ['2023', '2025', '2027', '2030', '2033'],
+                datasets: [{
+                    label: 'Marché IA Émotionnelle (en Milliards USD)',
+                    data: [1.2, 2.5, 4.8, 8.2, 10.8],
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 2. Pricing Comparison Chart
+        const ctxPrice = document.getElementById('pricingComparisonChart').getContext('2d');
+        new Chart(ctxPrice, {
+            type: 'bar',
+            data: {
+                labels: ['Mangogo', 'Niko', 'Dasai Mochi', 'It bobd (Est.)'],
+                datasets: [{
+                    label: 'Prix Moyen ($)',
+                    data: [60, 80, 100, 275],
+                    backgroundColor: ['#bdc3c7', '#95a5a6', '#7f8c8d', '#e67e22']
+                }]
+            },
+            options: {
+                plugins: { title: { display: true, text: 'Comparaison des Prix (USD)' } }
+            }
+        });
+
+        // 3. Value Radar Chart
+        const ctxRadar = document.getElementById('valueRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Sécurité', 'Bien-être', 'Technologie IA', 'Engagement', 'Design'],
+                datasets: [{
+                    label: 'Forces It bobd',
+                    data: [95, 90, 85, 80, 90],
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.2)'
+                }]
+            },
+            options: {
+                plugins: { title: { display: true, text: 'Proposition de Valeur' } }
+            }
+        });
+    </script>
 </body>
 </html>
-
