@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapport Complet d'Étude de Marché - It bobd</title>
+    <title>Rapport Stratégique - It bobd</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; color: #333; }
-        .container { max-width: 1000px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .container { max-width: 1100px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         h1, h2, h3 { color: #2c3e50; }
         h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; text-align: center; }
         h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 40px; color: #2980b9; }
         strong { color: #2980b9; }
         ul { list-style-type: square; margin-left: 20px; }
         blockquote { border-left: 5px solid #3498db; padding: 15px 25px; margin: 20px 0; background-color: #f0f7fd; font-style: italic; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; }
-        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; table-layout: fixed; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; overflow: hidden; text-overflow: ellipsis; }
         th { background-color: #3498db; color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
         .chart-container { position: relative; margin: 40px auto; height: 400px; width: 100%; max-width: 800px; }
@@ -25,22 +25,93 @@
         a { color: #3498db; text-decoration: none; font-weight: bold; }
         a:hover { text-decoration: underline; }
         .card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 8px; margin: 10px 0; }
+        .status-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        .status-direct { background: #e8f4fd; color: #2980b9; }
+        .status-indirect { background: #fdf2e9; color: #d35400; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Rapport Stratégique : Projet It bobd</h1>
+        <h1>Rapport Stratégique Complet : Projet It bobd</h1>
 
         <h2>📈 Analyse du Marché International</h2>
-        <p>Le marché de l'IA émotionnelle est en pleine explosion, porté par un besoin croissant de sécurité et de personnalisation dans l'automobile.</p>
+        <p>Le marché de l'IA émotionnelle est en pleine explosion. Estimé entre <strong>4,4 et 10,8 milliards USD</strong> d'ici 2033. Le segment spécifique de l'intelligence émotionnelle automobile a déjà dépassé <strong>1 milliard USD</strong> en 2023 avec un CAGR de 16,5%.</p>
         
         <div class="chart-container">
             <canvas id="marketGrowthChart"></canvas>
         </div>
 
-        <h3>3. Proposition de Prix et Positionnement</h3>
-        <p>It bobd se situe dans un "sweet spot" entre les gadgets purement décoratifs et les systèmes de sécurité industriels complexes.</p>
+        <h2>🏆 Analyse Concurrentielle Exhaustive</h2>
+        <p>Comparaison entre les compagnons B2C (Directs) et les systèmes de sécurité industriels (Indirects).</p>
         
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Produit / Acteur</th>
+                    <th style="width: 15%;">Type</th>
+                    <th style="width: 25%;">Positionnement / Cible</th>
+                    <th style="width: 40%;">Lien / Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>It bobd</strong></td>
+                    <td><span class="status-tag status-direct">Direct</span></td>
+                    <td>Robot interactif lié à l'OBD2 (Bien-être & Sécurité)</td>
+                    <td><em>Projet en cours (Innovation B2C)</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Niko Robot</strong></td>
+                    <td><span class="status-tag status-direct">Direct</span></td>
+                    <td>Gadget JDM / Esthétique Dashboard</td>
+                    <td><a href="https://www.instagram.com/robonikoai/" target="_blank">Instagram @robonikoai</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Dasai Mochi</strong></td>
+                    <td><span class="status-tag status-direct">Direct</span></td>
+                    <td>Fans de Drift / Culture Japonaise</td>
+                    <td><a href="https://www.youtube.com/watch?v=iYb299i7Q10" target="_blank">Voir démo YouTube</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Blazexel / Mangogo</strong></td>
+                    <td><span class="status-tag status-direct">Direct</span></td>
+                    <td>Gadget Tech / Décoration Dashboard</td>
+                    <td><a href="https://www.youtube.com/watch?v=aqZAKYZjyQA" target="_blank">Voir review YouTube</a></td>
+                </tr>
+                <tr>
+                    <td><strong>SIXSPEED Poki</strong></td>
+                    <td><span class="status-tag status-direct">Direct</span></td>
+                    <td>Ambiance intérieure / Kawaii</td>
+                    <td><a href="https://www.youtube.com/shorts/ELgew6fWp54" target="_blank">Voir Shorts YouTube</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Smart Eye / Affectiva</strong></td>
+                    <td><span class="status-tag status-indirect">Indirect</span></td>
+                    <td>DMS Sécurité / Automobilistes OEM</td>
+                    <td><a href="https://www.youtube.com/watch?v=1K5_yRkP8kE" target="_blank">Technologie DMS Affectiva</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Seeing Machines</strong></td>
+                    <td><span class="status-tag status-indirect">Indirect</span></td>
+                    <td>Attention & Fatigue / B2B Flottes</td>
+                    <td><a href="https://www.youtube.com/watch?v=DndWfJ_yW88" target="_blank">Eye Tracking Demo</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Cerence Inc.</strong></td>
+                    <td><span class="status-tag status-indirect">Indirect</span></td>
+                    <td>Assistant Vocal Émotionnel / OEM</td>
+                    <td><a href="https://www.youtube.com/watch?v=u6_1S9K7s8Y" target="_blank">Cerence Co-Pilot</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Promwad</strong></td>
+                    <td><span class="status-tag status-indirect">Indirect</span></td>
+                    <td>Ingénierie ADAS/DMS personnalisée</td>
+                    <td><a href="https://promwad.com/cases/dms-adas-algorithm" target="_blank">Étude de cas Promwad</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💰 Stratégie de Prix & Valeur</h2>
         <div class="grid">
             <div class="card">
                 <canvas id="pricingComparisonChart"></canvas>
@@ -50,91 +121,21 @@
             </div>
         </div>
 
-        <p>Étant donné l'absence d'informations spécifiques sur les coûts de fabrication d'It bobd, cette proposition de prix se basera sur une estimation de la valeur perçue, le positionnement sur le marché par rapport à la concurrence et les modèles de prix courants pour des produits technologiques similaires dans l'automobile.</p>
-
-        <h3>Facteurs Clés à Considérer</h3>
         <div class="card">
-            <strong>1. Valeur Perçue :</strong>
-            <ul>
-                <li><strong>Sécurité accrue :</strong> Détection et atténuation du stress/fatigue (prévention accidents).</li>
-                <li><strong>Confort émotionnel :</strong> Réduction du stress routier et amélioration de l'humeur.</li>
-                <li><strong>Innovation technologique :</strong> IA de pointe et interface robotique physique.</li>
-                <li><strong>Personnalisation :</strong> Apprentissage des préférences individuelles.</li>
-            </ul>
+            <h3>Modèle recommandé : Hybride</h3>
+            <p><strong>Prix Appareil :</strong> 200 € - 350 €</p>
+            <p><strong>Abonnement Services IA :</strong> 5 € - 15 € / mois</p>
+            <p><em>Justification :</em> Permet un prix d'entrée accessible tout en valorisant la mise à jour continue du moteur émotionnel et des rapports de bien-être.</p>
         </div>
 
-        <div class="card">
-            <strong>2. Positionnement sur le Marché :</strong>
-            <p>Segment Premium/Innovant : Différenciation par la profondeur de l'IA émotionnelle comparée aux assistants vocaux standards ou gadgets JDM.</p>
-        </div>
-
-        <h2>💰 Stratégie de Prix Estimée</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Prix Matériel</th>
-                    <th>Abonnement (Services IA)</th>
-                    <th>Cible</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Premium One-Shot</strong></td>
-                    <td>350 € - 600 €</td>
-                    <td>Inclus (limité)</td>
-                    <td>Early Adopters, High Income</td>
-                </tr>
-                <tr>
-                    <td><strong>Hybride (Recommandé)</strong></td>
-                    <td>200 € - 350 €</td>
-                    <td>5 € - 15 € / mois</td>
-                    <td>Conducteurs quotidiens connectés</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>👤 Fiche Consommateur Cible (Persona)</h2>
+        <h2>👤 Fiche Persona : Clara</h2>
         <blockquote>
-            <strong>Clara, la Conductrice Consciencieuse (28-45 ans)</strong><br>
-            Professionnelle active, urbaine, technophile. Elle cherche à transformer ses trajets stressants en moments de sérénité et de sécurité.
+            <strong>Profil :</strong> 28-45 ans, cadre urbaine connectée.<br>
+            <strong>Besoin :</strong> Cherche à réduire son stress routier et se sentir accompagnée en sécurité lors de ses trajets quotidiens.
         </blockquote>
 
-        <h2>🔗 Analyse Concurrentielle & Démos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Type</th>
-                    <th>Lien Démo YouTube</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Niko Robot</strong></td>
-                    <td>Gadget JDM</td>
-                    <td><a href="https://www.youtube.com/watch?v=aqZAKYZjyQA" target="_blank">Voir la review</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Dasai Mochi</strong></td>
-                    <td>Drift Culture</td>
-                    <td><a href="https://www.youtube.com/watch?v=iYb299i7Q10" target="_blank">Voir la démo</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Smart Eye / Affectiva</strong></td>
-                    <td>DMS Sécurité (B2B)</td>
-                    <td><a href="https://www.youtube.com/watch?v=1K5_yRkP8kE" target="_blank">Technologie DMS</a></td>
-                </tr>
-                <tr>
-                    <td><strong>Seeing Machines</strong></td>
-                    <td>Fatigue Monitoring</td>
-                    <td><a href="https://www.youtube.com/watch?v=DndWfJ_yW88" target="_blank">Eye Tracking</a></td>
-                </tr>
-            </tbody>
-        </table>
-
         <h2>🏁 Conclusion Commerciale</h2>
-        <p>Le projet <strong>It bobd</strong> a l'opportunité de créer une niche distincte en offrant une combinaison unique d'IA émotionnelle avancée, d'une expérience de compagnon physique et d'une orientation client forte (B2C).</p>
+        <p>It bobd se distingue par son <strong>IA émotionnelle profonde</strong> liée aux données réelles de la voiture (OBD2), offrant une expérience de compagnon physique unique là où les concurrents ne proposent que des gadgets passifs ou des systèmes industriels sans empathie.</p>
     </div>
 
     <script>
@@ -145,8 +146,8 @@
             data: {
                 labels: ['2023', '2025', '2027', '2030', '2033'],
                 datasets: [{
-                    label: 'Marché IA Émotionnelle (en Milliards USD)',
-                    data: [1.2, 2.5, 4.8, 8.2, 10.8],
+                    label: 'Marché IA Émotionnelle (Milliards USD)',
+                    data: [1.2, 2.8, 5.1, 8.4, 10.8],
                     borderColor: '#3498db',
                     backgroundColor: 'rgba(52, 152, 219, 0.1)',
                     fill: true,
@@ -161,15 +162,15 @@
         new Chart(ctxPrice, {
             type: 'bar',
             data: {
-                labels: ['Mangogo', 'Niko', 'Dasai Mochi', 'It bobd (Est.)'],
+                labels: ['Gadgets JDM', 'It bobd (Est.)', 'Systèmes OEM'],
                 datasets: [{
-                    label: 'Prix Moyen ($)',
-                    data: [60, 80, 100, 275],
-                    backgroundColor: ['#bdc3c7', '#95a5a6', '#7f8c8d', '#e67e22']
+                    label: 'Prix Moyen (€)',
+                    data: [80, 275, 1200],
+                    backgroundColor: ['#bdc3c7', '#e67e22', '#2c3e50']
                 }]
             },
             options: {
-                plugins: { title: { display: true, text: 'Comparaison des Prix (USD)' } }
+                plugins: { title: { display: true, text: 'Positionnement Prix' } }
             }
         });
 
@@ -178,10 +179,10 @@
         new Chart(ctxRadar, {
             type: 'radar',
             data: {
-                labels: ['Sécurité', 'Bien-être', 'Technologie IA', 'Engagement', 'Design'],
+                labels: ['Sécurité', 'Bien-être', 'Interaction', 'Design', 'Données Car'],
                 datasets: [{
-                    label: 'Forces It bobd',
-                    data: [95, 90, 85, 80, 90],
+                    label: 'It bobd',
+                    data: [90, 95, 90, 85, 95],
                     borderColor: '#2ecc71',
                     backgroundColor: 'rgba(46, 204, 113, 0.2)'
                 }]
