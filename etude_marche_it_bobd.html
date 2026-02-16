@@ -111,7 +111,7 @@
             </tbody>
         </table>
 
-        <h2>💰 Stratégie de Prix & Valeur</h2>
+        <h2>💰 Proposition de Valeur & Stratégie</h2>
         <div class="grid">
             <div class="card">
                 <canvas id="pricingComparisonChart"></canvas>
@@ -122,20 +122,23 @@
         </div>
 
         <div class="card">
-            <h3>Modèle recommandé : Hybride</h3>
-            <p><strong>Prix Appareil :</strong> 200 € - 350 €</p>
-            <p><strong>Abonnement Services IA :</strong> 5 € - 15 € / mois</p>
-            <p><em>Justification :</em> Permet un prix d'entrée accessible tout en valorisant la mise à jour continue du moteur émotionnel et des rapports de bien-être.</p>
+            <h3>Les piliers de l'innovation It bobd</h3>
+            <ul>
+                <li><strong>Sécurité & Diagnostic :</strong> Lecture active de l'OBD2 pour détecter l'usure des pièces et prévenir les pannes avant le garage.</li>
+                <li><strong>Interaction Totale :</strong> Le robot parle au conducteur, comprend ses besoins et <em>écoute</em> même les grincements de la voiture pour affiner son diagnostic.</li>
+                <li><strong>Régulation de l'Humeur :</strong> Détection de la conduite agressive et intervention par le dialogue ou l'ambiance pour apaiser le conducteur.</li>
+                <li><strong>Atmosphère :</strong> Création d'une "bonne ambiance" personnalisée dans l'habitacle grâce à un design robotique interactif.</li>
+            </ul>
         </div>
 
         <h2>👤 Fiche Persona : Clara</h2>
         <blockquote>
             <strong>Profil :</strong> 28-45 ans, cadre urbaine connectée.<br>
-            <strong>Besoin :</strong> Cherche à réduire son stress routier et se sentir accompagnée en sécurité lors de ses trajets quotidiens.
+            <strong>Besoin :</strong> Cherche à réduire son stress routier et avoir un assistant qui "prend soin" de la santé mécanique et émotionnelle de sa voiture.
         </blockquote>
 
         <h2>🏁 Conclusion Commerciale</h2>
-        <p>It bobd se distingue par son <strong>IA émotionnelle profonde</strong> liée aux données réelles de la voiture (OBD2), offrant une expérience de compagnon physique unique là où les concurrents ne proposent que des gadgets passifs ou des systèmes industriels sans empathie.</p>
+        <p>It bobd ne se contente pas d'observer ; il <strong>communique et protège</strong>. En fusionnant le diagnostic mécanique profond et l'empathie vocale, il crée une nouvelle catégorie de produit : l'Ange Gardien Émotionnel.</p>
     </div>
 
     <script>
@@ -174,21 +177,27 @@
             }
         });
 
-        // 3. Value Radar Chart
+        // 3. Value Radar Chart (UPDATED with user feedback)
         const ctxRadar = document.getElementById('valueRadarChart').getContext('2d');
         new Chart(ctxRadar, {
             type: 'radar',
             data: {
-                labels: ['Sécurité', 'Bien-être', 'Interaction', 'Design', 'Données Car'],
+                labels: ['Diagnostic Préventif', 'Interaction Vocale', 'Écoute Acoustique', 'Régulation Humeur', 'Ambiance & Design'],
                 datasets: [{
                     label: 'It bobd',
-                    data: [90, 95, 90, 85, 95],
+                    data: [100, 95, 90, 95, 90],
                     borderColor: '#2ecc71',
                     backgroundColor: 'rgba(46, 204, 113, 0.2)'
+                }, {
+                    label: 'Gadgets Classiques',
+                    data: [10, 20, 0, 30, 80],
+                    borderColor: '#bdc3c7',
+                    backgroundColor: 'rgba(189, 195, 199, 0.1)'
                 }]
             },
             options: {
-                plugins: { title: { display: true, text: 'Proposition de Valeur' } }
+                plugins: { title: { display: true, text: 'Supériorité de la Proposition de Valeur' } },
+                scales: { r: { suggestMin: 0, suggestMax: 100 } }
             }
         });
     </script>
