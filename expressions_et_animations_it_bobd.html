@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressions et Animations du Robot It bobd</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 1100px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; text-align: center; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 40px; color: #2980b9; }
+        strong { color: #2980b9; }
+        ul { list-style-type: square; margin-left: 20px; }
+        blockquote { border-left: 5px solid #3498db; padding: 15px 25px; margin: 20px 0; background-color: #f0f7fd; font-style: italic; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; table-layout: fixed; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; overflow: hidden; text-overflow: ellipsis; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .chart-container { position: relative; margin: 40px auto; height: 400px; width: 100%; max-width: 800px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 8px; margin: 10px 0; }
+        .status-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        .status-direct { background: #e8f4fd; color: #2980b9; }
+        .status-indirect { background: #fdf2e9; color: #d35400; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Expressions et Animations du Robot It bobd 🚗</h1>
+
+        <p>Ce rapport présente une cartographie des expressions faciales et des animations suggérées pour le robot émotionnel It bobd. Il vise à fournir une vue d'ensemble graphique des capacités émotionnelles et interactives du robot en diverses situations de conduite et d'état du véhicule.</p>
+        <p>Pour chaque situation, une expression visuelle (emoji) et une description de l'animation sont proposées, permettant une compréhension rapide de la réaction attendue du robot.</p>
+
+        <h2>📊 Répartition des Catégories d'Expressions</h2>
+        <div class="chart-container">
+            <canvas id="expressionCategoryChart"></canvas>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>MOTEUR & TEMPÉRATURE</h2>
+                <ul>
+                    <li><span class="emoji">🥶</span> **Moteur froid:** Visage gelé, grincement des dents, tremblement.</li>
+                    <li><span class="emoji">🥵</span> **Surchauffe moteur:** Visage rouge, sueur, souffle haletant.</li>
+                    <li><span class="emoji">😊</span> **Démarrage réussi:** Sourire, yeux ouverts, étirement.</li>
+                    <li><span class="emoji">😱</span> **Moteur cale:** Surprise choquée, sursaut, hoquet.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>CONDUITE & ACCÉLÉRATION</h2>
+                <ul>
+                    <li><span class="emoji">😎</span> **Accélération brutale:** Yeux plissés, sourire excité, penché en arrière.</li>
+                    <li><span class="emoji">😨</span> **Freinage d'urgence:** Peur extrême, mains devant le visage, cri.</li>
+                    <li><span class="emoji">🤢</span> **Accélérations/freinages successifs:** Inquiet, nauséeux, tête qui bouge.</li>
+                    <li><span class="emoji">😌</span> **Conduite douce:** Paisible, sourire zen, respiration calme.</li>
+                    <li><span class="emoji">😬</span> **Virage serré:** Penché sur le côté, inclinaison latérale.</li>
+                    <li><span class="emoji">😵‍💫</span> **Vitesse excessive:** Excité ou terrifié, vibration rapide.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>CAPTEURS & MAINTENANCE</h2>
+                <ul>
+                    <li><span class="emoji">😷</span> **Sonde Lambda sale:** Toux, grimace, crache.</li>
+                    <li><span class="emoji">😩</span> **Niveau huile bas:** Fatigué, assoiffé, tire la langue.</li>
+                    <li><span class="emoji">😟</span> **Pression pneus faible:** Inquiet, regarde en bas, vérifie sous lui.</li>
+                    <li><span class="emoji">😫</span> **Réservoir vide:** Épuisé, affamé, s'affaisse.</li>
+                    <li><span class="emoji">😴</span> **Batterie faible:** Somnolent, bâille, yeux qui se ferment.</li>
+                    <li><span class="emoji">😨</span> **Freins usés:** Nerveux, inquiet, mime freiner.</li>
+                    <li><span class="emoji">😮‍💨</span> **Filtre à air encrassé:** Essoufflé, respire mal.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>CONDITIONS ROUTIÈRES</h2>
+                <ul>
+                    <li><span class="emoji">😵</span> **Route cahoteuse:** Secoué, étourdi, vibrations.</li>
+                    <li><span class="emoji">😢</span> **Pluie détectée:** Triste, larmes, gouttes qui tombent.</li>
+                    <li><span class="emoji">🤔</span> **Brouillard:** Confus, plisse les yeux, cherche à voir.</li>
+                    <li><span class="emoji">😎</span> **Soleil éblouissant:** Ébloui, met des lunettes.</li>
+                    <li><span class="emoji">🥶</span> **Verglas/neige:** Froid + prudent, grelotte.</li>
+                    <li><span class="emoji">😖</span> **Nid de poule:** Douleur soudaine, sursaut.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>ALERTES & SÉCURITÉ</h2>
+                <ul>
+                    <li><span class="emoji">🚨</span> **Obstacle proche:** Alerte, yeux grands ouverts, signal STOP.</li>
+                    <li><span class="emoji">😟</span> **Distance sécurité non respectée:** Stress, sourcils froncés, recule.</li>
+                    <li><span class="emoji">😒</span> **Ceinture non attachée:** Désapprouve, sévère, pointe du doigt.</li>
+                    <li><span class="emoji">👮‍♀️</span> **Vitesse limitée dépassée:** Réprimande ou <span class="emoji">😉</span> complice.</li>
+                    <li><span class="emoji">🤒</span> **Check engine:** Malade, docteur, stéthoscope.</li>
+                    <li><span class="emoji">🔬</span> **ABS activé:** Concentration extrême, yeux laser.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>INTERACTIONS CONDUCTEUR</h2>
+                <ul>
+                    <li><span class="emoji">🥺</span> **Conducteur énervé:** Inquiet, apaisant, gestes calmants.</li>
+                    <li><span class="emoji">🤨</span> **Conduite agressive:** Juge ou <span class="emoji">💪</span> encourage.</li>
+                    <li><span class="emoji">🚨</span> **Conducteur fatigué:** Alerte, préoccupé, tasse de café.</li>
+                    <li><span class="emoji">😠</span> **Téléphone au volant:** Très désapprouve, croise les bras.</li>
+                    <li><span class="emoji">🎶</span> **Musique forte:** Danse, headbang, bouge la tête.</li>
+                    <li><span class="emoji">😴</span> **Longue route:** Ennui, s'amuse, compte moutons.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>ÉTATS VÉHICULE</h2>
+                <ul>
+                    <li><span class="emoji">✨</span> **Voiture propre:** Fier, sourire éclatant, brillance.</li>
+                    <li><span class="emoji">🤢</span> **Voiture sale:** Dégoûté, sale, couvert de boue.</li>
+                    <li><span class="emoji">😮</span> **Coffre ouvert:** Surpris, se retourne, regarde derrière.</li>
+                    <li><span class="emoji">⚠️</span> **Porte ouverte:** Alerte, regarde côté, flèche indicative.</li>
+                    <li><span class="emoji">🤔</span> **Phares allumés de jour:** Confus, lunettes nuit.</li>
+                    <li><span class="emoji">🤷‍♀️</span> **Essuie-glaces sans pluie:** Perplexe, toc, mouvement inutile.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>SITUATIONS SOCIALES</h2>
+                <ul>
+                    <li><span class="emoji">😑</span> **Embouteillage:** Ennui profond, regarde montre, soupire.</li>
+                    <li><span class="emoji">😒</span> **Doublé par autre véhicule:** Vexé ou <span class="emoji">🤩</span> impressionné.</li>
+                    <li><span class="emoji">😲</span> **Klaxon reçu:** Choqué, offensé, sursaut.</li>
+                    <li><span class="emoji">👋</span> **Salut autre conducteur:** Amical, sourire, wave.</li>
+                    <li><span class="emoji">😡</span> **Priorité non respectée:** Indigné, colère, geste de protestation.</li>
+                    <li><span class="emoji">🏆</span> **Stationnement réussi:** Victoire, champion, célébration.</li>
+                    <li><span class="emoji">🤦‍♀️</span> **Stationnement raté:** Honte, gêne, cache le visage.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>MODES SPÉCIAUX</h2>
+                <ul>
+                    <li><span class="emoji">🏎️</span> **Mode sport:** Déterminé, focus, flammes.</li>
+                    <li><span class="emoji">🌿</span> **Mode éco:** Zen, feuille verte, aura verte.</li>
+                    <li><span class="emoji">🅿️</span> **Mode parking:** Concentré, précis, radar.</li>
+                    <li><span class="emoji">🌙</span> **Mode nuit:** Somnolent, calme, étoiles.</li>
+                    <li><span class="emoji">🛀</span> **Cruise control:** Relaxé, pieds en l'air.</li>
+                    <li><span class="emoji">💪</span> **Mode manuel:** Impliqué, coach, encourage.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>ÉVÉNEMENTS SPÉCIAUX</h2>
+                <ul>
+                    <li><span class="emoji">👋</span> **Nouveau passager:** Curieux, accueillant, salue.</li>
+                    <li><span class="emoji">🥳</span> **Anniversaire conducteur:** Fête, confettis, gâteau.</li>
+                    <li><span class="emoji">🗺️</span> **Trajet inhabituel:** Perdu, GPS, carte.</li>
+                    <li><span class="emoji">😊</span> **Destination atteinte:** Satisfait, soulagé, étirement.</li>
+                    <li><span class="emoji">🆘</span> **Panne imminente:** Panique, SOS, signal détresse.</li>
+                    <li><span class="emoji">✅</span> **Révision passée:** Heureux, certificat, tampon "OK".</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            Généré par Maxi pour le projet It Bobd.<br>
+            Inspiré par la structure du rapport stratégique existant.
+        </footer>
+    </div>
+
+    <script>
+        // Data for the pie chart
+        const expressionCategories = {
+            'MOTEUR & TEMPÉRATURE': 4,
+            'CONDUITE & ACCÉLÉRATION': 6,
+            'CAPTEURS & MAINTENANCE': 7,
+            'CONDITIONS ROUTIÈRES': 6,
+            'ALERTES & SÉCURITÉ': 6,
+            'INTERACTIONS CONDUCTEUR': 6,
+            'ÉTATS VÉHICULE': 6,
+            'SITUATIONS SOCIALES': 7,
+            'MODES SPÉCIAUX': 6,
+            'ÉVÉNEMENTS SPÉCIAUX': 6
+        };
+
+        const labels = Object.keys(expressionCategories);
+        const data = Object.values(expressionCategories);
+
+        const backgroundColors = [
+            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+            '#FF9F40', '#7FFF00', '#DEB887', '#BA55D3', '#B0C4DE'
+        ];
+
+        // Chart for Expression Categories Distribution
+        const ctxCategories = document.getElementById('expressionCategoryChart').getContext('2d');
+        new Chart(ctxCategories, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribution des Expressions par Catégorie'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' expressions';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
