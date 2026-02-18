@@ -7,14 +7,15 @@
     <title>Correspondance Yeux It bobd - Expressions</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; color: #333; }
-        .container { max-width: 1000px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         h1, h2 { color: #2c3e50; text-align: center; }
         h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; }
-        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.95em; }
-        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; vertical-align: top; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; vertical-align: middle; }
         th { background-color: #3498db; color: white; font-weight: bold; }
         tr:nth-child(even) { background-color: #f9f9f9; }
         .eye-description { font-style: italic; color: #555; font-size: 0.85em; }
+        .eye-preview img { width: 80px; height: auto; border-radius: 4px; background: #000; display: block; margin: 0 auto; }
         footer { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 0.9em; }
     </style>
 </head>
@@ -22,20 +23,19 @@
     <div class="container">
         <h1>🤖 Correspondance Yeux & Expressions pour It bobd 👁️</h1>
 
-        <p>Ce tableau établit une correspondance sémantique entre les expressions émotionnelles et interactives de votre robot It bobd, telles que définies dans <a href="https://houcembot.github.io/it-bobd/expressions_et_animations_it_bobd.html" target="_blank">le rapport sur les expressions</a>, et les états visuels de ses yeux basés sur le code Arduino (`eyes_emotions`).</p>
-        <p>L'objectif est de clarifier comment chaque émotion sera rendue visuellement par les yeux de It bobd.</p>
+        <p>Ce tableau établit une correspondance visuelle entre les expressions émotionnelles de It bobd et les états de ses yeux générés dynamiquement.</p>
 
         <h2>Tableau de Correspondance Détaillé</h2>
 
         <table>
             <thead>
                 <tr>
-                    <th>Catégorie d'Expression</th>
-                    <th>Expression Spécifique</th>
+                    <th>Catégorie</th>
+                    <th>Expression</th>
                     <th>Emoji</th>
-                    <th>Description de l'Expression</th>
-                    <th>État des Yeux It bobd</th>
-                    <th>Description Visuelle des Yeux</th>
+                    <th>Aperçu des Yeux</th>
+                    <th>État Technique</th>
+                    <th>Description Visuelle</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,447 +44,269 @@
                     <td rowspan="4"><strong>MOTEUR & TEMPÉRATURE</strong></td>
                     <td>Moteur froid</td>
                     <td>🥶</td>
-                    <td>Visage gelé, grincement des dents, tremblement.</td>
-                    <td>NORMAL / TIRED (léger)</td>
-                    <td class="eye-description">Yeux normaux, peut-être avec un léger aspect "fatigué" ou "lourd" si l'expression complète est une gêne.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_normal.png" alt="Normal"></td>
+                    <td>NORMAL</td>
+                    <td class="eye-description">Yeux normaux, immobiles.</td>
                 </tr>
                 <tr>
                     <td>Surchauffe moteur</td>
                     <td>🥵</td>
-                    <td>Visage rouge, sueur, souffle haletant.</td>
-                    <td>ANGRY / NORMAL (alerte)</td>
-                    <td class="eye-description">Yeux "froncés" par la colère/tension ouverts et fixes pour l'alerte.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Yeux froncés pour marquer l'alerte critique.</td>
                 </tr>
                 <tr>
                     <td>Démarrage réussi</td>
                     <td>😊</td>
-                    <td>Sourire, yeux ouverts, étirement.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux avec la forme "souriante" (partie inférieure masquée).</td>
+                    <td class="eye-description">Yeux souriants.</td>
                 </tr>
                 <tr>
                     <td>Moteur cale</td>
                     <td>😱</td>
-                    <td>Surprise choquée, sursaut, hoquet.</td>
-                    <td>NORMAL (grands ouverts)</td>
-                    <td class="eye-description">Yeux normaux, mais avec un mouvement rapide et fixé (peut-être un clignement très rapide suivi d'une ouverture fixe).</td>
+                    <td class="eye-preview"><img src="eyes/eyes_normal.png" alt="Normal"></td>
+                    <td>NORMAL (fixe)</td>
+                    <td class="eye-description">Ouverture fixe, mouvement brusque.</td>
                 </tr>
+
                 <!-- CONDUITE & ACCÉLÉRATION -->
                 <tr>
-                    <td rowspan="6"><strong>CONDUITE & ACCÉLÉRATION</strong></td>
+                    <td rowspan="6"><strong>CONDUITE</strong></td>
                     <td>Accélération brutale</td>
                     <td>😎</td>
-                    <td>Yeux plissés, sourire excité, penché en arrière.</td>
-                    <td>HAPPY / ANGRY (déterminé)</td>
-                    <td class="eye-description">Yeux "souriants" ou "froncés" pour la concentration/détermination.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
+                    <td>HAPPY</td>
+                    <td class="eye-description">Excitation.</td>
                 </tr>
                 <tr>
                     <td>Freinage d'urgence</td>
                     <td>😨</td>
-                    <td>Peur extrême, mains devant le visage, cri.</td>
-                    <td>ANGRY / CLIGNEMENT (sursaut)</td>
-                    <td class="eye-description">Yeux "froncés" par la tension, ou un clignement brusque suivi d'une ouverture tendue.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_blink.png" alt="Blink"></td>
+                    <td>BLINK (Sursaut)</td>
+                    <td class="eye-description">Clignement rapide puis fixe.</td>
                 </tr>
                 <tr>
-                    <td>Accélérations/freinages successifs</td>
+                    <td>Accélérations successives</td>
                     <td>🤢</td>
-                    <td>Inquiet, nauséeux, tête qui bouge.</td>
-                    <td>TIRED / NORMAL (mouvements)</td>
-                    <td class="eye-description">Yeux "fatigués" (aspect lourd) avec des mouvements d'oscillation.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
+                    <td>TIRED</td>
+                    <td class="eye-description">Nausée, aspect tombant.</td>
                 </tr>
                 <tr>
                     <td>Conduite douce</td>
                     <td>😌</td>
-                    <td>Paisible, sourire zen, respiration calme.</td>
-                    <td>NORMAL / HAPPY (léger)</td>
-                    <td class="eye-description">Yeux normaux, légèrement "souriants" pour la sérénité.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_normal.png" alt="Normal"></td>
+                    <td>NORMAL</td>
+                    <td class="eye-description">Sérénité.</td>
                 </tr>
                 <tr>
                     <td>Virage serré</td>
                     <td>😬</td>
-                    <td>Penché sur le côté, inclinaison latérale.</td>
-                    <td>ANGRY (concentration)</td>
-                    <td class="eye-description">Yeux "froncés" par la concentration.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY (Focus)</td>
+                    <td class="eye-description">Concentration.</td>
                 </tr>
                 <tr>
                     <td>Vitesse excessive</td>
                     <td>😵‍💫</td>
-                    <td>Excité ou terrifié, vibration rapide.</td>
-                    <td>ANGRY / NORMAL (fixe)</td>
-                    <td class="eye-description">Yeux "froncés" par la tension, ou normaux et fixes, avec une vibration implicite par le contexte.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Tension.</td>
                 </tr>
+
                 <!-- CAPTEURS & MAINTENANCE -->
                 <tr>
-                    <td rowspan="7"><strong>CAPTEURS & MAINTENANCE</strong></td>
+                    <td rowspan="7"><strong>MAINTENANCE</strong></td>
                     <td>Sonde Lambda sale</td>
                     <td>😷</td>
-                    <td>Toux, grimace, crache.</td>
-                    <td>TIRED / ANGRY (gêne)</td>
-                    <td class="eye-description">Yeux "fatigués" ou "froncés" par la gêne/malaise.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
+                    <td>TIRED</td>
+                    <td class="eye-description">Gêne.</td>
                 </tr>
                 <tr>
                     <td>Niveau huile bas</td>
                     <td>😩</td>
-                    <td>Fatigué, assoiffé, tire la langue.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
                     <td>TIRED</td>
-                    <td class="eye-description">Yeux avec l'aspect "fatigué" (lourd et tombant).</td>
+                    <td class="eye-description">Épuisement.</td>
                 </tr>
                 <tr>
                     <td>Pression pneus faible</td>
                     <td>😟</td>
-                    <td>Inquiet, regarde en bas, vérifie sous lui.</td>
-                    <td>ANGRY (préoccupation)</td>
-                    <td class="eye-description">Yeux "froncés" par l'inquiétude.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Inquiétude.</td>
                 </tr>
                 <tr>
                     <td>Réservoir vide</td>
                     <td>😫</td>
-                    <td>Épuisé, affamé, s'affaisse.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
                     <td>TIRED</td>
-                    <td class="eye-description">Yeux avec l'aspect "fatigué" (lourd et tombant).</td>
+                    <td class="eye-description">S'affaisse.</td>
                 </tr>
                 <tr>
                     <td>Batterie faible</td>
                     <td>😴</td>
-                    <td>Somnolent, bâille, yeux qui se ferment.</td>
-                    <td>TIRED / CLIGNEMENT (lent)</td>
-                    <td class="eye-description">Yeux "fatigués" avec des clignements très lents et prolongés.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_blink.png" alt="Blink"></td>
+                    <td>BLINK (Lent)</td>
+                    <td class="eye-description">Somnolence.</td>
                 </tr>
                 <tr>
                     <td>Freins usés</td>
                     <td>😨</td>
-                    <td>Nerveux, inquiet, mime freiner.</td>
-                    <td>ANGRY (anxiété)</td>
-                    <td class="eye-description">Yeux "froncés" par la tension et l'anxiété.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Anxiété.</td>
                 </tr>
                 <tr>
-                    <td>Filtre à air encrassé</td>
+                    <td>Filtre à air sale</td>
                     <td>😮‍💨</td>
-                    <td>Essoufflé, respire mal.</td>
-                    <td>TIRED / NORMAL (souffrant)</td>
-                    <td class="eye-description">Yeux "fatigués", ou normaux mais avec une légère oscillation ou un clignement lent.</td>
-                </tr>
-                <!-- CONDITIONS ROUTIÈRES -->
-                <tr>
-                    <td rowspan="6"><strong>CONDITIONS ROUTIÈRES</strong></td>
-                    <td>Route cahoteuse</td>
-                    <td>😵</td>
-                    <td>Secoué, étourdi, vibrations.</td>
-                    <td>NORMAL (mouvements rapides)</td>
-                    <td class="eye-description">Yeux normaux, mais avec des mouvements aléatoires rapides ou des clignements brefs.</td>
-                </tr>
-                <tr>
-                    <td>Pluie détectée</td>
-                    <td>😢</td>
-                    <td>Triste, larmes, gouttes qui tombent.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
                     <td>TIRED</td>
-                    <td class="eye-description">Yeux "fatigués" (aspect triste/lourd).</td>
+                    <td class="eye-description">Souffle court.</td>
                 </tr>
-                <tr>
-                    <td>Brouillard</td>
-                    <td>🤔</td>
-                    <td>Confus, plisse les yeux, cherche à voir.</td>
-                    <td>ANGRY (froncé, incertitude)</td>
-                    <td class="eye-description">Yeux "froncés" pour simuler un effort de vision ou une légère confusion.</td>
-                </tr>
-                <tr>
-                    <td>Soleil éblouissant</td>
-                    <td>😎</td>
-                    <td>Ébloui, met des lunettes.</td>
-                    <td>CLIGNEMENT / NORMAL (plissé)</td>
-                    <td class="eye-description">Clignements fréquents ou yeux normaux avec une hauteur réduite (pour "plisser").</td>
-                </tr>
-                <tr>
-                    <td>Verglas/neige</td>
-                    <td>🥶</td>
-                    <td>Froid + prudent, grelotte.</td>
-                    <td>NORMAL (fixe, vigilant)</td>
-                    <td class="eye-description">Yeux normaux, très fixes, peu de mouvements, pour la vigilance.</td>
-                </tr>
-                <tr>
-                    <td>Nid de poule</td>
-                    <td>😖</td>
-                    <td>Douleur soudaine, sursaut.</td>
-                    <td>CLIGNEMENT (brusque) / ANGRY</td>
-                    <td class="eye-description">Clignement très brusque, ou yeux "froncés" par la douleur/surprise.</td>
-                </tr>
+
                 <!-- ALERTES & SÉCURITÉ -->
                 <tr>
-                    <td rowspan="6"><strong>ALERTES & SÉCURITÉ</strong></td>
+                    <td rowspan="6"><strong>SÉCURITÉ</strong></td>
                     <td>Obstacle proche</td>
                     <td>🚨</td>
-                    <td>Alerte, yeux grands ouverts, signal STOP.</td>
-                    <td>NORMAL (grands ouverts, fixe)</td>
-                    <td class="eye-description">Yeux normaux, très ouverts, fixes et orientés vers l'avant.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_normal.png" alt="Normal"></td>
+                    <td>NORMAL (Grands)</td>
+                    <td class="eye-description">Vigilance extrême.</td>
                 </tr>
                 <tr>
-                    <td>Distance sécurité non respectée</td>
+                    <td>Distance sécurité</td>
                     <td>😟</td>
-                    <td>Stress, sourcils froncés, recule.</td>
-                    <td>ANGRY (préoccupation)</td>
-                    <td class="eye-description">Yeux "froncés" par l'inquiétude et le stress.</td>
-                </tr>
-                <tr>
-                    <td>Ceinture non attachée</td>
-                    <td>😒</td>
-                    <td>Désapprouve, sévère, pointe du doigt.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
                     <td>ANGRY</td>
-                    <td class="eye-description">Yeux "froncés" pour marquer la désapprobation.</td>
+                    <td class="eye-description">Stress.</td>
                 </tr>
                 <tr>
-                    <td>Vitesse limitée dépassée</td>
-                    <td>👮‍♀️ / 😉</td>
-                    <td>Réprimande ou complice.</td>
-                    <td>ANGRY / HAPPY (selon contexte)</td>
-                    <td class="eye-description">Yeux "froncés" (réprimande) ou "souriants" (complicité).</td>
+                    <td>Ceinture non mise</td>
+                    <td>😒</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Désapprobation.</td>
+                </tr>
+                <tr>
+                    <td>Vitesse limitée</td>
+                    <td>👮‍♀️</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Réprimande.</td>
                 </tr>
                 <tr>
                     <td>Check engine</td>
                     <td>🤒</td>
-                    <td>Malade, docteur, stéthoscope.</td>
-                    <td>TIRED / ANGRY (malaise)</td>
-                    <td class="eye-description">Yeux "fatigués" ou "froncés" pour exprimer le malaise ou l'inquiétude.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
+                    <td>TIRED</td>
+                    <td class="eye-description">Malade.</td>
                 </tr>
                 <tr>
                     <td>ABS activé</td>
                     <td>🔬</td>
-                    <td>Concentration extrême, yeux laser.</td>
-                    <td>ANGRY (concentration)</td>
-                    <td class="eye-description">Yeux "froncés" pour la concentration intense.</td>
-                </tr>
-                <!-- INTERACTIONS CONDUCTEUR -->
-                <tr>
-                    <td rowspan="6"><strong>INTERACTIONS CONDUCTEUR</strong></td>
-                    <td>Conducteur énervé</td>
-                    <td>🥺</td>
-                    <td>Inquiet, apaisant, gestes calmants.</td>
-                    <td>TIRED (inquiétude)</td>
-                    <td class="eye-description">Yeux "fatigués" pour exprimer l'inquiétude ou l'apaisement.</td>
-                </tr>
-                <tr>
-                    <td>Conduite agressive</td>
-                    <td>🤨 / 💪</td>
-                    <td>Juge ou encourage.</td>
-                    <td>ANGRY / NORMAL (selon contexte)</td>
-                    <td class="eye-description">Yeux "froncés" (jugement) ou normaux et fixes (observation, "challenge").</td>
-                </tr>
-                <tr>
-                    <td>Conducteur fatigué</td>
-                    <td>🚨</td>
-                    <td>Alerte, préoccupé, tasse de café.</td>
-                    <td>NORMAL (vigilant) / ANGRY (préoccupation)</td>
-                    <td class="eye-description">Yeux normaux et vigilants, ou "froncés" par la préoccupation.</td>
-                </tr>
-                <tr>
-                    <td>Téléphone au volant</td>
-                    <td>😠</td>
-                    <td>Très désapprouve, croise les bras.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
                     <td>ANGRY</td>
-                    <td class="eye-description">Yeux "froncés" pour la désapprobation forte.</td>
+                    <td class="eye-description">Concentration.</td>
                 </tr>
-                <tr>
-                    <td>Musique forte</td>
-                    <td>🎶</td>
-                    <td>Danse, headbang, bouge la tête.</td>
-                    <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
-                </tr>
-                <tr>
-                    <td>Longue route</td>
-                    <td>😴</td>
-                    <td>Ennui, s'amuse, compte moutons.</td>
-                    <td>TIRED / NORMAL (léger mouvement)</td>
-                    <td class="eye-description">Yeux "fatigués" ou normaux avec des mouvements lents.</td>
-                </tr>
-                <!-- ÉTATS VÉHICULE -->
-                <tr>
-                    <td rowspan="6"><strong>ÉTATS VÉHICULE</strong></td>
-                    <td>Voiture propre</td>
-                    <td>✨</td>
-                    <td>Fier, sourire éclatant, brillance.</td>
-                    <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
-                </tr>
-                <tr>
-                    <td>Voiture sale</td>
-                    <td>🤢</td>
-                    <td>Dégoûté, sale, couvert de boue.</td>
-                    <td>ANGRY (dégoût) / TIRED (malaise)</td>
-                    <td class="eye-description">Yeux "froncés" (dégoût) ou "fatigués" (malaise).</td>
-                </tr>
-                <tr>
-                    <td>Coffre ouvert</td>
-                    <td>😮</td>
-                    <td>Surpris, se retourne, regarde derrière.</td>
-                    <td>NORMAL (grands ouverts)</td>
-                    <td class="eye-description">Yeux normaux, très ouverts, avec un mouvement de "regard en arrière" implicite.</td>
-                </tr>
-                <tr>
-                    <td>Porte ouverte</td>
-                    <td>⚠️</td>
-                    <td>Alerte, regarde côté, flèche indicative.</td>
-                    <td>NORMAL (vigilant) / ANGRY (alerte)</td>
-                    <td class="eye-description">Yeux normaux et vigilants, ou "froncés" par l'alerte.</td>
-                </tr>
-                <tr>
-                    <td>Phares allumés de jour</td>
-                    <td>🤔</td>
-                    <td>Confus, lunettes nuit.</td>
-                    <td>ANGRY (confusion)</td>
-                    <td class="eye-description">Yeux "froncés" pour la confusion.</td>
-                </tr>
-                <tr>
-                    <td>Essuie-glaces sans pluie</td>
-                    <td>🤷‍♀️</td>
-                    <td>Perplexe, toc, mouvement inutile.</td>
-                    <td>ANGRY (perplexité)</td>
-                    <td class="eye-description">Yeux "froncés" par la perplexité.</td>
-                </tr>
+
                 <!-- SITUATIONS SOCIALES -->
                 <tr>
-                    <td rowspan="7"><strong>SITUATIONS SOCIALES</strong></td>
+                    <td rowspan="7"><strong>SOCIAL</strong></td>
                     <td>Embouteillage</td>
                     <td>😑</td>
-                    <td>Ennui profond, regarde montre, soupire.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
                     <td>TIRED</td>
-                    <td class="eye-description">Yeux "fatigués" (ennui).</td>
+                    <td class="eye-description">Ennui profond.</td>
                 </tr>
                 <tr>
-                    <td>Doublé par autre véhicule</td>
-                    <td>😒 / 🤩</td>
-                    <td>Vexé ou impressionné.</td>
-                    <td>ANGRY / NORMAL (admiratif)</td>
-                    <td class="eye-description">Yeux "froncés" (vexation) ou normaux et ouverts (admiration).</td>
+                    <td>Doublé</td>
+                    <td>😒</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Vexé.</td>
                 </tr>
                 <tr>
                     <td>Klaxon reçu</td>
                     <td>😲</td>
-                    <td>Choqué, offensé, sursaut.</td>
-                    <td>NORMAL (grands ouverts) / CLIGNEMENT (sursaut)</td>
-                    <td class="eye-description">Yeux normaux, très ouverts, ou un clignement brusque.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_blink.png" alt="Blink"></td>
+                    <td>BLINK</td>
+                    <td class="eye-description">Sursaut.</td>
                 </tr>
                 <tr>
-                    <td>Salut autre conducteur</td>
+                    <td>Salut</td>
                     <td>👋</td>
-                    <td>Amical, sourire, wave.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
+                    <td class="eye-description">Amical.</td>
                 </tr>
                 <tr>
-                    <td>Priorité non respectée</td>
+                    <td>Priorité grillée</td>
                     <td>😡</td>
-                    <td>Indigné, colère, geste de protestation.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
                     <td>ANGRY</td>
-                    <td class="eye-description">Yeux "froncés" par la colère.</td>
+                    <td class="eye-description">Colère.</td>
                 </tr>
                 <tr>
                     <td>Stationnement réussi</td>
                     <td>🏆</td>
-                    <td>Victoire, champion, célébration.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
+                    <td class="eye-description">Célébration.</td>
                 </tr>
                 <tr>
                     <td>Stationnement raté</td>
                     <td>🤦‍♀️</td>
-                    <td>Honte, gêne, cache le visage.</td>
-                    <td>TIRED (honte) / ANGRY (frustration)</td>
-                    <td class="eye-description">Yeux "fatigués" (honte) ou "froncés" (frustration).</td>
+                    <td class="eye-preview"><img src="eyes/eyes_tired.png" alt="Tired"></td>
+                    <td>TIRED</td>
+                    <td class="eye-description">Honte.</td>
                 </tr>
-                <!-- MODES SPÉCIAUX -->
-                <tr>
-                    <td rowspan="6"><strong>MODES SPÉCIAUX</strong></td>
-                    <td>Mode sport</td>
-                    <td>🏎️</td>
-                    <td>Déterminé, focus, flammes.</td>
-                    <td>ANGRY (détermination)</td>
-                    <td class="eye-description">Yeux "froncés" pour la détermination et la concentration.</td>
-                </tr>
-                <tr>
-                    <td>Mode éco</td>
-                    <td>🌿</td>
-                    <td>Zen, feuille verte, aura verte.</td>
-                    <td>NORMAL / HAPPY (serein)</td>
-                    <td class="eye-description">Yeux normaux, calmes, ou légèrement "souriants" pour la sérénité.</td>
-                </tr>
-                <tr>
-                    <td>Mode parking</td>
-                    <td>🅿️</td>
-                    <td>Concentré, précis, radar.</td>
-                    <td>ANGRY (concentration)</td>
-                    <td class="eye-description">Yeux "froncés" pour la concentration.</td>
-                </tr>
-                <tr>
-                    <td>Mode nuit</td>
-                    <td>🌙</td>
-                    <td>Somnolent, calme, étoiles.</td>
-                    <td>TIRED / CLIGNEMENT (lent)</td>
-                    <td class="eye-description">Yeux "fatigués" avec des clignements très lents.</td>
-                </tr>
-                <tr>
-                    <td>Cruise control</td>
-                    <td>🛀</td>
-                    <td>Relaxé, pieds en l'air.</td>
-                    <td>NORMAL / HAPPY (relaxé)</td>
-                    <td class="eye-description">Yeux normaux, calmes, ou légèrement "souriants".</td>
-                </tr>
-                <tr>
-                    <td>Mode manuel</td>
-                    <td>💪</td>
-                    <td>Impliqué, coach, encourage.</td>
-                    <td>ANGRY (implication) / HAPPY (encouragement)</td>
-                    <td class="eye-description">Yeux "froncés" (implication) ou "souriants" (encouragement).</td>
-                </tr>
+
                 <!-- ÉVÉNEMENTS SPÉCIAUX -->
                 <tr>
-                    <td rowspan="6"><strong>ÉVÉNEMENTS SPÉCIAUX</strong></td>
+                    <td rowspan="5"><strong>SPÉCIAL</strong></td>
                     <td>Nouveau passager</td>
                     <td>👋</td>
-                    <td>Curieux, accueillant, salue.</td>
-                    <td>NORMAL / HAPPY (curieux)</td>
-                    <td class="eye-description">Yeux normaux, peut-être avec un léger mouvement de curiosité, ou "souriants".</td>
-                </tr>
-                <tr>
-                    <td>Anniversaire conducteur</td>
-                    <td>🥳</td>
-                    <td>Fête, confettis, gâteau.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
+                    <td class="eye-description">Accueillant.</td>
                 </tr>
                 <tr>
-                    <td>Trajet inhabituel</td>
-                    <td>🗺️</td>
-                    <td>Perdu, GPS, carte.</td>
-                    <td>ANGRY (perplexe)</td>
-                    <td class="eye-description">Yeux "froncés" par la perplexité ou le doute.</td>
+                    <td>Anniversaire</td>
+                    <td>🥳</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
+                    <td>HAPPY</td>
+                    <td class="eye-description">Fête.</td>
                 </tr>
                 <tr>
                     <td>Destination atteinte</td>
                     <td>😊</td>
-                    <td>Satisfait, soulagé, étirement.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
+                    <td class="eye-description">Soulagement.</td>
                 </tr>
                 <tr>
                     <td>Panne imminente</td>
                     <td>🆘</td>
-                    <td>Panique, SOS, signal détresse.</td>
-                    <td>ANGRY / NORMAL (alerte, fixe)</td>
-                    <td class="eye-description">Yeux "froncés" par la panique, ou normaux, très ouverts et fixes pour l'alerte.</td>
+                    <td class="eye-preview"><img src="eyes/eyes_angry.png" alt="Angry"></td>
+                    <td>ANGRY</td>
+                    <td class="eye-description">Panique.</td>
                 </tr>
                 <tr>
                     <td>Révision passée</td>
                     <td>✅</td>
-                    <td>Heureux, certificat, tampon "OK".</td>
+                    <td class="eye-preview"><img src="eyes/eyes_happy.png" alt="Happy"></td>
                     <td>HAPPY</td>
-                    <td class="eye-description">Yeux "souriants".</td>
+                    <td class="eye-description">Validé.</td>
                 </tr>
             </tbody>
         </table>
 
         <footer>
             Rapport généré par Maxi pour le projet It Bobd.<br>
-            Date de la correspondance : 18 Février 2026.
+            Images générées mathématiquement d'après le code Arduino original.
         </footer>
     </div>
 </body>
