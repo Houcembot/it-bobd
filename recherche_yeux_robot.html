@@ -184,6 +184,47 @@
 
         </div>
 
+        <div class="card"> <!-- Nouveau card pour vos yeux -->
+            <h3>Vos Yeux Robotiques It bobd (selon le code)</h3>
+            <p>Basés sur le code Arduino (`eyes_emotions` dans `BOBD- Historique Codes..md`), voici la description visuelle et les animations de vos propres yeux pour It bobd. Ces yeux sont des formes géométriques rendues dynamiquement, et non des images statiques.</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f2f2f2; font-weight: bold; color: #333;">Expression</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f2f2f2; font-weight: bold; color: #333;">Description Visuelle</th>
+                        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f2f2f2; font-weight: bold; color: #333;">Animations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;"><strong>NORMAL</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Deux carrés arrondis blancs, un peu espacés, sur un fond noir. Au centre de l'écran.</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Léger mouvement aléatoire (haut/bas, gauche/droite) ; hauteur à 56 pixels.</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;"><strong>CLIGNEMENT</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Les carrés se réduisent en hauteur, se transformant en un trait horizontal blanc fin (6px) et large (64px).</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Fermeture rapide, pause courte en trait fin, puis réouverture rapide. Fréquence aléatoire (2 à 5s).</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;"><strong>ANGRY (Colère)</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Yeux ouverts. Coins supérieurs *intérieurs* masqués par un triangle noir, créant un effet de "sourcils froncés".</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Mouvements aléatoires et clignements maintenus, avec l'apparence "froncée" quand l'œil est ouvert.</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;"><strong>TIRED (Fatigué)</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Yeux ouverts. Coins supérieurs *extérieurs* masqués par un triangle noir, créant un effet de "sourcils tombants".</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Mouveements aléatoires et clignements maintenus, avec l'apparence "tombante" quand l'œil est ouvert.</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;"><strong>HAPPY (Content)</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Yeux ouverts. Partie inférieure masquée par un rectangle arrondi noir, donnant une forme plus ouverte vers le haut, comme des yeux souriants.</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; text-align: left;">Mouvements aléatoires et clignements maintenus, avec l'apparence "souriante" quand l'œil est ouvert.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <footer>
             Rapport généré par Maxi pour le projet It Bobd.<br>
             Date de la recherche : 18 Février 2026.
