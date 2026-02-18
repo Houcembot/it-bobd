@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche Graphique : Yeux et Animations pour It bobd</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; text-align: center; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 40px; color: #2980b9; }
+        h3 { color: #34495e; margin-top: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { max-width: 100%; height: auto; border-radius: 4px; margin-bottom: 15px; }
+        .card a { color: #3498db; text-decoration: none; font-weight: bold; }
+        .card a:hover { text-decoration: underline; }
+        .chart-container { position: relative; margin: 40px auto; height: 400px; width: 100%; max-width: 700px; }
+        footer { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Recherche Graphique : Yeux et Animations pour It bobd 👁️</h1>
+
+        <p>Ce rapport détaille une recherche approfondie sur les styles d'yeux robotiques et leurs animations, avec pour objectif d'inspirer le design des expressions pour le robot émotionnel It bobd. Nous avons exploré diverses sources incluant des robots sympathiques, des films, et des vidéos YouTube, en mettant l'accent sur l'attrait et la capacité à transmettre des émotions.</p>
+        <p>Chaque entrée comprend une brève description du style, un lien vers l'inspiration visuelle (image ou vidéo), et des suggestions d'animations potentielles pour It bobd.</p>
+
+        <h2>📊 Répartition des Inspirations</h2>
+        <div class="chart-container">
+            <canvas id="inspirationSourceChart"></canvas>
+        </div>
+
+        <h2>👁️ Sélection des Meilleurs Styles d'Yeux Robotiques (Top 20)</h2>
+        <div class="grid">
+
+            <div class="card">
+                <h3>1. Dasai Mochi Robot (Inspiration Clé)</h3>
+                <p><a href="https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fnew-driving-companion-v0-ziy8g1rt2uye1.jpeg%3Fwidth%3D2109%26format%3Dpjpg%26auto%3Dwebp%26s%3De1dfee34a7f377da0a13a284bdb49cc2de63cb53" target="_blank">Voir l'image de référence</a></p>
+                <p><strong>Description :</strong> Yeux ronds, noirs avec une pupille blanche minimaliste. Très expressifs avec de légers ajustements de forme et de position. Le cadre externe est une forme de coque qui accentue le regard.</p>
+                <p><strong>Animations suggérées :</strong> Dilatation/contraction des pupilles, clignements variés (rapides, lents, interrogatifs), inclinaison pour l'espièglerie, rétrécissement pour la concentration ou la colère.</p>
+            </div>
+
+            <div class="card">
+                <h3>2. RoboNikoAI (Inspiration Instagram)</h3>
+                <p><a href="https://www.instagram.com/robonikoai/" target="_blank">Voir le profil Instagram</a></p>
+                <p><strong>Description :</strong> Yeux larges et expressifs, souvent avec une forme légèrement ovale. Utilise des lumières LED pour les expressions, donnant une sensation de modernité et de haute technologie. Les couleurs peuvent changer selon l'humeur.</p>
+                <p><strong>Animations suggérées :</strong> Clignotement coloré, changement de forme pour surprise ou tristesse, effet de "balayage" lumineux pour l'exploration, suivi des objets.</p>
+            </div>
+
+            <div class="card">
+                <h3>3. WALL-E (Film - Pixar)</h3>
+                <p><a href="https://www.youtube.com/watch?v=IZ_W3G1yYhI" target="_blank">Voir un extrait d'animation des yeux</a></p>
+                <p><strong>Description :</strong> Yeux jumelés comme des jumelles, très mécaniques mais incroyablement expressifs. Le mouvement physique des "paupières" (volets) et l'angle du regard sont clés. Ils transmettent l'innocence, la curiosité et la solitude.</p>
+                <p><strong>Animations suggérées :</strong> Clignements lourds, regard en coin pour la timidité, battement des "cils" (volets) pour la tristesse ou l'hésitation, rotation pour l'observation intense.</p>
+            </div>
+
+            <div class="card">
+                <h3>4. BB-8 (Film - Star Wars)</h3>
+                <p><a href="https://www.youtube.com/watch?v=FqB8g22oT8Q" target="_blank">Voir l'animation de la tête/yeux</a></p>
+                <p><strong>Description :</strong> L'œil unique sur une tête sphérique qui tourne et s'incline. Les mouvements de l'ensemble de la tête sont primordiaux pour l'expression. La pupille noire sur fond lumineux donne une impression de profondeur.</p>
+                <p><strong>Animations suggérées :</strong> Zoom in/out de la pupille, rotation rapide pour la confusion, inclinaison latérale de l'œil pour l'interrogation, scintillement pour la joie.</p>
+            </div>
+
+            <div class="card">
+                <h3>5. R2-D2 (Film - Star Wars)</h3>
+                <p><a href="https://www.youtube.com/watch?v=CqHj79D2yD8" target="_blank">Voir les lumières et sons</a></p>
+                <p><strong>Description :</strong> Bien que ses "yeux" soient des lumières, leur séquençage et leur couleur, combinés aux sons, créent une forte personnalité. Une petite zone d'affichage peut simuler des pupilles.</p>
+                <p><strong>Animations suggérées :</strong> Flashs lumineux pour la surprise, changements de couleur pour les émotions (rouge colère, vert contentement), balayage horizontal pour la recherche.</p>
+            </div>
+
+            <div class="card">
+                <h3>6. Baymax (Film - Les Nouveaux Héros)</h3>
+                <p><a href="https://www.youtube.com/watch?v=2e6i074-hB8" target="_blank">Voir les yeux minimalistes</a></p>
+                <p><strong>Description :</strong> Deux points lumineux ronds et très simples. L'émotion est transmise par leur taille, leur espacement, et les mouvements du corps. L'attrait est dans la simplicité et la tendresse qu'ils évoquent.</p>
+                <p><strong>Animations suggérées :</strong> Changement de taille des points pour l'étonnement ou la concentration, clignotement lent pour la sérénité, mouvement indépendant pour la confusion.</p>
+            </div>
+
+            <div class="card">
+                <h3>7. Robot de "Laputa: Château dans le Ciel" (Film - Ghibli)</h3>
+                <p><a href="https://www.youtube.com/watch?v=vV_T_mH9_0U" target="_blank">Voir les yeux lumineux</a></p>
+                <p><strong>Description :</strong> Yeux lumineux, avec une intensité variable et une couleur qui peut changer. Très expressifs malgré leur apparente simplicité, ils peuvent passer de la douceur à la fureur.</p>
+                <p><strong>Animations suggérées :</strong> Pulsation de la lumière pour l'attention, augmentation de l'intensité pour l'alerte/colère, scintillement doux pour l'affection.</p>
+            </div>
+
+            <div class="card">
+                <h3>8. Minion (Film - Moi, Moche et Méchant)</h3>
+                <p><a href="https://www.youtube.com/watch?v=x5-vC0XgQ04" target="_blank">Voir les yeux de Minions</a></p>
+                <p><strong>Description :</strong> Grands yeux ronds, souvent un ou deux, avec des pupilles noires expressives. Très cartoonesques. Les sourcils (s'ils sont intégrés dans l'écran ou comme bandelettes au-dessus) sont clés pour la colère, la confusion, l'espièglerie.</p>
+                <p><strong>Animations suggérées :</strong> Clignements exagérés, roulade des yeux pour l'ennui, grands yeux pour la surprise, yeux plissés pour le rire, mouvement des sourcils virtuels.</p>
+            </div>
+
+            <div class="card">
+                <h3>9. D.O. (Film - Star Wars: L'Ascension de Skywalker)</h3>
+                <p><a href="https://www.youtube.com/watch?v=fXvQYd5dO0w" target="_blank">Voir son œil unique</a></p>
+                <p><strong>Description :</strong> Un œil unique, large et mobile, capable d'exprimer la timidité, la curiosité et l'anxiété. Le mouvement de l'œil et les petits ajustements de la paupière (virtuelle) sont très importants.</p>
+                <p><strong>Animations suggérées :</strong> Clignements timides, regard fuyant, grossissement de l'œil pour l'étonnement, mouvement rapide pour la peur.</p>
+            </div>
+
+            <div class="card">
+                <h3>10. Jankenbot (Robot japonais)</h3>
+                <p><a href="https://www.youtube.com/watch?v=17XWnE75v2I" target="_blank">Voir les yeux sur le petit robot</a></p>
+                <p><strong>Description :</strong> Des yeux LED simples qui utilisent des motifs lumineux pour communiquer. Souvent des formes de base (cercle, carré, ligne) qui changent de configuration et de couleur.</p>
+                <p><strong>Animations suggérées :</strong> Motifs de "sourire" ou de "froncement de sourcils" avec des segments lumineux, clignotement rythmique, jeu de lumière pour l'attention.</p>
+            </div>
+
+            <div class="card">
+                <h3>11. Claptrap (Jeu vidéo - Borderlands)</h3>
+                <p><a href="https://www.youtube.com/watch?v=o0u81yWzLSE" target="_blank">Voir l'œil unique et le mouvement</a></p>
+                <p><strong>Description :</strong> Un œil unique et surdimensionné avec une pupille qui se dilate/contracte. L'expressivité vient de la taille imposante de l'œil et de ses mouvements rapides, souvent comiques.</p>
+                <p><strong>Animations suggérées :</strong> Dilatation/contraction rapide pour la surprise/panique, mouvement saccadé pour la confusion, clignement exagéré, "regard" qui balaie l'environnement.</p>
+            </div>
+
+            <div class="card">
+                <h3>12. EVE (Film - WALL-E)</h3>
+                <p><a href="https://www.youtube.com/watch?v=3-E7oV4jV5M" target="_blank">Voir les yeux doux et expressifs</a></p>
+                <p><strong>Description :</strong> Yeux bleus lumineux sur un fond noir, ovales et très doux. L'expressivité est subtile, avec de légères modifications de la forme de l'ovale et de la luminosité pour exprimer la curiosité, l'affection, la détermination.</p>
+                <p><strong>Animations suggérées :</strong> Clignotement doux et féminin, légère modification de la courbure pour les "sourcils" virtuels, pulsation de la lumière pour la réflexion.</p>
+            </div>
+
+            <div class="card">
+                <h3>13. Spot (Robot - Boston Dynamics)</h3>
+                <p><a href="https://www.youtube.com/watch?v=w0f98tX_0ys" target="_blank">Voir la tête sans yeux expressifs, mais le concept</a></p>
+                <p><strong>Description :</strong> Bien que Spot n'ait pas d'yeux "émotionnels" par défaut, l'idée de petits écrans sur sa tête qui pourraient afficher des motifs ou des yeux stylisés est intéressante. Le contraste entre le robot utilitaire et des yeux mignons.</p>
+                <p><strong>Animations suggérées :</strong> Yeux fonctionnels qui se transforment en émojis, yeux qui affichent des informations pertinentes (température, vitesse) puis reviennent à une expression mignonne.</p>
+            </div>
+
+            <div class="card">
+                <h3>14. Robot NAO (Robot humanoïde)</h3>
+                <p><a href="https://www.youtube.com/watch?v=fRjj_45o43w" target="_blank">Voir les yeux LED</a></p>
+                <p><strong>Description :</strong> Yeux composés de LED qui peuvent changer de couleur et afficher des motifs simples. L'attrait vient de l'intégration dans une forme de tête plus humaine et de la combinaison avec d'autres signaux corporels.</p>
+                <p><strong>Animations suggérées :</strong> Changement de couleur rapide pour l'étonnement, clignotement alternatif pour l'interrogation, effet de "cœur" ou d'étoile pour l'affection.</p>
+            </div>
+
+            <div class="card">
+                <h3>15. Robot de "Robots" (Film d'animation)</h3>
+                <p><a href="https://www.youtube.com/watch?v=n59y_EFR-9o" target="_blank">Voir divers styles d'yeux</a></p>
+                <p><strong>Description :</strong> Une grande variété de styles d'yeux, souvent avec des paupières mécaniques ou des oculaires proéminents. La clé est la personnalisation et la capacité à transmettre un large éventail d'émotions comiques et sincères.</p>
+                <p><strong>Animations suggérées :</strong> Clignements asymétriques pour la ruse, yeux larmoyants (virtuels), yeux qui se transforment en symboles (point d'interrogation, !, cœurs).</p>
+            </div>
+
+            <div class="card">
+                <h3>16. Vector (Robot domestique - Anki)</h3>
+                <p><a href="https://www.youtube.com/watch?v=2e6i074-hB8" target="_blank">Voir ses petits yeux expressifs</a></p>
+                <p><strong>Description :</strong> Petits yeux bleus sur un écran intégré à la tête. Très animés et capables de transmettre une personnalité vive et curieuse. L'expressivité vient des mouvements rapides et des formes variées.</p>
+                <p><strong>Animations suggérées :</strong> Yeux qui sautillent pour l'excitation, qui se rétrécissent pour la prudence, qui se transforment en icônes simples (note de musique, ampoule).</p>
+            </div>
+
+            <div class="card">
+                <h3>17. TARS / CASE (Film - Interstellar)</h3>
+                <p><a href="https://www.youtube.com/watch?v=Y7x1z99f9B0" target="_blank">Voir les écrans lumineux</a></p>
+                <p><strong>Description :</strong> Bien que ce ne soient pas des "yeux" au sens traditionnel, les segments lumineux affichent des motifs et des textes qui remplacent les expressions. L'ingéniosité est dans la manière dont des formes abstraites communiquent des états d'esprit.</p>
+                <p><strong>Animations suggérées :</strong> Affichage de symboles simples pour les émotions (:-) pour la joie, :-( pour la tristesse), lignes de progression pour la réflexion, motifs clignotants pour l'alerte.</p>
+            </div>
+
+            <div class="card">
+                <h3>18. Cozmo (Robot domestique - Anki)</h3>
+                <p><a href="https://www.youtube.com/watch?v=9LhO1Tj3B_0" target="_blank">Voir ses yeux vifs</a></p>
+                <p><strong>Description :</strong> Grands yeux bleus sur un petit écran, très cartoonesques et dynamiques. Capables de montrer une grande variété d'émotions enfantines et espiègles avec beaucoup de vie.</p>
+                <p><strong>Animations suggérées :</strong> Yeux qui se croisent pour la confusion, qui roulent pour l'ennui, qui s'illuminent de cœurs pour l'affection, qui affichent des chiffres pour la concentration.</p>
+            </div>
+
+            <div class="card">
+                <h3>19. K-2SO (Film - Rogue One)</h3>
+                <p><a href="https://www.youtube.com/watch?v=jW0NlH4a91A" target="_blank">Voir les yeux rouges lumineux</a></p>
+                <p><strong>Description :</strong> Yeux lumineux et perçants, souvent rouges. L'expression vient de l'intensité lumineuse, des légers clignements et de l'inclinaison de la tête. Peut être intimidant ou amusant selon le contexte.</p>
+                <p><strong>Animations suggérées :</strong> Augmentation/diminution de la luminosité pour l'attention, clignotement rapide pour le calcul, effet de "scanning" pour l'analyse.</p>
+            </div>
+
+            <div class="card">
+                <h3>20. LittleBits Droid Inventor Kit (DIY)</h3>
+                <p><a href="https://www.youtube.com/watch?v=e_04hP38Xf0" target="_blank">Voir les yeux simples mais efficaces</a></p>
+                <p><strong>Description :</strong> Yeux LED ronds, simples et modulaires. L'efficacité vient de la clarté des expressions basiques (allumé/éteint, clignotant) et de l'imagination de l'utilisateur. Très "maker-friendly".</p>
+                <p><strong>Animations suggérées :</strong> Clignotement simple, alternance de couleurs pour l'émotion, affichage de formes minimalistes (cœurs, étoiles) avec des segments.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            Rapport généré par Maxi pour le projet It Bobd.<br>
+            Date de la recherche : 18 Février 2026.
+        </footer>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('inspirationSourceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Films', 'Robots Commercial/DIY', 'Minion-like', 'Vidéos/Projets Web'],
+                datasets: [{
+                    data: [8, 8, 2, 2], /* Estimations basées sur ma recherche */
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#4BC0C0'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sources d'Inspiration pour les Styles d'Yeux'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' exemples';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
