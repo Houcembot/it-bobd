@@ -2,7 +2,7 @@
 #include <SPI.h>
 #include <TFT_eSPI.h>
 
-// Initialize TFT
+// Initialisation de l'écran TFT
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite spr = TFT_eSprite(&tft);
 
@@ -15,7 +15,7 @@ TFT_eSprite spr = TFT_eSprite(&tft);
 #define V_DARK 0x0110
 #define TFT_YELLOW 0xFFE0
 
-// Eye Parameters
+// Paramètres des Yeux
 int eyeW = 56;
 int eyeH_Max = 56;
 int borderRadius = 16;
@@ -24,7 +24,7 @@ int blinkThickness = 6;
 int blinkWidth = 64;
 float blinkThreshold = 12.0;
 
-// Animation Variables
+// Variables d'Animation
 float curLx, curLy, curLh;
 float targetLx, targetLy, targetLh;
 unsigned long blinkTimer = 0;
@@ -34,7 +34,7 @@ unsigned long moodTimer = 0;
 enum Mood { NORMAL, TIRED, ANGRY, HAPPY };
 Mood currentMood = NORMAL;
 
-// Dashboard Variables
+// Variables du Dashboard
 float realRPM = 0, realSPD = 0, realTMP = 0;
 
 // Helper Functions
@@ -46,7 +46,7 @@ void printCentered(String s, int y, int size, uint16_t color) {
   spr.print(s);
 }
 
-// Eye Drawing Logic
+// Logique de Dessin des Yeux
 void drawEyesToSprite() {
   spr.fillSprite(BGCOLOR);
   int drawW, drawH, drawRadius, finalY;
@@ -97,7 +97,7 @@ void updateEyesLogic() {
   if (curLh < 1.0) targetLh = eyeH_Max;
 }
 
-// Dashboard Logic
+// Logique du Dashboard
 uint16_t getSpeedColor(float spd) {
   if (spd < 40) return TFT_BLUE;
   if (spd < 80) return TFT_YELLOW;
@@ -143,7 +143,7 @@ void setup() {
   spr.createSprite(SCREEN_W, SCREEN_H);
   spr.setSwapBytes(true);
 
-  // Initialize Eye Targets
+  // Initialisation des cibles Yeux
   targetLh = eyeH_Max;
   targetLx = (SCREEN_W - (eyeW * 2 + spaceBetween)) / 2;
   targetLy = (SCREEN_H - eyeH_Max) / 2;
@@ -158,21 +158,21 @@ void loop() {
   static unsigned long switchModeTimer = 0;
   static bool showDashboard = false;
 
-  // Toggle mode every 10 seconds for demo
+  // Alterne le mode toutes les 10 secondes pour la démo
   if (millis() > switchModeTimer) {
     showDashboard = !showDashboard;
     switchModeTimer = millis() + 10000;
   }
 
   if (showDashboard) {
-    // Simulate OBD Data
+    // Simule des données OBD
     realRPM = random(800, 4800);
     realSPD = map(realRPM, 800, 4800, 0, 120);
     realTMP = 92;
     drawDashboard(realRPM, realSPD, realTMP);
     delay(50);
   } else {
-    // Animate Eyes
+    // Anime les Yeux
     updateEyesLogic();
     drawEyesToSprite();
     spr.pushSprite(0, 0);
