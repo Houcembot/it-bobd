@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport d'État - Projet IT-BOBD</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        h3 { color: #16a085; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-done { color: #27ae60; font-weight: bold; }
+        .status-pending { color: #e67e22; font-weight: bold; }
+        .status-todo { color: #7f8c8d; font-weight: bold; }
+        code { background: #eee; padding: 2px 5px; border-radius: 4px; font-family: Consolas, monospace; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        li:before { content: "•"; color: #3498db; font-weight: bold; position: absolute; left: 0; }
+        .footer { margin-top: 40px; font-size: 0.8em; text-align: center; color: #777; border-top: 1px solid #ddd; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>🤖 Rapport d'État du Projet : IT-BOBD</h1>
+    <p><strong>Date :</strong> 26 Février 2026<br>
+    <strong>Branche Git :</strong> <code>main</code> (À jour avec origin)</p>
+
+    <div class="card">
+        <h2>📊 Résumé Exécutif</h2>
+        <p>Le projet <strong>It bobd</strong> (Robot Assistant Émotionnel pour Voiture) est en phase de transition entre la <strong>recherche/prototypage</strong> et le <strong>développement matériel final</strong>. L'infrastructure (Git, Workspace) est saine. Les briques logicielles principales (Animation Yeux, Lecture OBD2) ont été prototypées mais doivent être unifiées.</p>
+    </div>
+
+    <div class="card">
+        <h2>✅ Ce qui a été accompli (Done)</h2>
+        <ul>
+            <li><span class="status-done">[FAIT]</span> <strong>Étude de Marché & Concept :</strong> Dossier complet (<code>etude_marche_it_bobd.md</code>) validant le besoin d'un assistant ludique vs les scanners OBD classiques.</li>
+            <li><span class="status-done">[FAIT]</span> <strong>Recherche Technique OBD2 :</strong> Identification des protocoles (ISO 14230-4 KWP) et du hardware nécessaire (PIC18F25K80, ESP32-C3/S3). Fichier <code>obd2_references.csv</code> créé.</li>
+            <li><span class="status-done">[FAIT]</span> <strong>Prototypage Code (Legacy) :</strong>
+                <ul>
+                    <li>Code d'animation des yeux ("Néon Pulsé") fonctionnel sur ESP32-S3 Zero + GC9A01.</li>
+                    <li>Code de lecture OBD2 via Bluetooth/Série (ELM327) testé.</li>
+                    <li>Code d'interface "Dashboard" (Jauges RPM/Vitesse) créé.</li>
+                </ul>
+            </li>
+            <li><span class="status-done">[FAIT]</span> <strong>Infrastructure :</strong> Dépôt GitHub synchronisé, fichiers de gestion (<code>PROJECT_HUB.md</code>, <code>BOBD- Historique Codes..md</code>) en place.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🚧 En Cours / À Faire (Pending)</h2>
+        <ul>
+            <li><span class="status-pending">[URGENT]</span> <strong>Architecture Unifiée ESP32 :</strong> Fusionner les codes séparés (Yeux + OBD + Dashboard) en un seul firmware cohérent (<code>bobd_main.cpp</code> ?).</li>
+            <li><span class="status-pending">[EN COURS]</span> <strong>Design Mécanique :</strong> Intégration de l'écran rond 1.28" dans un boîtier style "Robot".</li>
+            <li><span class="status-todo">[À FAIRE]</span> <strong>Logique Émotionnelle :</strong> Coder la réaction du robot (Yeux heureux/tristes) en fonction des données OBD (Conduite brusque = Yeux rouges/tristes).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>📁 Fichiers Clés Identifiés</h2>
+        <ul>
+            <li><code>BOBD- Historique Codes..md</code> : Contient tout le code source historique (C++/Arduino) à migrer/nettoyer.</li>
+            <li><code>etude_marche_it_bobd.md</code> : La "Bible" du produit.</li>
+            <li><code>bobd_main.py</code> : Semble être une tentative Python (peut-être pour Raspberry Pi ou prototype PC ?).</li>
+            <li><code>obd2_references.csv</code> : Base de données des commandes AT et PIDs.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        Généré par OpenClaw Agent (Maxi) pour Max - 26/02/2026
+    </div>
+
+</body>
+</html>

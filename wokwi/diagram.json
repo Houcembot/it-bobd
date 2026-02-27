@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "author": "Maxi (OpenClaw)",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gc9a01",
+      "id": "lcd1",
+      "top": -64.32,
+      "left": 136.9,
+      "rotate": 0,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.1", "lcd1:GND", "black", [ "v0" ] ],
+    [ "esp:3V3.1", "lcd1:VCC", "red", [ "v0" ] ],
+    [ "esp:12", "lcd1:SCL", "blue", [ "v0" ] ],
+    [ "esp:11", "lcd1:SDA", "green", [ "v0" ] ],
+    [ "esp:14", "lcd1:RST", "purple", [ "v0" ] ],
+    [ "esp:9", "lcd1:DC", "orange", [ "v0" ] ],
+    [ "esp:10", "lcd1:CS", "yellow", [ "v0" ] ],
+    [ "lcd1:BLK", "esp:3V3.1", "red", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

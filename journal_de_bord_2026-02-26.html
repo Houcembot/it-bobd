@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal de Bord - Projet IT-Bobd (26 Février 2026)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 25px; }
+        h2 { color: #2980b9; margin-top: 35px; border-bottom: 1px dashed #a0d1ed; padding-bottom: 5px; }
+        h3 { color: #16a085; margin-top: 25px; }
+        .card { background: white; border-radius: 10px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-left: 5px solid #3498db; }
+        .lesson-card { background: #e8f5e9; border-left: 5px solid #28a745; margin-top: 20px; padding: 15px; border-radius: 8px; }
+        .lesson-card h3 { color: #28a745; margin-top: 0; }
+        .lesson-card p { font-size: 0.95em; }
+        code { background: #eee; padding: 2px 5px; border-radius: 4px; font-family: Consolas, monospace; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 8px; padding-left: 25px; position: relative; }
+        li:before { content: "👉"; color: #e67e22; font-weight: bold; position: absolute; left: 0; }
+        .footer { margin-top: 40px; font-size: 0.85em; text-align: center; color: #777; border-top: 1px solid #ddd; padding-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <h1>Journal de Bord Quotidien - Projet IT-Bobd 🤖🚗</h1>
+    <p><strong>Date du Rapport :</strong> 26 Février 2026<br>
+    <strong>Modèle Utilisé :</strong> zai/glm-4.7-flashx</p>
+
+    <div class="card">
+        <h2>📋 Récapitulatif de la Journée</h2>
+        <ul>
+            <li>Vérification et confirmation de la présence du projet <code>it-bobd</code> dans le workspace.</li>
+            <li>Génération et push d'un rapport d'état HTML détaillé sur GitHub.</li>
+            <li>Création d'un environnement de simulation Wokwi complet pour ESP32-S3 Zero et écran rond GC9A01.</li>
+            <li>Intégration du code C++ (Arduino) unifié pour l'animation des yeux et le dashboard OBD simulé.</li>
+            <li>Gestion des rappels via Cron (appel à Mr. Alaa).</li>
+            <li>Basculement réussi vers le modèle AI <code>zai/glm-4.7-flashx</code> pour cette session.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>💡 Leçons Apprises et Observations Clés</h2>
+
+        <div class="lesson-card">
+            <h3>L'Importance des Heartbeats</h3>
+            <p>Les <strong>heartbeats</strong> sont cruciaux pour le suivi proactif. Ils ont permis de détecter l'absence initiale du projet <code>it-bobd</code> et de le localiser. La mise à jour de <code>memory/heartbeat-state.json</code> est essentielle pour assurer la continuité et éviter les vérifications répétitives.</p>
+        </div>
+
+        <div class="lesson-card">
+            <h3>Défi de la Simulation Wokwi (VS Code Extension)</h3>
+            <p>La mise en place de la simulation Wokwi a rencontré des obstacles inattendus, principalement liés à l'interprétation du <code>diagram.json</code> par l'extension VS Code et aux limitations de l'édition visuelle pour le plan communautaire. Nous avons dû insister sur l'édition textuelle et les problèmes de rafraîchissement. La compréhension des dépendances entre <code>diagram.json</code>, <code>main.cpp</code>, et la compilation PlatformIO est fondamentale.</p>
+        </div>
+        
+        <div class="lesson-card">
+            <h3>Gestion des Modèles AI</h3>
+            <p>La bascule entre les modèles AI est une fonctionnalité puissante, mais elle nécessite une configuration précise dans <code>openclaw.json</code> pour que les modèles soient "autorisés" à être utilisés directement. La gestion des tokens de passerelle est également un point sensible.</p>
+        </div>
+
+        <div class="lesson-card">
+            <h3>Communication et Précision</h3>
+            <p>Dans les tâches complexes, la clarté de la communication est primordiale. Les aller-retours sur des points comme le chargement de l'écran Wokwi ont montré que des problèmes techniques peuvent être contournés par une compréhension mutuelle et des instructions très précises.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>⏭️ Prochaines Étapes</h2>
+        <ul>
+            <li>Finaliser la vérification de la simulation Wokwi par l'utilisateur.</li>
+            <li>Poursuivre le développement de l'architecture du firmware ESP32 (fusion des logiques Yeux/OBD/Dashboard en production).</li>
+            <li>Implémenter la logique émotionnelle du robot basée sur les données OBD.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        Journal généré par <code>zai/glm-4.7-flashx</code> (Maxi) pour Max.
+    </div>
+
+</body>
+</html>
