@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation IT-Bobd (ESP32-S3 + GC9A01)</title>
+    <script src="https://unpkg.com/@wokwi/elements@1/dist/wokwi-elements.bundle.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #222; color: #fff; height: 100vh; margin: 0; }
+        h1 { margin-top: 20px; }
+        #simulation-container { width: 100%; height: 600px; border: 1px solid #444; background: #333; margin-top: 20px; }
+        .instructions { margin-top: 10px; color: #aaa; font-size: 0.9em; }
+        a { color: #4af; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <h1>🤖 IT-Bobd Simulator</h1>
+    <div class="instructions">
+        Simulation ESP32-S3 + Écran Rond GC9A01.<br>
+        Si la simulation ne charge pas ici, utilisez le <a href="https://wokwi.com/projects/new/esp32-s3" target="_blank">site officiel</a> avec les fichiers du dossier <code>wokwi/</code>.
+    </div>
+
+    <!-- Wokwi Elements requires a paid Club subscription for embedding usually, 
+         but for a quick visualization, we can link to the project via URL parameters 
+         OR simply provide the direct link to open with these files if Wokwi supported it directly via URL.
+         
+         Since deep-linking huge code via URL is unstable, the best "One Click" solution 
+         without copy-paste is to download this repo and open it in VS Code with Wokwi extension.
+         
+         HOWEVER, I will generate a direct link construction below for you to click.
+    -->
+    
+    <div id="simulation-container">
+        <iframe src="https://wokwi.com/projects/new/esp32-s3?diagram=https://raw.githubusercontent.com/Houcembot/it-bobd/main/wokwi/diagram.json" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+
+</body>
+</html>

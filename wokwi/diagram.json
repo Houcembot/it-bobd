@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Maxi (OpenClaw)",
+  "author": "Maxi",
   "editor": "wokwi",
   "parts": [
     {
@@ -8,14 +8,13 @@
       "id": "esp",
       "top": 0,
       "left": 0,
-      "attrs": {}
+      "attrs": { "env": "arduino-esp32" }
     },
     {
       "type": "wokwi-gc9a01",
       "id": "lcd1",
-      "top": -64.32,
-      "left": 136.9,
-      "rotate": 0,
+      "top": 0,
+      "left": 200,
       "attrs": {}
     }
   ],
@@ -30,6 +29,5 @@
     [ "esp:9", "lcd1:DC", "orange", [ "v0" ] ],
     [ "esp:10", "lcd1:CS", "yellow", [ "v0" ] ],
     [ "lcd1:BLK", "esp:3V3.1", "red", [ "v0" ] ]
-  ],
-  "dependencies": {}
+  ]
 }
