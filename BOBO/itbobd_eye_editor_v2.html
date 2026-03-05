@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT-BOBD Eye Expression Editor v2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--panel:#12121a;--border:#1e1e2e;--accent:#00ff88;--accent2:#00aaff;--warn:#ff4444;--text:#e0e0e0;--dim:#666;--rec:#ff3366}
+body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;overflow:hidden;height:100vh}
+h1{font-family:'Orbitron',sans-serif;font-size:1.2em;color:var(--accent);text-align:center;padding:8px;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.app{display:grid;grid-template-columns:280px 260px 1fr;grid-template-rows:auto 1fr auto;height:100vh}
+.header{grid-column:1/-1}
+
+/* --- PREVIEW --- */
+.preview{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:8px;overflow-y:auto}
+.canvas-wrap{position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;border:3px solid var(--border);margin:4px 0;flex-shrink:0}
+.canvas-wrap.recording{border-color:var(--rec);box-shadow:0 0 20px rgba(255,51,102,0.4)}
+canvas#eyeCanvas{width:240px;height:240px;display:block}
+
+/* Joystick */
+.joystick-wrap{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#1a1a2e 0%,#0a0a15 100%);border:2px solid var(--border);position:relative;cursor:grab;margin:6px 0;flex-shrink:0}
+.joystick-wrap:active{cursor:grabbing}
+.joystick-dot{width:20px;height:20px;border-radius:50%;background:var(--accent);position:absolute;top:50px;left:50px;pointer-events:none;transition:none;box-shadow:0 0 8px rgba(0,255,136,0.5)}
+.joystick-ring{position:absolute;top:10px;left:10px;width:100px;height:100px;border:1px dashed #333;border-radius:50%;pointer-events:none}
+.joystick-label{font-size:0.55em;color:var(--dim);text-align:center;margin-top:2px}
+
+/* Timeline */
+.timeline{display:flex;align-items:center;gap:6px;width:100%;padding:4px 0;flex-shrink:0}
+.timeline-bar{flex:1;height:18px;background:var(--bg);border-radius:4px;position:relative;cursor:pointer}
+.timeline-progress{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;width:0%}
+.timeline-kf-marker{position:absolute;top:2px;width:3px;height:14px;background:white;border-radius:1px;opacity:0.7}
+.time-display{font-family:'Orbitron',sans-serif;font-size:0.7em;color:var(--accent);min-width:50px}
+
+/* Buttons */
+.btn-row{display:flex;gap:3px;flex-wrap:wrap;margin:4px 0}
+.btn{padding:4px 8px;font-family:'JetBrains Mono',monospace;font-size:0.6em;border:1px solid var(--border);background:var(--bg);color:var(--text);cursor:pointer;border-radius:4px;transition:all 0.15s;white-space:nowrap}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.btn.rec{border-color:var(--rec);color:var(--rec)}
+.btn.rec.active{background:var(--rec);color:white}
+.btn.export-btn{border-color:var(--accent2);color:var(--accent2)}
+.btn.export-btn:hover{background:var(--accent2);color:var(--bg)}
+.btn.mood-btn.active{background:#aa44ff;color:white;border-color:#aa44ff}
+.btn.wokwi{border-color:#ffaa00;color:#ffaa00}
+.btn.wokwi:hover{background:#ffaa00;color:var(--bg)}
+.btn.lib{border-color:#ff66aa;color:#ff66aa;font-size:0.55em}
+.btn.lib:hover{background:#ff66aa;color:var(--bg)}
+
+/* --- CONTROLS --- */
+.controls{background:var(--panel);border-right:1px solid var(--border);overflow-y:auto;padding:8px}
+.section-title{font-family:'Orbitron',sans-serif;font-size:0.6em;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin:10px 0 4px;padding-bottom:3px;border-bottom:1px solid var(--border)}
+.slider-row{display:flex;align-items:center;gap:4px;margin:3px 0}
+.slider-row label{font-size:0.6em;color:var(--dim);width:45px;flex-shrink:0}
+.slider-row input[type="range"]{flex:1;height:3px;-webkit-appearance:none;background:var(--border);border-radius:2px;outline:none}
+.slider-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--accent);cursor:pointer}
+.slider-row .val{font-size:0.6em;color:var(--accent);width:25px;text-align:right}
+
+/* Wokwi panel */
+.wokwi-panel{background:#0d0d14;border:1px solid #332200;border-radius:6px;padding:6px;margin:6px 0}
+.wokwi-title{font-size:0.6em;color:#ffaa00;margin-bottom:4px;font-weight:bold}
+.config-display{font-size:0.55em;color:var(--dim);background:var(--bg);padding:3px 6px;border-radius:3px;margin:3px 0;min-height:18px}
+
+/* --- EXPRESSIONS --- */
+.expressions{background:var(--bg);overflow-y:auto;padding:8px}
+.expr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:4px}
+.expr-card{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:6px;cursor:pointer;transition:all 0.2s}
+.expr-card:hover{border-color:var(--accent)}
+.expr-card.has-data{border-left:3px solid var(--accent)}
+.expr-card.playing{border-color:var(--accent2);box-shadow:0 0 8px rgba(0,170,255,0.3)}
+.expr-card.selected{border-color:var(--accent);background:#1a2a1a}
+.expr-header{display:flex;justify-content:space-between;align-items:center}
+.expr-id{font-family:'Orbitron',sans-serif;font-size:0.7em;color:var(--accent);font-weight:700}
+.expr-name input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:inherit;font-size:0.6em;width:100%;outline:none}
+.expr-name input:focus{border-color:var(--accent)}
+.expr-kf-bar{height:12px;background:var(--bg);border-radius:2px;margin-top:3px;position:relative}
+.expr-kf-dot{position:absolute;top:2px;width:3px;height:8px;background:var(--accent);border-radius:2px}
+.expr-actions{display:flex;gap:3px;margin-top:3px}
+.expr-actions .btn{font-size:0.5em;padding:2px 5px}
+
+/* Library panel */
+.lib-panel{background:#1a0a1a;border:1px solid #44224a;border-radius:6px;padding:6px;margin-bottom:8px}
+.lib-title{font-size:0.6em;color:#ff66aa;margin-bottom:4px;font-weight:bold}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:3px;max-height:150px;overflow-y:auto}
+
+/* Footer */
+.footer{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:4px 10px;background:var(--panel);border-top:1px solid var(--border)}
+.footer .status{font-size:0.6em;color:var(--dim)}
+.footer .status span{color:var(--accent)}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header"><h1>IT-BOBD Eye Expression Editor v2</h1></div>
+
+<!-- PREVIEW -->
+<div class="preview">
+<div class="canvas-wrap" id="canvasWrap"><canvas id="eyeCanvas" width="240" height="240"></canvas></div>
+
+<!-- Joystick -->
+<div class="joystick-wrap" id="joystick">
+  <div class="joystick-ring"></div>
+  <div class="joystick-dot" id="joystickDot"></div>
+</div>
+<div class="joystick-label">Glisser pour bouger les yeux</div>
+
+<!-- Auto-Blink -->
+<div class="btn-row" style="justify-content:center">
+  <button class="btn active" id="btnAutoBlink" onclick="toggleAutoBlink()">👁 Auto-Blink</button>
+  <span style="font-size:0.55em;color:var(--dim);padding:4px">Vitesse:</span>
+  <input type="range" id="sBlinkSpeed" min="1" max="10" value="5" style="width:60px;height:3px" oninput="blinkSpeed=11-this.value;document.getElementById('vBlink').textContent=this.value">
+  <span class="val" id="vBlink" style="font-size:0.6em">5</span>
+</div>
+
+<!-- Timeline -->
+<div class="timeline">
+  <div class="time-display" id="timeDisplay">0.00s</div>
+  <div class="timeline-bar" id="timelineBar">
+    <div class="timeline-progress" id="timelineProgress"></div>
+    <div id="timelineMarkers"></div>
+  </div>
+</div>
+
+<div class="btn-row" style="justify-content:center">
+  <button class="btn rec" id="btnRecord" onclick="toggleRecord()">● REC</button>
+  <button class="btn" id="btnPlay" onclick="playExpression()">▶ PLAY</button>
+  <button class="btn" id="btnStop" onclick="stopPlayback()">■ STOP</button>
+  <button class="btn" id="btnAddKF" onclick="addKeyframe()">+ KF</button>
+  <button class="btn" onclick="clearKeyframes()">✕ CLR</button>
+</div>
+
+<div class="btn-row" style="justify-content:center">
+  <button class="btn export-btn" onclick="exportArduino()">⬇ .ino</button>
+  <button class="btn export-btn" onclick="exportJSON()">⬇ JSON</button>
+  <button class="btn" onclick="importJSON()">⬆ Import</button>
+</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+
+<!-- Wokwi-style panel -->
+<div class="wokwi-panel">
+<div class="wokwi-title">🎮 FluxGarage Controls</div>
+<div class="btn-row">
+  <button class="btn wokwi mood-btn active" data-mood="0" onclick="cycleMood()">Mood</button>
+  <button class="btn wokwi" onclick="triggerLaugh()">Laugh</button>
+  <button class="btn wokwi" onclick="triggerConfused()">Confused</button>
+  <button class="btn wokwi" id="btnFlickerW" onclick="toggleFlicker()">Flicker</button>
+</div>
+<div class="btn-row">
+  <button class="btn wokwi" id="btnConfigMode" onclick="cycleConfigMode()">Mode</button>
+  <button class="btn wokwi" onclick="configIncrement()">++</button>
+  <button class="btn wokwi" onclick="configDecrement()">--</button>
+</div>
+<div class="config-display" id="configDisplay">Mode: Positions pré-définies</div>
+</div>
+
+<div class="section-title">Position</div>
+<div class="slider-row"><label>X</label><input type="range" id="sX" min="20" max="120" value="64" oninput="updateParam()"><span class="val" id="vX">64</span></div>
+<div class="slider-row"><label>Y</label><input type="range" id="sY" min="40" max="140" value="92" oninput="updateParam()"><span class="val" id="vY">92</span></div>
+
+<div class="section-title">Taille</div>
+<div class="slider-row"><label>Larg.</label><input type="range" id="sW" min="10" max="100" value="56" oninput="updateParam()"><span class="val" id="vW">56</span></div>
+<div class="slider-row"><label>Haut.</label><input type="range" id="sH" min="0" max="100" value="56" oninput="updateParam()"><span class="val" id="vH">56</span></div>
+
+<div class="section-title">Style</div>
+<div class="slider-row"><label>Radius</label><input type="range" id="sR" min="0" max="50" value="16" oninput="updateParam()"><span class="val" id="vR">16</span></div>
+<div class="slider-row"><label>Espace</label><input type="range" id="sS" min="0" max="60" value="24" oninput="updateParam()"><span class="val" id="vS">24</span></div>
+
+<div class="section-title">Mood</div>
+<div class="btn-row">
+  <button class="btn mood-btn active" data-mood="0" onclick="setMood(0)">Normal</button>
+  <button class="btn mood-btn" data-mood="1" onclick="setMood(1)">Tired</button>
+  <button class="btn mood-btn" data-mood="2" onclick="setMood(2)">Angry</button>
+  <button class="btn mood-btn" data-mood="3" onclick="setMood(3)">Happy</button>
+</div>
+
+<div class="section-title">Positions Rapides</div>
+<div class="btn-row">
+  <button class="btn" onclick="setPos(64,70)">↑N</button>
+  <button class="btn" onclick="setPos(85,70)">↗NE</button>
+  <button class="btn" onclick="setPos(85,92)">→E</button>
+  <button class="btn" onclick="setPos(85,110)">↘SE</button>
+  <button class="btn" onclick="setPos(64,110)">↓S</button>
+</div>
+<div class="btn-row">
+  <button class="btn" onclick="setPos(42,110)">↙SW</button>
+  <button class="btn" onclick="setPos(42,92)">←W</button>
+  <button class="btn" onclick="setPos(42,70)">↖NW</button>
+  <button class="btn active" onclick="setPos(64,92)">⊙C</button>
+</div>
+
+<div class="section-title">Effets</div>
+<div class="btn-row">
+  <button class="btn" id="btnFlicker" onclick="toggleFlicker()">Flicker</button>
+  <button class="btn" id="btnCyclops" onclick="toggleCyclops()">Cyclope</button>
+  <button class="btn" id="btnCurious" onclick="toggleCurious()">Curieux</button>
+</div>
+<div class="slider-row" id="flickerAmpRow" style="display:none"><label>Amp.</label><input type="range" id="sFA" min="1" max="10" value="3" oninput="updateParam()"><span class="val" id="vFA">3</span></div>
+
+<div class="section-title">Animations Rapides</div>
+<div class="btn-row">
+  <button class="btn" onclick="quickAnim('blink')">Cligner</button>
+  <button class="btn" onclick="quickAnim('double_blink')">Dbl Clin</button>
+  <button class="btn" onclick="quickAnim('look_lr')">↔ G-D</button>
+  <button class="btn" onclick="quickAnim('look_ud')">↕ H-B</button>
+</div>
+<div class="btn-row">
+  <button class="btn" onclick="quickAnim('surprise')">Surprise</button>
+  <button class="btn" onclick="quickAnim('laugh')">Rire</button>
+  <button class="btn" onclick="quickAnim('angry')">Colère</button>
+  <button class="btn" onclick="quickAnim('roll')">Roll</button>
+</div>
+
+<div class="section-title">Keyframes (<span id="kfCount">0</span>)</div>
+<div id="kfList" style="max-height:120px;overflow-y:auto"></div>
+</div>
+
+<!-- EXPRESSIONS -->
+<div class="expressions">
+<!-- Library panel -->
+<div class="lib-panel">
+  <div class="lib-title">📚 Bibliothèque Templates (inspiré QBIT + FluxGarage)</div>
+  <div class="lib-grid" id="libGrid"></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+  <div class="section-title" style="margin:0;border:none">Expressions (40 slots)</div>
+  <button class="btn" onclick="playAll()" style="font-size:0.55em">▶ Play All</button>
+</div>
+<div class="expr-grid" id="exprGrid"></div>
+</div>
+
+<div class="footer">
+  <div class="status">IT-BOBD | Expr: <span id="statusExpr">#1</span> | KF: <span id="statusKF">0</span> | <span id="statusMode">EDIT</span></div>
+  <div class="status">GC9A01 240x240 | ESP32-S3 Zero | Blink: <span id="statusBlink">ON</span></div>
+</div>
+</div>
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+const canvas=document.getElementById('eyeCanvas'),ctx=canvas.getContext('2d');
+
+// === STATE ===
+let params={x:64,y:92,w:56,h:56,radius:16,space:24,mood:0,flicker:false,flickerAmp:3,cyclops:false,curious:false};
+let rendered={...params};
+let expressions=[];
+for(let i=0;i<40;i++) expressions.push({name:'',keyframes:[]});
+
+const presetNames=['Neutre','Content','Triste','Colère','Surpris','Rire','Confus','Endormi','Réveil','Clin doeil','Alerte Moteur','Vitesse Haute','Ralenti','Accélération','Frein Brusque','Temp OK','Temp Haute','Regard Gauche','Regard Droite','Batterie Faible','Bonjour','Au Revoir','Oui','Non','Curieux','Timide','Fier','Peur','Amoureux','Cyclope','Scan','Loading','Glitch','Focus','Double Clin','Roll Eyes','Excité','Pensif','Soupir','Idle Heureux'];
+presetNames.forEach((n,i)=>{expressions[i].name=n});
+
+let selectedExpr=0, isRecording=false, recordStart=0, isPlaying=false, playStart=0, playKFs=[];
+
+// Auto-blink
+let autoBlink=true, blinkSpeed=6, nextBlink=Date.now()+2000, isBlinking=false;
+
+// Wokwi config mode
+const CONFIG_MODES=['Widths','Heights','Border Radius','Space Between','Cyclops','Curious','Positions'];
+let configMode=6;
+
+// === RENDER ===
+function drawEyes(){
+  ctx.fillStyle='#000';ctx.fillRect(0,0,240,240);
+  const sp=0.25,hsp=(params.h<5)?0.4:sp;
+  rendered.x+=(params.x-rendered.x)*sp;rendered.y+=(params.y-rendered.y)*sp;
+  rendered.w+=(params.w-rendered.w)*sp;rendered.h+=(params.h-rendered.h)*hsp;
+  rendered.radius+=(params.radius-rendered.radius)*sp;rendered.space+=(params.space-rendered.space)*sp;
+  rendered.mood=params.mood;rendered.flicker=params.flicker;rendered.flickerAmp=params.flickerAmp;
+  rendered.cyclops=params.cyclops;rendered.curious=params.curious;
+
+  let fl=0;if(rendered.flicker)fl=(Math.random()-0.5)*2*rendered.flickerAmp;
+  const bT=12,bTh=6,bW=64;
+  let dW,dH,dR,fY,xL,xR;
+  const iW=Math.round(rendered.w),iH=Math.round(rendered.h),iSp=Math.round(rendered.space),iR=Math.round(rendered.radius);
+
+  if(rendered.h<bT){dW=bW;dH=bTh;dR=3;fY=rendered.y+28-3;xL=rendered.x+fl-(bW-iW)/2;xR=xL+bW+(iSp-(bW-iW))}
+  else{dW=iW;dH=iH;dR=iR;fY=rendered.y+(56-dH)/2;xL=rendered.x+fl;xR=xL+iW+iSp}
+
+  ctx.fillStyle='#fff';
+  if(rendered.cyclops){rr(ctx,(240-dW)/2+fl,fY,dW,dH,dR)}
+  else{
+    let lW=dW,lH=dH,rW=dW,rH=dH;
+    if(rendered.curious&&rendered.h>=bT){if(rendered.x<59){lW+=8;lH+=8}else if(rendered.x>69){rW+=8;rH+=8}}
+    rr(ctx,xL,fY,lW,lH,dR);rr(ctx,xR,fY,rW,rH,dR);
+    if(rendered.h>=bT){
+      ctx.fillStyle='#000';const mH=dH/2;
+      if(rendered.mood===2){tri(ctx,xL,fY,xL+dW,fY,xL+dW,fY+mH);tri(ctx,xR,fY,xR+dW,fY,xR,fY+mH)}
+      else if(rendered.mood===1){tri(ctx,xL,fY,xL+dW,fY,xL,fY+mH);tri(ctx,xR,fY,xR+dW,fY,xR+dW,fY+mH)}
+      else if(rendered.mood===3){rr(ctx,xL-2,fY+mH,dW+4,56,iR);rr(ctx,xR-2,fY+mH,dW+4,56,iR)}
+    }
+  }
+}
+function rr(c,x,y,w,h,r){if(w<=0||h<=0)return;r=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();c.fill()}
+function tri(c,x1,y1,x2,y2,x3,y3){c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.lineTo(x3,y3);c.closePath();c.fill()}
+
+// === AUTO BLINK ===
+function updateAutoBlink(){
+  if(!autoBlink||isPlaying)return;
+  const now=Date.now();
+  if(!isBlinking&&now>nextBlink){
+    isBlinking=true;params.h=0;
+  }
+  if(isBlinking&&rendered.h<1){
+    isBlinking=false;params.h=56;
+    nextBlink=now+blinkSpeed*500+Math.random()*2000;
+  }
+}
+function toggleAutoBlink(){
+  autoBlink=!autoBlink;
+  document.getElementById('btnAutoBlink').classList.toggle('active',autoBlink);
+  document.getElementById('statusBlink').textContent=autoBlink?'ON':'OFF';
+  if(!autoBlink){params.h=56}
+}
+
+// === JOYSTICK ===
+(function(){
+  const joy=document.getElementById('joystick'),dot=document.getElementById('joystickDot');
+  let dragging=false;
+  const cx=50,cy=50,maxR=40;
+
+  function update(e){
+    const rect=joy.getBoundingClientRect();
+    const px=(e.clientX||e.touches[0].clientX)-rect.left-10;
+    const py=(e.clientY||e.touches[0].clientY)-rect.top-10;
+    let dx=px-cx,dy=py-cy;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>maxR){dx=dx/dist*maxR;dy=dy/dist*maxR}
+    dot.style.left=(cx+dx)+'px';dot.style.top=(cy+dy)+'px';
+    // Map to eye position
+    params.x=Math.round(64+dx/maxR*42);
+    params.y=Math.round(92+dy/maxR*30);
+    setSliders();
+  }
+  function stop(){dragging=false;dot.style.left=cx+'px';dot.style.top=cy+'px';params.x=64;params.y=92;setSliders()}
+
+  joy.addEventListener('mousedown',e=>{dragging=true;update(e)});
+  joy.addEventListener('touchstart',e=>{dragging=true;update(e);e.preventDefault()},{passive:false});
+  document.addEventListener('mousemove',e=>{if(dragging)update(e)});
+  document.addEventListener('touchmove',e=>{if(dragging)update(e)},{passive:false});
+  document.addEventListener('mouseup',()=>{if(dragging)stop()});
+  document.addEventListener('touchend',()=>{if(dragging)stop()});
+})();
+
+// === UI CONTROLS ===
+function updateParam(){
+  params.x=+document.getElementById('sX').value;params.y=+document.getElementById('sY').value;
+  params.w=+document.getElementById('sW').value;params.h=+document.getElementById('sH').value;
+  params.radius=+document.getElementById('sR').value;params.space=+document.getElementById('sS').value;
+  params.flickerAmp=+document.getElementById('sFA').value;
+  'X Y W H R S FA'.split(' ').forEach(k=>document.getElementById('v'+k).textContent=document.getElementById('s'+k).value);
+}
+function setSliders(){
+  document.getElementById('sX').value=params.x;document.getElementById('sY').value=params.y;
+  document.getElementById('sW').value=params.w;document.getElementById('sH').value=params.h;
+  document.getElementById('sR').value=params.radius;document.getElementById('sS').value=params.space;
+  document.getElementById('sFA').value=params.flickerAmp;
+  updateParam();updateMoodBtns();updateEffectBtns();
+}
+function setMood(m){params.mood=m;updateMoodBtns()}
+function updateMoodBtns(){document.querySelectorAll('.mood-btn[data-mood]').forEach(b=>b.classList.toggle('active',+b.dataset.mood===params.mood))}
+function setPos(x,y){params.x=x;params.y=y;setSliders()}
+function toggleFlicker(){params.flicker=!params.flicker;updateEffectBtns()}
+function toggleCyclops(){params.cyclops=!params.cyclops;updateEffectBtns()}
+function toggleCurious(){params.curious=!params.curious;updateEffectBtns()}
+function updateEffectBtns(){
+  document.getElementById('btnFlicker').classList.toggle('active',params.flicker);
+  document.getElementById('btnFlickerW').classList.toggle('active',params.flicker);
+  document.getElementById('btnCyclops').classList.toggle('active',params.cyclops);
+  document.getElementById('btnCurious').classList.toggle('active',params.curious);
+  document.getElementById('flickerAmpRow').style.display=params.flicker?'flex':'none';
+}
+
+// === WOKWI CONTROLS ===
+function cycleMood(){params.mood=(params.mood+1)%4;updateMoodBtns();
+  const names=['DEFAULT','TIRED','ANGRY','HAPPY'];
+  document.getElementById('configDisplay').textContent='Mood: '+names[params.mood]}
+function triggerLaugh(){quickAnim('laugh')}
+function triggerConfused(){quickAnim('confused')}
+function cycleConfigMode(){configMode=(configMode+1)%7;
+  document.getElementById('configDisplay').textContent='Mode: '+CONFIG_MODES[configMode];
+  document.getElementById('btnConfigMode').textContent='Mode:'+configMode}
+function configIncrement(){
+  if(configMode===0){params.w=Math.min(100,params.w+2)}
+  else if(configMode===1){params.h=Math.min(100,params.h+2)}
+  else if(configMode===2){params.radius=Math.min(50,params.radius+1)}
+  else if(configMode===3){params.space=Math.min(60,params.space+2)}
+  else if(configMode===4){params.cyclops=false;updateEffectBtns()}
+  else if(configMode===5){params.curious=true;updateEffectBtns()}
+  else if(configMode===6){cyclePosForward()}
+  setSliders();showConfigVal()
+}
+function configDecrement(){
+  if(configMode===0){params.w=Math.max(10,params.w-2)}
+  else if(configMode===1){params.h=Math.max(0,params.h-2)}
+  else if(configMode===2){params.radius=Math.max(0,params.radius-1)}
+  else if(configMode===3){params.space=Math.max(0,params.space-2)}
+  else if(configMode===4){params.cyclops=true;updateEffectBtns()}
+  else if(configMode===5){params.curious=false;updateEffectBtns()}
+  else if(configMode===6){cyclePosBackward()}
+  setSliders();showConfigVal()
+}
+let posIdx=0;
+const POSITIONS=[[64,92],[64,70],[85,70],[85,92],[85,110],[64,110],[42,110],[42,92],[42,70]];
+const POS_NAMES=['Center','N','NE','E','SE','S','SW','W','NW'];
+function cyclePosForward(){posIdx=(posIdx+1)%9;setPos(POSITIONS[posIdx][0],POSITIONS[posIdx][1])}
+function cyclePosBackward(){posIdx=(posIdx+8)%9;setPos(POSITIONS[posIdx][0],POSITIONS[posIdx][1])}
+function showConfigVal(){
+  const v=configMode===0?params.w:configMode===1?params.h:configMode===2?params.radius:
+    configMode===3?params.space:configMode===4?(params.cyclops?'ON':'OFF'):
+    configMode===5?(params.curious?'ON':'OFF'):POS_NAMES[posIdx];
+  document.getElementById('configDisplay').textContent=CONFIG_MODES[configMode]+': '+v}
+
+// === KEYFRAMES ===
+function captureKF(t){return{t:Math.round(t),x:params.x,y:params.y,w:params.w,h:params.h,r:params.radius,s:params.space,mood:params.mood,flicker:params.flicker,fa:params.flickerAmp,cyclops:params.cyclops,curious:params.curious}}
+function applyKF(kf){params.x=kf.x;params.y=kf.y;params.w=kf.w;params.h=kf.h;params.radius=kf.r;params.space=kf.s;params.mood=kf.mood;params.flicker=kf.flicker;params.flickerAmp=kf.fa;params.cyclops=kf.cyclops;params.curious=kf.curious;setSliders()}
+function addKeyframe(){
+  const expr=expressions[selectedExpr];
+  const t=isRecording?Math.min(Date.now()-recordStart,3000):(expr.keyframes.length===0?0:3000);
+  expr.keyframes.push(captureKF(t));
+  expr.keyframes.sort((a,b)=>a.t-b.t);
+  refreshKFList();refreshExprGrid()
+}
+function clearKeyframes(){expressions[selectedExpr].keyframes=[];refreshKFList();refreshExprGrid()}
+function deleteKF(i){expressions[selectedExpr].keyframes.splice(i,1);refreshKFList();refreshExprGrid()}
+function refreshKFList(){
+  const expr=expressions[selectedExpr],el=document.getElementById('kfList');
+  document.getElementById('kfCount').textContent=expr.keyframes.length;
+  document.getElementById('statusKF').textContent=expr.keyframes.length;
+  if(!expr.keyframes.length){el.innerHTML='<div style="font-size:0.55em;color:#666;padding:3px">Vide. +KF ou REC</div>';updateTLMarkers();return}
+  el.innerHTML=expr.keyframes.map((kf,i)=>
+    `<div style="display:flex;align-items:center;gap:3px;padding:2px 0;border-bottom:1px solid #1e1e2e">
+      <span style="font-size:0.55em;color:#00ff88;width:35px">${(kf.t/1000).toFixed(1)}s</span>
+      <span style="font-size:0.5em;color:#666">x${kf.x} y${kf.y} ${kf.w}x${kf.h} m${kf.mood}</span>
+      <button class="btn" style="font-size:0.45em;padding:1px 3px;margin-left:auto" onclick="applyKF(expressions[${selectedExpr}].keyframes[${i}])">◎</button>
+      <button class="btn" style="font-size:0.45em;padding:1px 3px;color:#ff4444" onclick="deleteKF(${i})">✕</button>
+    </div>`).join('');
+  updateTLMarkers()
+}
+function updateTLMarkers(){
+  const el=document.getElementById('timelineMarkers'),expr=expressions[selectedExpr];
+  el.innerHTML=expr.keyframes.map(kf=>`<div class="timeline-kf-marker" style="left:${kf.t/30}%"></div>`).join('')
+}
+
+// === RECORDING ===
+function toggleRecord(){isRecording?stopRecord():startRecord()}
+function startRecord(){isRecording=true;recordStart=Date.now();expressions[selectedExpr].keyframes=[];addKeyframe();
+  document.getElementById('btnRecord').classList.add('active');document.getElementById('canvasWrap').classList.add('recording');
+  document.getElementById('statusMode').textContent='● REC';document.getElementById('statusMode').style.color='#ff3366'}
+function stopRecord(){isRecording=false;addKeyframe();
+  document.getElementById('btnRecord').classList.remove('active');document.getElementById('canvasWrap').classList.remove('recording');
+  document.getElementById('statusMode').textContent='EDIT';document.getElementById('statusMode').style.color=''}
+
+// === PLAYBACK ===
+function playExpression(){
+  const expr=expressions[selectedExpr];if(expr.keyframes.length<2)return;
+  isPlaying=true;playStart=Date.now();playKFs=expr.keyframes;
+  document.getElementById('btnPlay').classList.add('active');
+  document.getElementById('statusMode').textContent='▶ PLAY';document.getElementById('statusMode').style.color='#00aaff';
+  document.querySelectorAll('.expr-card').forEach(c=>c.classList.remove('playing'));
+  document.querySelector(`.expr-card[data-idx="${selectedExpr}"]`)?.classList.add('playing')
+}
+function stopPlayback(){
+  isPlaying=false;document.getElementById('btnPlay').classList.remove('active');
+  document.getElementById('statusMode').textContent='EDIT';document.getElementById('statusMode').style.color='';
+  document.getElementById('timelineProgress').style.width='0%';
+  document.querySelectorAll('.expr-card').forEach(c=>c.classList.remove('playing'))
+}
+function updatePlayback(){
+  if(!isPlaying)return;const el=Date.now()-playStart,last=playKFs[playKFs.length-1].t;
+  if(el>=last){applyKF(playKFs[playKFs.length-1]);stopPlayback();return}
+  document.getElementById('timelineProgress').style.width=(el/3000*100)+'%';
+  document.getElementById('timeDisplay').textContent=(el/1000).toFixed(2)+'s';
+  let kA=0,kB=1;for(let i=0;i<playKFs.length-1;i++){if(el>=playKFs[i].t&&el<playKFs[i+1].t){kA=i;kB=i+1;break}}
+  const a=playKFs[kA],b=playKFs[kB];let t=(el-a.t)/(b.t-a.t);t=t*t*(3-2*t);
+  params.x=Math.round(a.x+(b.x-a.x)*t);params.y=Math.round(a.y+(b.y-a.y)*t);
+  params.w=Math.round(a.w+(b.w-a.w)*t);params.h=Math.round(a.h+(b.h-a.h)*t);
+  params.radius=Math.round(a.r+(b.r-a.r)*t);params.space=Math.round(a.s+(b.s-a.s)*t);
+  params.mood=t<0.5?a.mood:b.mood;params.flicker=t<0.5?a.flicker:b.flicker;
+  params.flickerAmp=t<0.5?a.fa:b.fa;params.cyclops=t<0.5?a.cyclops:b.cyclops;
+  params.curious=t<0.5?a.curious:b.curious;setSliders()
+}
+
+// === PLAY ALL ===
+let playAllIdx=-1;
+function playAll(){
+  playAllIdx=expressions.findIndex(e=>e.keyframes.length>=2);
+  if(playAllIdx===-1)return;playNextInAll()
+}
+function playNextInAll(){
+  if(playAllIdx>=40){playAllIdx=-1;return}
+  if(expressions[playAllIdx].keyframes.length>=2){selectExpr(playAllIdx);playExpression()}
+  else{playAllIdx++;while(playAllIdx<40&&expressions[playAllIdx].keyframes.length<2)playAllIdx++;
+    if(playAllIdx<40)playNextInAll()}
+}
+
+// === QUICK ANIMATIONS ===
+function quickAnim(type){
+  const d={x:64,y:92,w:56,h:56,r:16,s:24,mood:0,flicker:false,fa:0,cyclops:false,curious:false};
+  let kfs=[];
+  if(type==='blink')kfs=[{...d,t:0},{...d,t:400,h:0},{...d,t:800},{...d,t:3000}];
+  else if(type==='double_blink')kfs=[{...d,t:0},{...d,t:300,h:0},{...d,t:600},{...d,t:900,h:0},{...d,t:1200},{...d,t:3000}];
+  else if(type==='look_lr')kfs=[{...d,t:0},{...d,t:400,x:42},{...d,t:800,x:85},{...d,t:1200,x:42},{...d,t:1800},{...d,t:3000}];
+  else if(type==='look_ud')kfs=[{...d,t:0},{...d,t:500,y:70},{...d,t:1000,y:110},{...d,t:1500,y:70},{...d,t:2000},{...d,t:3000}];
+  else if(type==='surprise')kfs=[{...d,t:0},{...d,t:200,w:75,h:75,r:20,s:30,y:70},{...d,t:2000,w:75,h:75,r:20,s:30,y:70},{...d,t:3000}];
+  else if(type==='laugh')kfs=[{...d,t:0,mood:3},{...d,t:400,mood:3,y:85},{...d,t:700,mood:3,y:98},{...d,t:1000,mood:3,y:85},{...d,t:1300,mood:3,y:98},{...d,t:2000,mood:3},{...d,t:3000}];
+  else if(type==='angry')kfs=[{...d,t:0},{...d,t:400,mood:2,w:60,h:48,r:8,s:16,flicker:true,fa:3},{...d,t:2600,mood:2,w:60,h:48,r:8,s:16,flicker:true,fa:3},{...d,t:3000}];
+  else if(type==='confused')kfs=[{...d,t:0},{...d,t:400,x:42},{...d,t:800,x:85},{...d,t:1200,x:42,mood:1},{...d,t:2000,mood:1},{...d,t:3000}];
+  else if(type==='roll')kfs=[{...d,t:0},{...d,t:375,y:70},{...d,t:750,x:85,y:70},{...d,t:1125,x:85},{...d,t:1500,x:85,y:110},{...d,t:1875,y:110,mood:1},{...d,t:2250,x:42},{...d,t:3000}];
+  else if(type==='yawn')kfs=[{...d,t:0,mood:1},{...d,t:800,mood:1,h:70,w:65,r:25},{...d,t:1600,mood:1,h:70,w:65,r:25},{...d,t:2200,mood:1,h:30},{...d,t:3000,mood:1}];
+  else if(type==='pingpong')kfs=[{...d,t:0},{...d,t:300,x:42},{...d,t:600,x:85},{...d,t:900,x:42},{...d,t:1200,x:85},{...d,t:1500,x:42},{...d,t:1800,x:85},{...d,t:3000}];
+  else if(type==='wink')kfs=[{...d,t:0,mood:3},{...d,t:500,mood:3},{...d,t:800,mood:3,w:40},{...d,t:1200,mood:3},{...d,t:3000}];
+  else if(type==='scared')kfs=[{...d,t:0},{...d,t:200,w:70,h:70,r:20,s:30,flicker:true,fa:4,y:75},{...d,t:600,x:42,y:70,w:70,h:70,flicker:true,fa:3},{...d,t:1200,x:85,y:100,flicker:true,fa:3},{...d,t:1800,x:42,y:80,flicker:true,fa:2},{...d,t:3000}];
+  else if(type==='love')kfs=[{...d,t:0},{...d,t:500,w:70,h:70,r:30,s:20,mood:3,y:75},{...d,t:2500,w:70,h:70,r:30,s:20,mood:3,y:75},{...d,t:3000}];
+  else if(type==='sleep')kfs=[{...d,t:0,mood:1},{...d,t:1000,mood:1,h:20,y:100},{...d,t:2500,mood:1,h:0,y:100},{...d,t:3000,mood:1,h:0,y:100}];
+  else if(type==='wake')kfs=[{...d,t:0,h:0,mood:1},{...d,t:1000,h:25,mood:1},{...d,t:2000,h:56,mood:0},{...d,t:3000}];
+  else if(type==='scan')kfs=[{...d,t:0,w:50,h:30,r:4},{...d,t:600,x:85,w:50,h:30,r:4},{...d,t:1200,x:42,w:50,h:30,r:4},{...d,t:1800,x:85,w:50,h:30,r:4},{...d,t:2400,w:50,h:30,r:4},{...d,t:3000}];
+  else if(type==='glitch')kfs=[{...d,t:0,flicker:true,fa:5},{...d,t:300,x:85,y:70,w:70,h:20,r:2,s:40,mood:2,flicker:true,fa:5},{...d,t:600,x:42,y:110,w:30,h:60,r:0,s:10,mood:1,flicker:true,fa:5},{...d,t:900,h:0,flicker:true,fa:5},{...d,t:1200,x:85,y:70,w:80,h:80,r:30,s:5,mood:3,flicker:true,fa:5},{...d,t:1600,x:42,w:20,h:20,r:10,s:50,mood:2,flicker:true,fa:5},{...d,t:2200,flicker:true,fa:3},{...d,t:3000}];
+  else if(type==='rotate')kfs=[{...d,t:0},{...d,t:375,y:70},{...d,t:750,x:85,y:70},{...d,t:1125,x:85},{...d,t:1500,x:85,y:110},{...d,t:1875,y:110},{...d,t:2250,x:42},{...d,t:2625,x:42,y:70},{...d,t:3000}];
+  else if(type==='bee')kfs=[{...d,t:0,curious:true},{...d,t:300,x:42,y:75,curious:true},{...d,t:600,x:80,y:95,curious:true},{...d,t:900,x:50,y:105,curious:true},{...d,t:1200,x:85,y:75,curious:true},{...d,t:1500,x:64,y:85,curious:true},{...d,t:2000,curious:true},{...d,t:3000}];
+
+  expressions[selectedExpr].keyframes=kfs;
+  refreshKFList();refreshExprGrid();playExpression()
+}
+
+// === LIBRARY ===
+const LIBRARY=[
+  {name:'Blink',icon:'👁',type:'blink'},{name:'Double Blink',icon:'👁‍🗨',type:'double_blink'},
+  {name:'Look L↔R',icon:'👀',type:'look_lr'},{name:'Look U↕D',icon:'🔄',type:'look_ud'},
+  {name:'Surprise',icon:'😲',type:'surprise'},{name:'Laugh',icon:'😂',type:'laugh'},
+  {name:'Angry',icon:'😠',type:'angry'},{name:'Confused',icon:'😕',type:'confused'},
+  {name:'Roll Eyes',icon:'🙄',type:'roll'},{name:'Yawn',icon:'🥱',type:'yawn'},
+  {name:'Ping Pong',icon:'🏓',type:'pingpong'},{name:'Wink',icon:'😉',type:'wink'},
+  {name:'Scared',icon:'😨',type:'scared'},{name:'Love',icon:'😍',type:'love'},
+  {name:'Sleep',icon:'😴',type:'sleep'},{name:'Wake Up',icon:'☀️',type:'wake'},
+  {name:'Scan',icon:'📡',type:'scan'},{name:'Glitch',icon:'⚡',type:'glitch'},
+  {name:'Rotate',icon:'🔁',type:'rotate'},{name:'Bee',icon:'🐝',type:'bee'},
+];
+
+function buildLibrary(){
+  document.getElementById('libGrid').innerHTML=LIBRARY.map(l=>
+    `<button class="btn lib" onclick="quickAnim('${l.type}')" title="${l.name}">${l.icon} ${l.name}</button>`
+  ).join('')
+}
+
+// === EXPRESSIONS GRID ===
+function selectExpr(idx){
+  selectedExpr=idx;
+  document.querySelectorAll('.expr-card').forEach(c=>c.classList.remove('selected'));
+  document.querySelector(`.expr-card[data-idx="${idx}"]`)?.classList.add('selected');
+  document.getElementById('statusExpr').textContent=`#${idx+1}`;
+  refreshKFList();
+  if(expressions[idx].keyframes.length>0)applyKF(expressions[idx].keyframes[0])
+}
+function refreshExprGrid(){
+  document.getElementById('exprGrid').innerHTML=expressions.map((expr,i)=>{
+    const has=expr.keyframes.length>0,sel=i===selectedExpr;
+    return`<div class="expr-card ${has?'has-data':''} ${sel?'selected':''}" data-idx="${i}" onclick="selectExpr(${i})">
+      <div class="expr-header"><span class="expr-id">#${String(i+1).padStart(2,'0')}</span><span style="font-size:0.5em;color:#666">${expr.keyframes.length}KF</span></div>
+      <div class="expr-name"><input value="${expr.name}" onchange="expressions[${i}].name=this.value" onclick="event.stopPropagation()"></div>
+      <div class="expr-kf-bar">${expr.keyframes.map(kf=>`<div class="expr-kf-dot" style="left:${kf.t/30}%"></div>`).join('')}</div>
+      <div class="expr-actions">
+        <button class="btn" onclick="event.stopPropagation();selectedExpr=${i};playExpression()">▶</button>
+        <button class="btn" onclick="event.stopPropagation();dupExpr(${i})">⧉</button>
+        <button class="btn" style="color:#ff4444" onclick="event.stopPropagation();expressions[${i}].keyframes=[];refreshExprGrid();if(selectedExpr===${i})refreshKFList()">✕</button>
+      </div></div>`}).join('')
+}
+function dupExpr(f){const e=expressions.findIndex((x,i)=>i>f&&!x.keyframes.length);if(e===-1)return;
+  expressions[e].keyframes=JSON.parse(JSON.stringify(expressions[f].keyframes));
+  expressions[e].name=expressions[f].name+' (2)';refreshExprGrid()}
+
+// === EXPORT ===
+function exportArduino(){
+  let c='// Auto-generated by IT-BOBD Eye Expression Editor v2\n// Paste into RoboEyes_Expressions.ino\n\nconst Expression EXPRESSIONS[] = {\n';
+  let count=0;
+  expressions.forEach((expr,i)=>{if(!expr.keyframes.length)return;count++;
+    const nm=expr.name.replace(/[^a-zA-Z0-9]/g,'')||`Expr${i+1}`;
+    c+=`\n  // ${i+1}: ${expr.name}\n  {"${nm}", ${expr.keyframes.length}, {\n`;
+    expr.keyframes.forEach(kf=>{c+=`    {${kf.t}, ${kf.x}.0, ${kf.y}.0, ${kf.w}.0, ${kf.h}.0, ${kf.r}.0, ${kf.s}.0, ${kf.mood}, ${kf.flicker}, ${kf.fa}, ${kf.cyclops}, ${kf.curious}},\n`});
+    c+='  }},\n'});
+  c+=`};\n\nconst int NUM_EXPRESSIONS = ${count};\n`;
+  dl('EXPRESSIONS_generated.ino',c)
+}
+function exportJSON(){dl('itbobd_expressions.json',JSON.stringify(expressions,null,2))}
+function importJSON(){document.getElementById('fileInput').click()}
+function handleImport(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=e=>{try{const d=JSON.parse(e.target.result);if(Array.isArray(d)&&d.length===40){expressions=d;refreshExprGrid();selectExpr(0)}}catch(err){alert('JSON invalide')}};
+  r.readAsText(f);ev.target.value=''}
+function dl(n,c){const b=new Blob([c],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click()}
+
+// === MAIN LOOP ===
+function mainLoop(){
+  if(isRecording&&(Date.now()-recordStart)>=3000)stopRecord();
+  updatePlayback();
+  updateAutoBlink();
+  // Check playAll
+  if(playAllIdx>=0&&!isPlaying){playAllIdx++;while(playAllIdx<40&&expressions[playAllIdx]?.keyframes.length<2)playAllIdx++;
+    if(playAllIdx<40)playNextInAll();else playAllIdx=-1}
+  drawEyes();
+  requestAnimationFrame(mainLoop)
+}
+
+// Init
+buildLibrary();refreshExprGrid();selectExpr(0);setSliders();mainLoop();
+</script>
+</body>
+</html>

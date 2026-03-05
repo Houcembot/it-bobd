@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT-BOBD Eye Expression Editor</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --panel: #12121a;
+  --border: #1e1e2e;
+  --accent: #00ff88;
+  --accent2: #00aaff;
+  --warn: #ff4444;
+  --text: #e0e0e0;
+  --dim: #666;
+  --recording: #ff3366;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4em;
+  color: var(--accent);
+  text-align: center;
+  padding: 12px 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+
+.app { display: grid; grid-template-columns: 280px 260px 1fr; grid-template-rows: auto 1fr; height: 100vh; }
+.header { grid-column: 1 / -1; }
+
+/* Preview Panel */
+.preview {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.canvas-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--border);
+  margin: 8px 0;
+}
+
+.canvas-wrap.recording { border-color: var(--recording); box-shadow: 0 0 20px rgba(255,51,102,0.4); }
+
+canvas#eyeCanvas { width: 240px; height: 240px; display: block; }
+
+/* Controls Panel */
+.controls {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7em;
+  color: var(--accent2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 12px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.slider-row label {
+  font-size: 0.7em;
+  color: var(--dim);
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.slider-row .val {
+  font-size: 0.65em;
+  color: var(--accent);
+  width: 30px;
+  text-align: right;
+}
+
+.btn-row { display: flex; gap: 4px; flex-wrap: wrap; margin: 6px 0; }
+
+.btn {
+  padding: 5px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65em;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.btn.rec { border-color: var(--recording); color: var(--recording); }
+.btn.rec.active { background: var(--recording); color: white; }
+.btn.export-btn { border-color: var(--accent2); color: var(--accent2); }
+.btn.export-btn:hover { background: var(--accent2); color: var(--bg); }
+
+/* Expressions Panel */
+.expressions {
+  background: var(--bg);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.expr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 6px;
+}
+
+.expr-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.expr-card:hover { border-color: var(--accent); }
+.expr-card.has-data { border-left: 3px solid var(--accent); }
+.expr-card.playing { border-color: var(--accent2); box-shadow: 0 0 10px rgba(0,170,255,0.3); }
+.expr-card.selected { border-color: var(--accent); background: #1a2a1a; }
+
+.expr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.expr-id {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.expr-name {
+  font-size: 0.65em;
+  color: var(--dim);
+}
+
+.expr-name input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1em;
+  width: 100%;
+  outline: none;
+}
+
+.expr-name input:focus { border-color: var(--accent); }
+
+.expr-kf-bar {
+  height: 16px;
+  background: var(--bg);
+  border-radius: 3px;
+  margin-top: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.expr-kf-dot {
+  position: absolute;
+  top: 3px;
+  width: 4px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.expr-actions { display: flex; gap: 4px; margin-top: 4px; }
+.expr-actions .btn { font-size: 0.6em; padding: 3px 6px; }
+
+/* Timeline */
+.timeline {
+  background: var(--panel);
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeline-bar {
+  flex: 1;
+  height: 20px;
+  background: var(--bg);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.timeline-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 4px;
+  transition: width 0.05s;
+}
+
+.timeline-kf-markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.timeline-kf-marker {
+  position: absolute;
+  top: 2px;
+  width: 3px;
+  height: 16px;
+  background: white;
+  border-radius: 1px;
+  opacity: 0.7;
+}
+
+.time-display {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75em;
+  color: var(--accent);
+  min-width: 60px;
+}
+
+/* Footer bar */
+.footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+}
+
+.footer .status { font-size: 0.65em; color: var(--dim); }
+.footer .status span { color: var(--accent); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header"><h1>IT-BOBD Eye Expression Editor</h1></div>
+  
+  <!-- Preview -->
+  <div class="preview">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="eyeCanvas" width="240" height="240"></canvas>
+    </div>
+
+    <div class="timeline">
+      <div class="time-display" id="timeDisplay">0.00s</div>
+      <div class="timeline-bar" id="timelineBar">
+        <div class="timeline-progress" id="timelineProgress"></div>
+        <div class="timeline-kf-markers" id="timelineMarkers"></div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:6px;">
+      <button class="btn rec" id="btnRecord" onclick="toggleRecord()">● REC</button>
+      <button class="btn" id="btnPlay" onclick="playExpression()">▶ PLAY</button>
+      <button class="btn" id="btnStop" onclick="stopPlayback()">■ STOP</button>
+      <button class="btn" id="btnAddKF" onclick="addKeyframe()">+ KF</button>
+      <button class="btn" id="btnClearKF" onclick="clearKeyframes()">✕ CLEAR</button>
+    </div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:4px;">
+      <button class="btn export-btn" onclick="exportArduino()">⬇ EXPORT .ino</button>
+      <button class="btn export-btn" onclick="exportJSON()">⬇ EXPORT JSON</button>
+      <button class="btn" onclick="importJSON()">⬆ IMPORT JSON</button>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="section-title">Position</div>
+    <div class="slider-row">
+      <label>X</label>
+      <input type="range" id="sX" min="20" max="120" value="64" oninput="updateParam()">
+      <span class="val" id="vX">64</span>
+    </div>
+    <div class="slider-row">
+      <label>Y</label>
+      <input type="range" id="sY" min="40" max="140" value="92" oninput="updateParam()">
+      <span class="val" id="vY">92</span>
+    </div>
+
+    <div class="section-title">Taille</div>
+    <div class="slider-row">
+      <label>Larg.</label>
+      <input type="range" id="sW" min="10" max="100" value="56" oninput="updateParam()">
+      <span class="val" id="vW">56</span>
+    </div>
+    <div class="slider-row">
+      <label>Haut.</label>
+      <input type="range" id="sH" min="0" max="100" value="56" oninput="updateParam()">
+      <span class="val" id="vH">56</span>
+    </div>
+
+    <div class="section-title">Style</div>
+    <div class="slider-row">
+      <label>Radius</label>
+      <input type="range" id="sR" min="0" max="50" value="16" oninput="updateParam()">
+      <span class="val" id="vR">16</span>
+    </div>
+    <div class="slider-row">
+      <label>Espace</label>
+      <input type="range" id="sS" min="0" max="60" value="24" oninput="updateParam()">
+      <span class="val" id="vS">24</span>
+    </div>
+
+    <div class="section-title">Mood</div>
+    <div class="btn-row">
+      <button class="btn active" data-mood="0" onclick="setMood(0)">Normal</button>
+      <button class="btn" data-mood="1" onclick="setMood(1)">Tired</button>
+      <button class="btn" data-mood="2" onclick="setMood(2)">Angry</button>
+      <button class="btn" data-mood="3" onclick="setMood(3)">Happy</button>
+    </div>
+
+    <div class="section-title">Position Rapide</div>
+    <div class="btn-row">
+      <button class="btn" onclick="setPos(64,70)">↑N</button>
+      <button class="btn" onclick="setPos(85,70)">↗NE</button>
+      <button class="btn" onclick="setPos(85,92)">→E</button>
+      <button class="btn" onclick="setPos(85,110)">↘SE</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="setPos(64,110)">↓S</button>
+      <button class="btn" onclick="setPos(42,110)">↙SW</button>
+      <button class="btn" onclick="setPos(42,92)">←W</button>
+      <button class="btn" onclick="setPos(42,70)">↖NW</button>
+      <button class="btn" onclick="setPos(64,92)">⊙C</button>
+    </div>
+
+    <div class="section-title">Effets</div>
+    <div class="btn-row">
+      <button class="btn" id="btnFlicker" onclick="toggleFlicker()">Flicker</button>
+      <button class="btn" id="btnCyclops" onclick="toggleCyclops()">Cyclope</button>
+      <button class="btn" id="btnCurious" onclick="toggleCurious()">Curieux</button>
+    </div>
+    <div class="slider-row" id="flickerAmpRow" style="display:none">
+      <label>Amp.</label>
+      <input type="range" id="sFA" min="1" max="10" value="3" oninput="updateParam()">
+      <span class="val" id="vFA">3</span>
+    </div>
+
+    <div class="section-title">Animations Rapides</div>
+    <div class="btn-row">
+      <button class="btn" onclick="quickAnim('blink')">Cligner</button>
+      <button class="btn" onclick="quickAnim('look_lr')">Regard G↔D</button>
+      <button class="btn" onclick="quickAnim('look_ud')">Regard H↕B</button>
+      <button class="btn" onclick="quickAnim('surprise')">Surprise</button>
+      <button class="btn" onclick="quickAnim('laugh')">Rire</button>
+      <button class="btn" onclick="quickAnim('angry')">Colère</button>
+    </div>
+
+    <div class="section-title">Keyframes (<span id="kfCount">0</span>)</div>
+    <div id="kfList" style="max-height:150px; overflow-y:auto;"></div>
+  </div>
+
+  <!-- Expressions Grid -->
+  <div class="expressions">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div class="section-title" style="margin:0; border:none;">Expressions (40 slots)</div>
+    </div>
+    <div class="expr-grid" id="exprGrid"></div>
+  </div>
+
+  <div class="footer">
+    <div class="status">IT-BOBD | Expression: <span id="statusExpr">#1</span> | KF: <span id="statusKF">0</span> | <span id="statusMode">EDIT</span></div>
+    <div class="status">GC9A01 240x240 | ESP32-S3 Zero</div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+// =============================================================================
+// STATE
+// =============================================================================
+const canvas = document.getElementById('eyeCanvas');
+const ctx = canvas.getContext('2d');
+
+let params = {
+  x: 64, y: 92, w: 56, h: 56,
+  radius: 16, space: 24,
+  mood: 0, flicker: false, flickerAmp: 3,
+  cyclops: false, curious: false
+};
+
+// Current rendered state (interpolated)
+let rendered = { ...params };
+
+// 40 expression slots
+let expressions = [];
+for (let i = 0; i < 40; i++) {
+  expressions.push({ name: '', keyframes: [] });
+}
+
+// Preset names
+const presetNames = [
+  'Neutre','Content','Triste','Colère','Surpris','Rire','Confus','Endormi','Réveil','Clin doeil',
+  'Alerte Moteur','Vitesse Haute','Ralenti','Accélération','Frein Brusque','Temp OK','Temp Haute','Regard Gauche','Regard Droite','Batterie Faible',
+  'Bonjour','Au Revoir','Oui','Non','Curieux','Timide','Fier','Peur','Amoureux','Cyclope',
+  'Scan','Loading','Glitch','Focus','Double Clin','Roll Eyes','Excité','Pensif','Soupir','Idle Heureux'
+];
+presetNames.forEach((n, i) => { expressions[i].name = n; });
+
+let selectedExpr = 0;
+let isRecording = false;
+let recordStart = 0;
+let isPlaying = false;
+let playStart = 0;
+let playKFs = [];
+
+// =============================================================================
+// RENDER ENGINE
+// =============================================================================
+function drawEyes() {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, 240, 240);
+
+  // Interpolate rendered toward params
+  const speed = 0.25;
+  const hSpeed = (params.h < 5) ? 0.4 : speed;
+  rendered.x += (params.x - rendered.x) * speed;
+  rendered.y += (params.y - rendered.y) * speed;
+  rendered.w += (params.w - rendered.w) * speed;
+  rendered.h += (params.h - rendered.h) * hSpeed;
+  rendered.radius += (params.radius - rendered.radius) * speed;
+  rendered.space += (params.space - rendered.space) * speed;
+  rendered.mood = params.mood;
+  rendered.flicker = params.flicker;
+  rendered.flickerAmp = params.flickerAmp;
+  rendered.cyclops = params.cyclops;
+  rendered.curious = params.curious;
+
+  let flickOffset = 0;
+  if (rendered.flicker) {
+    flickOffset = (Math.random() - 0.5) * 2 * rendered.flickerAmp;
+  }
+
+  const blinkThreshold = 12;
+  const blinkThickness = 6;
+  const blinkWidth = 64;
+
+  let drawW, drawH, drawRadius, finalY, xL, xR;
+  const iW = Math.round(rendered.w);
+  const iH = Math.round(rendered.h);
+  const iSpace = Math.round(rendered.space);
+  const iRadius = Math.round(rendered.radius);
+
+  if (rendered.h < blinkThreshold) {
+    drawW = blinkWidth;
+    drawH = blinkThickness;
+    drawRadius = 3;
+    finalY = rendered.y + 28 - 3;
+    xL = rendered.x + flickOffset - (blinkWidth - iW) / 2;
+    xR = xL + blinkWidth + (iSpace - (blinkWidth - iW));
+  } else {
+    drawW = iW;
+    drawH = iH;
+    drawRadius = iRadius;
+    finalY = rendered.y + (56 - drawH) / 2;
+    xL = rendered.x + flickOffset;
+    xR = xL + iW + iSpace;
+  }
+
+  ctx.fillStyle = '#fff';
+
+  if (rendered.cyclops) {
+    const cx = (240 - drawW) / 2 + flickOffset;
+    roundRect(ctx, cx, finalY, drawW, drawH, drawRadius);
+  } else {
+    let lW = drawW, lH = drawH, rW = drawW, rH = drawH;
+    if (rendered.curious && rendered.h >= blinkThreshold) {
+      if (rendered.x < 59) { lW += 8; lH += 8; }
+      else if (rendered.x > 69) { rW += 8; rH += 8; }
+    }
+
+    roundRect(ctx, xL, finalY, lW, lH, drawRadius);
+    roundRect(ctx, xR, finalY, rW, rH, drawRadius);
+
+    // Mood overlays
+    if (rendered.h >= blinkThreshold) {
+      ctx.fillStyle = '#000';
+      const mH = drawH / 2;
+      if (rendered.mood === 2) { // ANGRY
+        triangle(ctx, xL, finalY, xL + drawW, finalY, xL + drawW, finalY + mH);
+        triangle(ctx, xR, finalY, xR + drawW, finalY, xR, finalY + mH);
+      } else if (rendered.mood === 1) { // TIRED
+        triangle(ctx, xL, finalY, xL + drawW, finalY, xL, finalY + mH);
+        triangle(ctx, xR, finalY, xR + drawW, finalY, xR + drawW, finalY + mH);
+      } else if (rendered.mood === 3) { // HAPPY
+        roundRect(ctx, xL - 2, finalY + mH, drawW + 4, 56, iRadius);
+        roundRect(ctx, xR - 2, finalY + mH, drawW + 4, 56, iRadius);
+      }
+    }
+  }
+}
+
+function roundRect(c, x, y, w, h, r) {
+  if (w <= 0 || h <= 0) return;
+  r = Math.min(r, w / 2, h / 2);
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.lineTo(x + w - r, y);
+  c.quadraticCurveTo(x + w, y, x + w, y + r);
+  c.lineTo(x + w, y + h - r);
+  c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  c.lineTo(x + r, y + h);
+  c.quadraticCurveTo(x, y + h, x, y + h - r);
+  c.lineTo(x, y + r);
+  c.quadraticCurveTo(x, y, x + r, y);
+  c.closePath();
+  c.fill();
+}
+
+function triangle(c, x1, y1, x2, y2, x3, y3) {
+  c.beginPath();
+  c.moveTo(x1, y1);
+  c.lineTo(x2, y2);
+  c.lineTo(x3, y3);
+  c.closePath();
+  c.fill();
+}
+
+// =============================================================================
+// UI CONTROLS
+// =============================================================================
+function updateParam() {
+  params.x = +document.getElementById('sX').value;
+  params.y = +document.getElementById('sY').value;
+  params.w = +document.getElementById('sW').value;
+  params.h = +document.getElementById('sH').value;
+  params.radius = +document.getElementById('sR').value;
+  params.space = +document.getElementById('sS').value;
+  params.flickerAmp = +document.getElementById('sFA').value;
+
+  document.getElementById('vX').textContent = params.x;
+  document.getElementById('vY').textContent = params.y;
+  document.getElementById('vW').textContent = params.w;
+  document.getElementById('vH').textContent = params.h;
+  document.getElementById('vR').textContent = params.radius;
+  document.getElementById('vS').textContent = params.space;
+  document.getElementById('vFA').textContent = params.flickerAmp;
+}
+
+function setSliders() {
+  document.getElementById('sX').value = params.x;
+  document.getElementById('sY').value = params.y;
+  document.getElementById('sW').value = params.w;
+  document.getElementById('sH').value = params.h;
+  document.getElementById('sR').value = params.radius;
+  document.getElementById('sS').value = params.space;
+  document.getElementById('sFA').value = params.flickerAmp;
+  updateParam();
+  updateMoodButtons();
+  updateEffectButtons();
+}
+
+function setMood(m) {
+  params.mood = m;
+  updateMoodButtons();
+}
+
+function updateMoodButtons() {
+  document.querySelectorAll('[data-mood]').forEach(b => {
+    b.classList.toggle('active', +b.dataset.mood === params.mood);
+  });
+}
+
+function setPos(x, y) {
+  params.x = x; params.y = y;
+  setSliders();
+}
+
+function toggleFlicker() {
+  params.flicker = !params.flicker;
+  updateEffectButtons();
+}
+function toggleCyclops() {
+  params.cyclops = !params.cyclops;
+  updateEffectButtons();
+}
+function toggleCurious() {
+  params.curious = !params.curious;
+  updateEffectButtons();
+}
+
+function updateEffectButtons() {
+  document.getElementById('btnFlicker').classList.toggle('active', params.flicker);
+  document.getElementById('btnCyclops').classList.toggle('active', params.cyclops);
+  document.getElementById('btnCurious').classList.toggle('active', params.curious);
+  document.getElementById('flickerAmpRow').style.display = params.flicker ? 'flex' : 'none';
+}
+
+// =============================================================================
+// KEYFRAME SYSTEM
+// =============================================================================
+function captureKF(timeMs) {
+  return {
+    t: Math.round(timeMs),
+    x: params.x, y: params.y,
+    w: params.w, h: params.h,
+    r: params.radius, s: params.space,
+    mood: params.mood,
+    flicker: params.flicker, fa: params.flickerAmp,
+    cyclops: params.cyclops, curious: params.curious
+  };
+}
+
+function applyKF(kf) {
+  params.x = kf.x; params.y = kf.y;
+  params.w = kf.w; params.h = kf.h;
+  params.radius = kf.r; params.space = kf.s;
+  params.mood = kf.mood;
+  params.flicker = kf.flicker; params.flickerAmp = kf.fa;
+  params.cyclops = kf.cyclops; params.curious = kf.curious;
+  setSliders();
+}
+
+function addKeyframe() {
+  const expr = expressions[selectedExpr];
+  const t = isRecording ? (Date.now() - recordStart) : (expr.keyframes.length === 0 ? 0 : 3000);
+  const kf = captureKF(Math.min(t, 3000));
+  expr.keyframes.push(kf);
+  expr.keyframes.sort((a, b) => a.t - b.t);
+  refreshKFList();
+  refreshExprGrid();
+}
+
+function clearKeyframes() {
+  expressions[selectedExpr].keyframes = [];
+  refreshKFList();
+  refreshExprGrid();
+}
+
+function deleteKF(idx) {
+  expressions[selectedExpr].keyframes.splice(idx, 1);
+  refreshKFList();
+  refreshExprGrid();
+}
+
+function refreshKFList() {
+  const expr = expressions[selectedExpr];
+  const el = document.getElementById('kfList');
+  document.getElementById('kfCount').textContent = expr.keyframes.length;
+  document.getElementById('statusKF').textContent = expr.keyframes.length;
+
+  if (expr.keyframes.length === 0) {
+    el.innerHTML = '<div style="font-size:0.6em;color:#666;padding:4px;">Aucun keyframe. Utilise + KF ou REC.</div>';
+    return;
+  }
+
+  el.innerHTML = expr.keyframes.map((kf, i) =>
+    `<div style="display:flex;align-items:center;gap:4px;padding:2px 0;border-bottom:1px solid #1e1e2e;">
+      <span style="font-size:0.6em;color:#00ff88;width:40px;">${(kf.t/1000).toFixed(1)}s</span>
+      <span style="font-size:0.55em;color:#666;">x${kf.x} y${kf.y} ${kf.w}x${kf.h} m${kf.mood}</span>
+      <button class="btn" style="font-size:0.5em;padding:1px 4px;margin-left:auto;" onclick="applyKF(expressions[${selectedExpr}].keyframes[${i}])">◎</button>
+      <button class="btn" style="font-size:0.5em;padding:1px 4px;color:#ff4444;" onclick="deleteKF(${i})">✕</button>
+    </div>`
+  ).join('');
+
+  updateTimelineMarkers();
+}
+
+function updateTimelineMarkers() {
+  const el = document.getElementById('timelineMarkers');
+  const expr = expressions[selectedExpr];
+  el.innerHTML = expr.keyframes.map(kf =>
+    `<div class="timeline-kf-marker" style="left:${(kf.t / 3000) * 100}%;"></div>`
+  ).join('');
+}
+
+// =============================================================================
+// RECORDING
+// =============================================================================
+function toggleRecord() {
+  if (isRecording) {
+    stopRecord();
+  } else {
+    startRecord();
+  }
+}
+
+function startRecord() {
+  isRecording = true;
+  recordStart = Date.now();
+  expressions[selectedExpr].keyframes = [];
+  addKeyframe(); // First KF at t=0
+  document.getElementById('btnRecord').classList.add('active');
+  document.getElementById('canvasWrap').classList.add('recording');
+  document.getElementById('statusMode').textContent = '● REC';
+  document.getElementById('statusMode').style.color = '#ff3366';
+}
+
+function stopRecord() {
+  isRecording = false;
+  addKeyframe(); // Last KF
+  document.getElementById('btnRecord').classList.remove('active');
+  document.getElementById('canvasWrap').classList.remove('recording');
+  document.getElementById('statusMode').textContent = 'EDIT';
+  document.getElementById('statusMode').style.color = '';
+}
+
+// Auto-stop at 3s
+function checkRecordTimeout() {
+  if (isRecording && (Date.now() - recordStart) >= 3000) {
+    stopRecord();
+  }
+}
+
+// =============================================================================
+// PLAYBACK
+// =============================================================================
+function playExpression() {
+  const expr = expressions[selectedExpr];
+  if (expr.keyframes.length < 2) return;
+  isPlaying = true;
+  playStart = Date.now();
+  playKFs = expr.keyframes;
+  document.getElementById('btnPlay').classList.add('active');
+  document.getElementById('statusMode').textContent = '▶ PLAY';
+  document.getElementById('statusMode').style.color = '#00aaff';
+  document.querySelectorAll('.expr-card').forEach(c => c.classList.remove('playing'));
+  document.querySelector(`.expr-card[data-idx="${selectedExpr}"]`)?.classList.add('playing');
+}
+
+function stopPlayback() {
+  isPlaying = false;
+  document.getElementById('btnPlay').classList.remove('active');
+  document.getElementById('statusMode').textContent = 'EDIT';
+  document.getElementById('statusMode').style.color = '';
+  document.getElementById('timelineProgress').style.width = '0%';
+  document.querySelectorAll('.expr-card').forEach(c => c.classList.remove('playing'));
+}
+
+function updatePlayback() {
+  if (!isPlaying) return;
+  const elapsed = Date.now() - playStart;
+  const lastT = playKFs[playKFs.length - 1].t;
+
+  if (elapsed >= lastT) {
+    applyKF(playKFs[playKFs.length - 1]);
+    stopPlayback();
+    return;
+  }
+
+  // Progress bar
+  document.getElementById('timelineProgress').style.width = (elapsed / 3000 * 100) + '%';
+  document.getElementById('timeDisplay').textContent = (elapsed / 1000).toFixed(2) + 's';
+
+  // Interpolation
+  let kfA = 0, kfB = 1;
+  for (let i = 0; i < playKFs.length - 1; i++) {
+    if (elapsed >= playKFs[i].t && elapsed < playKFs[i + 1].t) {
+      kfA = i; kfB = i + 1; break;
+    }
+  }
+
+  const a = playKFs[kfA], b = playKFs[kfB];
+  let t = (elapsed - a.t) / (b.t - a.t);
+  t = t * t * (3 - 2 * t); // smoothstep
+
+  params.x = Math.round(a.x + (b.x - a.x) * t);
+  params.y = Math.round(a.y + (b.y - a.y) * t);
+  params.w = Math.round(a.w + (b.w - a.w) * t);
+  params.h = Math.round(a.h + (b.h - a.h) * t);
+  params.radius = Math.round(a.r + (b.r - a.r) * t);
+  params.space = Math.round(a.s + (b.s - a.s) * t);
+  params.mood = t < 0.5 ? a.mood : b.mood;
+  params.flicker = t < 0.5 ? a.flicker : b.flicker;
+  params.flickerAmp = t < 0.5 ? a.fa : b.fa;
+  params.cyclops = t < 0.5 ? a.cyclops : b.cyclops;
+  params.curious = t < 0.5 ? a.curious : b.curious;
+
+  setSliders();
+}
+
+// =============================================================================
+// QUICK ANIMATIONS (auto-generate keyframes)
+// =============================================================================
+function quickAnim(type) {
+  const d = { x:64, y:92, w:56, h:56, r:16, s:24, mood:0, flicker:false, fa:0, cyclops:false, curious:false };
+  const kfs = [];
+
+  if (type === 'blink') {
+    kfs.push({...d, t:0}, {...d, t:500, h:0}, {...d, t:1000}, {...d, t:3000});
+  } else if (type === 'look_lr') {
+    kfs.push({...d, t:0}, {...d, t:400, x:42}, {...d, t:800, x:85}, {...d, t:1200, x:42}, {...d, t:2000, x:64}, {...d, t:3000});
+  } else if (type === 'look_ud') {
+    kfs.push({...d, t:0}, {...d, t:500, y:70}, {...d, t:1000, y:110}, {...d, t:1500, y:70}, {...d, t:2000}, {...d, t:3000});
+  } else if (type === 'surprise') {
+    kfs.push({...d, t:0}, {...d, t:200, w:75, h:75, r:20, s:30, y:70}, {...d, t:2000, w:75, h:75, r:20, s:30, y:70}, {...d, t:3000});
+  } else if (type === 'laugh') {
+    kfs.push({...d, t:0, mood:3}, {...d, t:400, mood:3, y:85}, {...d, t:700, mood:3, y:98}, {...d, t:1000, mood:3, y:85}, {...d, t:1300, mood:3, y:98}, {...d, t:2000, mood:3}, {...d, t:3000});
+  } else if (type === 'angry') {
+    kfs.push({...d, t:0}, {...d, t:400, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:2600, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:3000});
+  }
+
+  expressions[selectedExpr].keyframes = kfs;
+  refreshKFList();
+  refreshExprGrid();
+  playExpression();
+}
+
+// =============================================================================
+// EXPRESSIONS GRID
+// =============================================================================
+function selectExpr(idx) {
+  selectedExpr = idx;
+  document.querySelectorAll('.expr-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector(`.expr-card[data-idx="${idx}"]`)?.classList.add('selected');
+  document.getElementById('statusExpr').textContent = `#${idx + 1}`;
+  refreshKFList();
+  // Load first KF
+  const expr = expressions[idx];
+  if (expr.keyframes.length > 0) applyKF(expr.keyframes[0]);
+}
+
+function refreshExprGrid() {
+  const grid = document.getElementById('exprGrid');
+  grid.innerHTML = expressions.map((expr, i) => {
+    const hasData = expr.keyframes.length > 0;
+    const isSelected = i === selectedExpr;
+    return `
+      <div class="expr-card ${hasData ? 'has-data' : ''} ${isSelected ? 'selected' : ''}" data-idx="${i}" onclick="selectExpr(${i})">
+        <div class="expr-header">
+          <span class="expr-id">#${String(i + 1).padStart(2, '0')}</span>
+          <span style="font-size:0.55em;color:#666;">${expr.keyframes.length} KF</span>
+        </div>
+        <div class="expr-name">
+          <input value="${expr.name}" onchange="expressions[${i}].name=this.value;refreshExprGrid()" onclick="event.stopPropagation()">
+        </div>
+        <div class="expr-kf-bar">
+          ${expr.keyframes.map(kf => `<div class="expr-kf-dot" style="left:${(kf.t/3000)*100}%"></div>`).join('')}
+        </div>
+        <div class="expr-actions">
+          <button class="btn" onclick="event.stopPropagation();selectedExpr=${i};playExpression()">▶</button>
+          <button class="btn" onclick="event.stopPropagation();duplicateExpr(${i})">⧉</button>
+          <button class="btn" style="color:#ff4444" onclick="event.stopPropagation();expressions[${i}].keyframes=[];refreshExprGrid();if(selectedExpr===${i})refreshKFList();">✕</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function duplicateExpr(from) {
+  const empty = expressions.findIndex((e, i) => i > from && e.keyframes.length === 0);
+  if (empty === -1) return;
+  expressions[empty].keyframes = JSON.parse(JSON.stringify(expressions[from].keyframes));
+  expressions[empty].name = expressions[from].name + ' (copie)';
+  refreshExprGrid();
+}
+
+// =============================================================================
+// EXPORT
+// =============================================================================
+function exportArduino() {
+  let code = '// Auto-generated by IT-BOBD Eye Expression Editor\n';
+  code += '// Paste into RoboEyes_Expressions.ino\n\n';
+  code += 'const Expression EXPRESSIONS[] = {\n';
+
+  expressions.forEach((expr, i) => {
+    if (expr.keyframes.length === 0) return;
+    const name = expr.name.replace(/[^a-zA-Z0-9]/g, '') || `Expr${i+1}`;
+    code += `\n  // ${i+1}: ${expr.name}\n`;
+    code += `  {"${name}", ${expr.keyframes.length}, {\n`;
+    expr.keyframes.forEach(kf => {
+      code += `    {${kf.t}, ${kf.x}.0, ${kf.y}.0, ${kf.w}.0, ${kf.h}.0, ${kf.r}.0, ${kf.s}.0, ${kf.mood}, ${kf.flicker}, ${kf.fa}, ${kf.cyclops}, ${kf.curious}},\n`;
+    });
+    code += '  }},\n';
+  });
+
+  code += '};\n\nconst int NUM_EXPRESSIONS = ' + expressions.filter(e => e.keyframes.length > 0).length + ';\n';
+
+  downloadFile('EXPRESSIONS_generated.ino', code);
+}
+
+function exportJSON() {
+  const data = JSON.stringify(expressions, null, 2);
+  downloadFile('itbobd_expressions.json', data);
+}
+
+function importJSON() {
+  document.getElementById('fileInput').click();
+}
+
+function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data) && data.length === 40) {
+        expressions = data;
+        refreshExprGrid();
+        selectExpr(0);
+      }
+    } catch(err) { alert('Fichier JSON invalide'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function downloadFile(name, content) {
+  const blob = new Blob([content], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+}
+
+// =============================================================================
+// MAIN LOOP
+// =============================================================================
+function mainLoop() {
+  checkRecordTimeout();
+  updatePlayback();
+  drawEyes();
+  requestAnimationFrame(mainLoop);
+}
+
+// Init
+refreshExprGrid();
+selectExpr(0);
+setSliders();
+mainLoop();
+</script>
+</body>
+</html>
