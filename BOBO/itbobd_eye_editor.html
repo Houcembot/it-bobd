@@ -681,8 +681,8 @@ function applyKF(kf) {
 
 function addKeyframe() {
   const expr = expressions[selectedExpr];
-  const t = isRecording ? (Date.now() - recordStart) : (expr.keyframes.length === 0 ? 0 : 3000);
-  const kf = captureKF(Math.min(t, 3000));
+  const t = isRecording ? (Date.now() - recordStart) : (expr.keyframes.length === 0 ? 0 : 15000);
+  const kf = captureKF(Math.min(t, 15000));
   expr.keyframes.push(kf);
   expr.keyframes.sort((a, b) => a.t - b.t);
   refreshKFList();
@@ -728,7 +728,7 @@ function updateTimelineMarkers() {
   const el = document.getElementById('timelineMarkers');
   const expr = expressions[selectedExpr];
   el.innerHTML = expr.keyframes.map(kf =>
-    `<div class="timeline-kf-marker" style="left:${(kf.t / 3000) * 100}%;"></div>`
+    `<div class="timeline-kf-marker" style="left:${(kf.t / 15000) * 100}%;"></div>`
   ).join('');
 }
 
@@ -765,7 +765,7 @@ function stopRecord() {
 
 // Auto-stop at 3s
 function checkRecordTimeout() {
-  if (isRecording && (Date.now() - recordStart) >= 3000) {
+  if (isRecording && (Date.now() - recordStart) >= 15000) {
     stopRecord();
   }
 }
@@ -807,7 +807,7 @@ function updatePlayback() {
   }
 
   // Progress bar
-  document.getElementById('timelineProgress').style.width = (elapsed / 3000 * 100) + '%';
+  document.getElementById('timelineProgress').style.width = (elapsed / 15000 * 100) + '%';
   document.getElementById('timeDisplay').textContent = (elapsed / 1000).toFixed(2) + 's';
 
   // Interpolation
@@ -845,17 +845,17 @@ function quickAnim(type) {
   const kfs = [];
 
   if (type === 'blink') {
-    kfs.push({...d, t:0}, {...d, t:500, h:0}, {...d, t:1000}, {...d, t:3000});
+    kfs.push({...d, t:0}, {...d, t:500, h:0}, {...d, t:1000}, {...d, t:15000});
   } else if (type === 'look_lr') {
-    kfs.push({...d, t:0}, {...d, t:400, x:42}, {...d, t:800, x:85}, {...d, t:1200, x:42}, {...d, t:2000, x:64}, {...d, t:3000});
+    kfs.push({...d, t:0}, {...d, t:400, x:42}, {...d, t:800, x:85}, {...d, t:1200, x:42}, {...d, t:2000, x:64}, {...d, t:15000});
   } else if (type === 'look_ud') {
-    kfs.push({...d, t:0}, {...d, t:500, y:70}, {...d, t:1000, y:110}, {...d, t:1500, y:70}, {...d, t:2000}, {...d, t:3000});
+    kfs.push({...d, t:0}, {...d, t:500, y:70}, {...d, t:1000, y:110}, {...d, t:1500, y:70}, {...d, t:2000}, {...d, t:15000});
   } else if (type === 'surprise') {
-    kfs.push({...d, t:0}, {...d, t:200, w:75, h:75, r:20, s:30, y:70}, {...d, t:2000, w:75, h:75, r:20, s:30, y:70}, {...d, t:3000});
+    kfs.push({...d, t:0}, {...d, t:200, w:75, h:75, r:20, s:30, y:70}, {...d, t:2000, w:75, h:75, r:20, s:30, y:70}, {...d, t:15000});
   } else if (type === 'laugh') {
-    kfs.push({...d, t:0, mood:3}, {...d, t:400, mood:3, y:85}, {...d, t:700, mood:3, y:98}, {...d, t:1000, mood:3, y:85}, {...d, t:1300, mood:3, y:98}, {...d, t:2000, mood:3}, {...d, t:3000});
+    kfs.push({...d, t:0, mood:3}, {...d, t:400, mood:3, y:85}, {...d, t:700, mood:3, y:98}, {...d, t:1000, mood:3, y:85}, {...d, t:1300, mood:3, y:98}, {...d, t:2000, mood:3}, {...d, t:15000});
   } else if (type === 'angry') {
-    kfs.push({...d, t:0}, {...d, t:400, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:2600, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:3000});
+    kfs.push({...d, t:0}, {...d, t:400, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:2600, mood:2, w:60, h:48, r:8, s:16, flicker:true, fa:3}, {...d, t:15000});
   }
 
   expressions[selectedExpr].keyframes = kfs;
@@ -893,7 +893,7 @@ function refreshExprGrid() {
           <input value="${expr.name}" onchange="expressions[${i}].name=this.value;refreshExprGrid()" onclick="event.stopPropagation()">
         </div>
         <div class="expr-kf-bar">
-          ${expr.keyframes.map(kf => `<div class="expr-kf-dot" style="left:${(kf.t/3000)*100}%"></div>`).join('')}
+          ${expr.keyframes.map(kf => `<div class="expr-kf-dot" style="left:${(kf.t/15000)*100}%"></div>`).join('')}
         </div>
         <div class="expr-actions">
           <button class="btn" onclick="event.stopPropagation();selectedExpr=${i};playExpression()">▶</button>
