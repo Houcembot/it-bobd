@@ -32,393 +32,192 @@
     min-height: 100vh;
   }
 
-  /* HEADER */
   .header {
     background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-deep) 100%);
     border-bottom: 1px solid var(--border);
     padding: 16px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 100;
   }
   .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
   }
-  .header-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .header-title { display: flex; align-items: center; gap: 10px; }
   .header h1 {
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 18px; font-weight: 800;
     background: linear-gradient(135deg, var(--blue), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.03em;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .header-subtitle {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-  .stats-bar {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-  .stat {
-    text-align: center;
-  }
-  .stat-value {
-    font-size: 20px;
-    font-weight: 800;
-  }
-  .stat-label {
-    font-size: 9px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .stat-divider {
-    width: 1px;
-    height: 30px;
-    background: var(--border);
-  }
-  .update-time {
-    font-size: 10px;
-    color: var(--text-muted);
-    text-align: right;
-  }
+  .header-subtitle { font-size: 11px; color: var(--text-muted); }
+  .stats-bar { display: flex; gap: 16px; align-items: center; }
+  .stat { text-align: center; }
+  .stat-value { font-size: 20px; font-weight: 800; }
+  .stat-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
+  .stat-divider { width: 1px; height: 30px; background: var(--border); }
+  .update-time { font-size: 10px; color: var(--text-muted); }
 
-  /* MAIN */
-  .main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  /* SECTION TITLES */
+  .main { max-width: 1200px; margin: 0 auto; padding: 20px; }
   .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 14px;
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
   }
 
-  /* BOT CARDS */
+  /* AUTH BAR */
+  .auth-bar {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .auth-bar input {
+    flex: 1; min-width: 200px;
+    background: var(--bg-hover); border: 1px solid var(--border);
+    color: var(--text-primary); padding: 8px 12px; border-radius: 6px;
+    font-family: inherit; font-size: 12px;
+  }
+  .auth-bar input::placeholder { color: var(--text-muted); }
+  .auth-bar button {
+    background: var(--blue); color: white; border: none;
+    padding: 8px 16px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+  }
+  .auth-bar .status {
+    font-size: 11px; display: flex; align-items: center; gap: 4px;
+  }
+  .auth-bar .status.ok { color: var(--green); }
+  .auth-bar .status.no { color: var(--text-muted); }
+
+  /* BOTS */
   .bots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 14px;
-    margin-bottom: 28px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-bottom: 28px;
   }
   .bot-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; position: relative; overflow: hidden;
   }
-  .bot-card:hover {
-    border-color: var(--border-light);
-  }
-  .bot-card-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-  }
+  .bot-card-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .bot-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
   }
-  .bot-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .bot-info { display: flex; align-items: center; gap: 10px; }
   .bot-icon { font-size: 24px; }
-  .bot-name {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .bot-role {
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-  .bot-status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-  .bot-current-task {
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-  .bot-task-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-  .bot-idle {
-    padding: 12px;
-    border-radius: 8px;
-    background: var(--bg-hover);
-    color: var(--text-muted);
-    font-size: 12px;
-    text-align: center;
-  }
-  .bot-done-list {
-    max-height: 90px;
-    overflow-y: auto;
-  }
-  .bot-done-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
+  .bot-name { font-size: 16px; font-weight: 700; }
+  .bot-role { font-size: 11px; color: var(--text-secondary); }
+  .bot-status-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .bot-current-task { border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; }
+  .bot-task-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .bot-idle { padding: 12px; border-radius: 8px; background: var(--bg-hover); color: var(--text-muted); font-size: 12px; text-align: center; }
+  .bot-done-list { max-height: 90px; overflow-y: auto; }
+  .bot-done-item { display: flex; align-items: center; gap: 6px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); }
 
   /* TABS */
-  .tabs {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .project-tabs {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+  .tabs { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .project-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
   .tab-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    padding: 7px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
-    font-family: inherit;
-    transition: all 0.15s;
+    background: transparent; border: 1px solid var(--border); color: var(--text-secondary);
+    padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit;
   }
-  .tab-btn.active {
-    background: var(--bg-hover);
-    border-color: var(--border-light);
-    color: var(--text-primary);
-  }
-  .tab-badge {
-    margin-left: 6px;
-    background: var(--border-light);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 10px;
-  }
-  .view-toggle {
-    display: flex;
-    gap: 3px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    padding: 3px;
-  }
+  .tab-btn.active { background: var(--bg-hover); border-color: var(--border-light); color: var(--text-primary); }
+  .tab-badge { margin-left: 6px; background: var(--border-light); padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+  .view-toggle { display: flex; gap: 3px; background: var(--bg-card); border-radius: 8px; padding: 3px; }
   .view-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    padding: 5px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 11px;
-    font-family: inherit;
-    transition: all 0.15s;
+    background: transparent; border: none; color: var(--text-muted);
+    padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit;
   }
-  .view-btn.active {
-    background: var(--bg-hover);
-    color: var(--text-primary);
-  }
+  .view-btn.active { background: var(--bg-hover); color: var(--text-primary); }
 
   /* PROJECT BAR */
   .project-bar {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
   }
-  .project-name {
-    font-weight: 700;
-    font-size: 15px;
-  }
-  .project-desc {
-    color: var(--text-secondary);
-    font-size: 13px;
-  }
-  .project-phase {
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    white-space: nowrap;
-  }
+  .project-name { font-weight: 700; font-size: 15px; }
+  .project-desc { color: var(--text-secondary); font-size: 13px; }
+  .project-phase { padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 500; }
 
   /* KANBAN */
-  .kanban {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  @media (max-width: 768px) {
-    .kanban {
-      grid-template-columns: 1fr;
-    }
-  }
-  .kanban-col-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    padding: 0 4px;
-  }
-  .kanban-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-  .kanban-col-title {
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .kanban-count {
-    background: var(--bg-hover);
-    color: var(--text-secondary);
-    font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 10px;
-  }
-  .kanban-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 768px) { .kanban { grid-template-columns: 1fr; } }
+  .kanban-col-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .kanban-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .kanban-col-title { font-size: 13px; font-weight: 600; }
+  .kanban-count { background: var(--bg-hover); color: var(--text-secondary); font-size: 11px; padding: 2px 7px; border-radius: 10px; }
+  .kanban-cards { display: flex; flex-direction: column; gap: 8px; }
   .kanban-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 11px 13px;
-    border-left: 3px solid var(--border);
-    transition: border-color 0.15s;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 11px 13px; border-left: 3px solid var(--border);
+    cursor: pointer; transition: all 0.15s;
   }
-  .kanban-card:hover {
-    border-color: var(--border-light);
-  }
-  .kanban-card-title {
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .kanban-card-bot {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-weight: 500;
-  }
-  .kanban-empty {
-    border: 1px dashed var(--border);
-    border-radius: 8px;
-    padding: 18px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 12px;
-  }
+  .kanban-card:hover { border-color: var(--border-light); background: var(--bg-hover); }
+  .kanban-card-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .kanban-card-bot { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+  .kanban-empty { border: 1px dashed var(--border); border-radius: 8px; padding: 18px; text-align: center; color: var(--text-muted); font-size: 12px; }
 
-  /* AGENT VIEW */
-  .agent-section {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 12px;
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(1,4,9,0.85); z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
   }
-  .agent-section-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+  .modal {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px; width: 100%; max-width: 480px;
+    max-height: 80vh; overflow-y: auto;
   }
-  .agent-tasks-wrap {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .modal h3 { font-size: 16px; margin-bottom: 16px; }
+  .modal-close {
+    float: right; background: none; border: none; color: var(--text-muted);
+    font-size: 18px; cursor: pointer; padding: 4px 8px;
   }
-  .agent-task-chip {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 12px;
-    font-size: 12px;
+  .modal label { display: block; font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; margin-top: 14px; }
+  .modal select, .modal textarea, .modal input[type="text"] {
+    width: 100%; background: var(--bg-hover); border: 1px solid var(--border);
+    color: var(--text-primary); padding: 10px 12px; border-radius: 8px;
+    font-family: inherit; font-size: 13px; resize: vertical;
   }
+  .modal select { cursor: pointer; }
+  .modal textarea { min-height: 80px; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+  .btn {
+    padding: 8px 18px; border-radius: 8px; border: none;
+    font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-danger { background: var(--red); color: white; }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* LOADING */
-  .loading {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-secondary);
+  /* ADD TASK */
+  .add-task-btn {
+    border: 1px dashed var(--border); border-radius: 8px;
+    padding: 10px; text-align: center; color: var(--text-muted);
+    font-size: 12px; cursor: pointer; font-family: inherit;
+    background: transparent; width: 100; transition: all 0.15s;
   }
+  .add-task-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 20px; right: 20px; z-index: 300;
+    padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    animation: slideUp 0.3s ease; font-family: inherit;
+  }
+  .toast.success { background: #0f291a; border: 1px solid var(--green); color: var(--green); }
+  .toast.error { background: #2d0a0a; border: 1px solid var(--red); color: var(--red); }
+  .toast.info { background: #0a1929; border: 1px solid var(--blue); color: var(--blue); }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .loading { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
   .loading-spinner {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 3px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-bottom: 12px;
+    display: inline-block; width: 30px; height: 30px;
+    border: 3px solid var(--border); border-top-color: var(--blue);
+    border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .error-box {
-    background: #1c0a0a;
-    border: 1px solid var(--red);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    color: var(--red);
-    margin: 40px 20px;
-  }
-
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg-deep); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -426,14 +225,11 @@
 </head>
 <body>
 
-<div id="app">
-  <div class="loading">
-    <div class="loading-spinner"></div>
-    <div>Chargement du dashboard...</div>
-  </div>
-</div>
+<div id="app"><div class="loading"><div class="loading-spinner"></div><div>Chargement...</div></div></div>
 
 <script>
+const GITHUB_OWNER = "Houcembot";
+const GITHUB_REPO = "it-bobd";
 const BOT_CONFIG = {
   maxbot: { icon: "🎯", color: "#3B82F6" },
   rocbot: { icon: "⚙️", color: "#10B981" },
@@ -444,178 +240,178 @@ let state = {
   data: null,
   activeProject: null,
   view: "kanban",
-  error: null,
+  modal: null,     // { task, projectId } or { newTask: true, projectId }
+  ghToken: localStorage.getItem("gh_token_bf") || "",
+  ghConnected: false,
+  saving: false,
 };
 
+// ─── DATA ───
 async function loadData() {
   try {
-    const resp = await fetch("dashboard_data.json?" + Date.now());
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    state.data = await resp.json();
-    if (state.data.projects.length > 0 && !state.activeProject) {
-      state.activeProject = state.data.projects[0].id;
-    }
+    const r = await fetch("dashboard_data.json?" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    state.data = await r.json();
+    if (!state.activeProject && state.data.projects.length) state.activeProject = state.data.projects[0].id;
     render();
-  } catch (e) {
-    state.error = e.message;
-    render();
+  } catch(e) {
+    document.getElementById("app").innerHTML = `<div style="text-align:center;padding:60px;color:#F85149">
+      <div style="font-size:24px;margin-bottom:10px">⚠️</div>Impossible de charger dashboard_data.json<br><small style="color:#484F58">${e.message}</small></div>`;
   }
 }
 
 function getProject() {
-  if (!state.data) return null;
-  return state.data.projects.find(p => p.id === state.activeProject) || state.data.projects[0];
+  return state.data?.projects.find(p => p.id === state.activeProject) || state.data?.projects[0];
 }
-
 function getAllTasks() {
-  if (!state.data) return [];
-  return state.data.projects.flatMap(p => p.tasks || []);
+  return state.data?.projects.flatMap(p => p.tasks || []) || [];
 }
 
+// ─── GITHUB API ───
+async function testGithubToken(token) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`, {
+      headers: { Authorization: `token ${token}` }
+    });
+    return r.ok;
+  } catch { return false; }
+}
+
+async function createGithubIssue(title, body, labels) {
+  if (!state.ghToken) { showToast("Token GitHub requis", "error"); return null; }
+  try {
+    const r = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues`, {
+      method: "POST",
+      headers: { Authorization: `token ${state.ghToken}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ title, body, labels }),
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return await r.json();
+  } catch(e) {
+    showToast("Erreur GitHub: " + e.message, "error");
+    return null;
+  }
+}
+
+// ─── TOAST ───
+function showToast(msg, type="info") {
+  const t = document.createElement("div");
+  t.className = "toast " + type;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ─── RENDER ───
 function render() {
-  const app = document.getElementById("app");
-
-  if (state.error) {
-    app.innerHTML = `
-      <div class="error-box">
-        <div style="font-size:24px;margin-bottom:10px">⚠️</div>
-        <div style="font-weight:700;margin-bottom:6px">Impossible de charger les données</div>
-        <div style="font-size:12px;color:#8B949E">${state.error}</div>
-        <div style="font-size:11px;color:#484F58;margin-top:10px">Vérifiez que dashboard_data.json est présent</div>
-      </div>`;
-    return;
-  }
-  if (!state.data) {
-    app.innerHTML = '<div class="loading"><div class="loading-spinner"></div><div>Chargement...</div></div>';
-    return;
-  }
-
+  if (!state.data) return;
   const allTasks = getAllTasks();
-  const doneCount = allTasks.filter(t => t.status === "done").length;
-  const doingCount = allTasks.filter(t => t.status === "doing").length;
-  const todoCount = allTasks.length - doneCount - doingCount;
+  const done = allTasks.filter(t => t.status === "done").length;
+  const doing = allTasks.filter(t => t.status === "doing").length;
+  const todo = allTasks.length - done - doing;
   const project = getProject();
 
-  app.innerHTML = `
-    ${renderHeader(doneCount, doingCount, todoCount)}
+  document.getElementById("app").innerHTML = `
+    ${renderHeader(done, doing, todo)}
     <div class="main">
+      ${renderAuth()}
       ${renderBots(allTasks)}
       ${renderTabs()}
       ${project ? renderProjectBar(project) : ""}
       ${project ? (state.view === "kanban" ? renderKanban(project) : renderAgentView(project)) : ""}
     </div>
+    ${state.modal ? renderModal() : ""}
   `;
-
   bindEvents();
 }
 
 function renderHeader(done, doing, todo) {
-  return `
-    <div class="header">
-      <div class="header-inner">
-        <div class="header-title">
-          <span style="font-size:24px">🤖</span>
-          <div>
-            <h1>BOTFLEET DASHBOARD</h1>
-            <div class="header-subtitle">Houcem — Infrastructure Multi-Agents IA</div>
-          </div>
-        </div>
-        <div class="stats-bar">
-          <div class="stat"><div class="stat-value" style="color:var(--green)">${done}</div><div class="stat-label">Faites</div></div>
-          <div class="stat-divider"></div>
-          <div class="stat"><div class="stat-value" style="color:var(--orange)">${doing}</div><div class="stat-label">En cours</div></div>
-          <div class="stat-divider"></div>
-          <div class="stat"><div class="stat-value" style="color:var(--text-secondary)">${todo}</div><div class="stat-label">À faire</div></div>
-        </div>
-        <div class="update-time">Mis à jour : ${state.data.generated_at || "—"}</div>
-      </div>
+  return `<div class="header"><div class="header-inner">
+    <div class="header-title"><span style="font-size:24px">🤖</span><div>
+      <h1>BOTFLEET DASHBOARD</h1>
+      <div class="header-subtitle">Houcem — Infrastructure Multi-Agents IA</div>
+    </div></div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-value" style="color:var(--green)">${done}</div><div class="stat-label">Faites</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-value" style="color:var(--orange)">${doing}</div><div class="stat-label">En cours</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-value" style="color:var(--text-secondary)">${todo}</div><div class="stat-label">À faire</div></div>
+    </div>
+    <div class="update-time">Mis à jour : ${state.data.generated_at || "—"}</div>
+  </div></div>`;
+}
+
+function renderAuth() {
+  if (state.ghConnected) {
+    return `<div class="auth-bar">
+      <span class="status ok">✅ GitHub connecté</span>
+      <span style="flex:1"></span>
+      <button class="btn btn-ghost" onclick="disconnectGh()">Déconnecter</button>
     </div>`;
+  }
+  return `<div class="auth-bar">
+    <span style="font-size:12px;color:var(--text-secondary)">🔑</span>
+    <input type="password" id="gh-token" placeholder="Token GitHub pour éditer (ghp_...)" value="${state.ghToken}">
+    <button class="btn btn-primary" onclick="connectGh()">Connecter</button>
+    <span class="status no">Mode lecture seule</span>
+  </div>`;
 }
 
 function renderBots(allTasks) {
   const bots = state.data.bots;
-  let html = '<div class="section-title">Agents</div><div class="bots-grid">';
-
+  let h = '<div class="section-title">Agents</div><div class="bots-grid">';
   for (const [key, bot] of Object.entries(bots)) {
     const cfg = BOT_CONFIG[key] || { icon: "🤖", color: "#8B949E" };
     const doing = allTasks.filter(t => t.status === "doing" && t.bot === key);
     const done = allTasks.filter(t => t.status === "done" && t.bot === key);
     const isActive = doing.length > 0;
     const isSleep = key === "clobot" && !isActive;
-    const dotColor = isActive ? "var(--green)" : isSleep ? "var(--text-secondary)" : "var(--orange)";
-    const dotShadow = isActive ? "0 0 8px #3FB95088" : "none";
-
-    html += `
-      <div class="bot-card">
-        <div class="bot-card-bar" style="background:${isActive ? cfg.color : 'var(--border)'};box-shadow:${isActive ? '0 0 20px ' + cfg.color + '66' : 'none'}"></div>
-        <div class="bot-card-header">
-          <div class="bot-info">
-            <span class="bot-icon">${cfg.icon}</span>
-            <div>
-              <div class="bot-name">${bot.name}</div>
-              <div class="bot-role">${bot.role} — ${bot.model}</div>
-            </div>
-          </div>
-          <div class="bot-status-dot" style="background:${dotColor};box-shadow:${dotShadow}"></div>
-        </div>`;
-
-    if (doing.length > 0) {
-      html += `<div class="bot-task-label" style="color:${cfg.color}">En cours</div>`;
-      for (const t of doing) {
-        html += `<div class="bot-current-task" style="background:${cfg.color}15;border:1px solid ${cfg.color}33">
-          <div style="font-size:13px;font-weight:500">${t.id} — ${t.title}</div>
-        </div>`;
-      }
+    h += `<div class="bot-card">
+      <div class="bot-card-bar" style="background:${isActive ? cfg.color : 'var(--border)'};box-shadow:${isActive ? '0 0 20px '+cfg.color+'66' : 'none'}"></div>
+      <div class="bot-card-header"><div class="bot-info">
+        <span class="bot-icon">${cfg.icon}</span>
+        <div><div class="bot-name">${bot.name}</div><div class="bot-role">${bot.role} — ${bot.model}</div></div>
+      </div>
+      <div class="bot-status-dot" style="background:${isActive ? 'var(--green)' : isSleep ? 'var(--text-secondary)' : 'var(--orange)'};box-shadow:${isActive ? '0 0 8px #3FB95088' : 'none'}"></div></div>`;
+    if (doing.length) {
+      h += `<div class="bot-task-label" style="color:${cfg.color}">En cours</div>`;
+      for (const t of doing) h += `<div class="bot-current-task" style="background:${cfg.color}15;border:1px solid ${cfg.color}33"><div style="font-size:13px;font-weight:500">${t.id} — ${t.title}</div></div>`;
     } else {
-      html += `<div class="bot-idle">${isSleep ? "😴 En veille — activé sur commande" : "En attente de tâche"}</div>`;
+      h += `<div class="bot-idle">${isSleep ? '😴 En veille' : 'En attente'}</div>`;
     }
-
-    if (done.length > 0) {
-      html += `<div class="bot-task-label" style="color:var(--green);margin-top:10px">Complété (${done.length})</div>
-        <div class="bot-done-list">`;
-      for (const t of done.slice(-4)) {
-        html += `<div class="bot-done-item"><span style="color:var(--green)">✓</span><span>${t.id} — ${t.title}</span></div>`;
-      }
-      html += `</div>`;
+    if (done.length) {
+      h += `<div class="bot-task-label" style="color:var(--green);margin-top:10px">Complété (${done.length})</div><div class="bot-done-list">`;
+      for (const t of done.slice(-3)) h += `<div class="bot-done-item"><span style="color:var(--green)">✓</span><span>${t.id} — ${t.title}</span></div>`;
+      h += '</div>';
     }
-
-    html += `</div>`;
+    h += '</div>';
   }
-  html += '</div>';
-  return html;
+  h += '</div>';
+  return h;
 }
 
 function renderTabs() {
-  const projects = state.data.projects;
-  let tabs = '<div class="tabs"><div class="project-tabs">';
-  for (const p of projects) {
-    const active = p.id === state.activeProject ? "active" : "";
-    const done = (p.tasks || []).filter(t => t.status === "done").length;
-    const total = (p.tasks || []).length;
-    const badge = total > 0 ? `<span class="tab-badge">${done}/${total}</span>` : "";
-    tabs += `<button class="tab-btn ${active}" data-project="${p.id}">${p.name || p.id}${badge}</button>`;
+  let h = '<div class="tabs"><div class="project-tabs">';
+  for (const p of state.data.projects) {
+    const a = p.id === state.activeProject ? "active" : "";
+    const d = (p.tasks||[]).filter(t=>t.status==="done").length;
+    const tot = (p.tasks||[]).length;
+    h += `<button class="tab-btn ${a}" data-project="${p.id}">${p.name||p.id}${tot?`<span class="tab-badge">${d}/${tot}</span>`:""}</button>`;
   }
-  tabs += '</div>';
-  tabs += `<div class="view-toggle">
-    <button class="view-btn ${state.view === 'kanban' ? 'active' : ''}" data-view="kanban">Kanban</button>
-    <button class="view-btn ${state.view === 'agents' ? 'active' : ''}" data-view="agents">Par Agent</button>
+  h += `</div><div class="view-toggle">
+    <button class="view-btn ${state.view==='kanban'?'active':''}" data-view="kanban">Kanban</button>
+    <button class="view-btn ${state.view==='agents'?'active':''}" data-view="agents">Par Agent</button>
   </div></div>`;
-  return tabs;
+  return h;
 }
 
-function renderProjectBar(project) {
-  const isWaiting = (project.phase || "").toLowerCase().includes("attente") || (project.phase || "").toLowerCase().includes("définir");
-  const bgPhase = isWaiting ? "var(--bg-hover)" : "#1C3A5F";
-  const colorPhase = isWaiting ? "var(--text-secondary)" : "#58A6FF";
-  return `
-    <div class="project-bar">
-      <div>
-        <span class="project-name">${project.name || project.id}</span>
-        <span style="color:var(--text-muted);margin:0 8px">—</span>
-        <span class="project-desc">${project.desc || ""}</span>
-      </div>
-      <div class="project-phase" style="background:${bgPhase};color:${colorPhase}">${project.phase || "—"}</div>
-    </div>`;
+function renderProjectBar(p) {
+  const w = (p.phase||"").toLowerCase().match(/attente|définir/);
+  return `<div class="project-bar">
+    <div><span class="project-name">${p.name||p.id}</span><span style="color:var(--text-muted);margin:0 8px">—</span><span class="project-desc">${p.desc||""}</span></div>
+    <div class="project-phase" style="background:${w?'var(--bg-hover)':'#1C3A5F'};color:${w?'var(--text-secondary)':'#58A6FF'}">${p.phase||"—"}</div>
+  </div>`;
 }
 
 function renderKanban(project) {
@@ -624,91 +420,234 @@ function renderKanban(project) {
   const doing = tasks.filter(t => t.status === "doing");
   const done = tasks.filter(t => t.status === "done");
 
-  function col(title, dotColor, items) {
-    let html = `<div>
-      <div class="kanban-col-header">
-        <div class="kanban-dot" style="background:${dotColor}"></div>
-        <span class="kanban-col-title">${title}</span>
-        <span class="kanban-count">${items.length}</span>
-      </div>
-      <div class="kanban-cards">`;
-
-    if (items.length === 0) {
-      html += '<div class="kanban-empty">Aucune tâche</div>';
-    }
+  function col(title, dot, items) {
+    let h = `<div><div class="kanban-col-header">
+      <div class="kanban-dot" style="background:${dot}"></div>
+      <span class="kanban-col-title">${title}</span>
+      <span class="kanban-count">${items.length}</span>
+    </div><div class="kanban-cards">`;
+    if (!items.length) h += '<div class="kanban-empty">Aucune tâche</div>';
     for (const t of items) {
       const cfg = t.bot && BOT_CONFIG[t.bot] ? BOT_CONFIG[t.bot] : null;
-      const borderColor = cfg ? cfg.color : "var(--border)";
-      html += `<div class="kanban-card" style="border-left-color:${borderColor}">
+      const bc = cfg ? cfg.color : "var(--border)";
+      h += `<div class="kanban-card" style="border-left-color:${bc}" onclick="openTask('${project.id}','${t.id}')">
         <div class="kanban-card-title">${t.id} — ${t.title}</div>`;
-      if (cfg) {
-        html += `<div class="kanban-card-bot" style="background:${cfg.color}20;color:${cfg.color}">${cfg.icon} ${state.data.bots[t.bot]?.name || t.bot}</div>`;
-      }
-      html += `</div>`;
+      if (cfg) h += `<div class="kanban-card-bot" style="background:${cfg.color}20;color:${cfg.color}">${cfg.icon} ${state.data.bots[t.bot]?.name||t.bot}</div>`;
+      h += '</div>';
     }
-    html += '</div></div>';
-    return html;
+    if (state.ghConnected && title === "À faire") {
+      h += `<button class="add-task-btn" onclick="openNewTask('${project.id}')">+ Ajouter une tâche</button>`;
+    }
+    h += '</div></div>';
+    return h;
   }
 
   return `<div class="kanban">
-    ${col("À faire", "var(--text-secondary)", todo)}
-    ${col("En cours", "var(--orange)", doing)}
-    ${col("Terminé", "var(--green)", done)}
+    ${col("À faire","var(--text-secondary)",todo)}
+    ${col("En cours","var(--orange)",doing)}
+    ${col("Terminé","var(--green)",done)}
   </div>`;
 }
 
 function renderAgentView(project) {
-  const tasks = project.tasks || [];
-  let html = '';
-
+  let h = '';
   for (const [key, bot] of Object.entries(state.data.bots)) {
     const cfg = BOT_CONFIG[key] || { icon: "🤖", color: "#8B949E" };
-    const botTasks = tasks.filter(t => t.bot === key);
-    if (botTasks.length === 0) continue;
-
-    html += `<div class="agent-section" style="border-color:${cfg.color}22">
-      <div class="agent-section-header">
-        <span>${cfg.icon}</span>
-        <span style="font-weight:700;color:${cfg.color}">${bot.name}</span>
-        <span style="color:var(--text-muted);font-size:11px">— ${botTasks.length} tâches</span>
-      </div>
-      <div class="agent-tasks-wrap">`;
-
-    for (const t of botTasks) {
-      const isDone = t.status === "done";
-      const isDoing = t.status === "doing";
-      const bg = isDone ? "var(--bg-card)" : cfg.color + "10";
-      const border = isDone ? "var(--border)" : cfg.color + "33";
-      const opacity = isDone ? "0.6" : "1";
-      const prefix = isDone ? '<span style="color:var(--green);margin-right:5px">✓</span>' :
-                     isDoing ? `<span style="color:var(--orange);margin-right:5px">●</span>` : "";
-      html += `<div class="agent-task-chip" style="background:${bg};border-color:${border};opacity:${opacity}">
-        ${prefix}${t.id} — ${t.title}
-      </div>`;
+    const bt = (project.tasks||[]).filter(t => t.bot === key);
+    if (!bt.length) continue;
+    h += `<div class="agent-section" style="border:1px solid ${cfg.color}22;background:var(--bg-card);border-radius:10px;padding:14px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span>${cfg.icon}</span><span style="font-weight:700;color:${cfg.color}">${bot.name}</span>
+        <span style="color:var(--text-muted);font-size:11px">— ${bt.length} tâches</span>
+      </div><div style="display:flex;gap:8px;flex-wrap:wrap">`;
+    for (const t of bt) {
+      const isDone = t.status==="done", isDoing = t.status==="doing";
+      const bg = isDone ? "var(--bg-card)" : cfg.color+"10";
+      const bd = isDone ? "var(--border)" : cfg.color+"33";
+      const pre = isDone ? '<span style="color:var(--green);margin-right:5px">✓</span>' : isDoing ? '<span style="color:var(--orange);margin-right:5px">●</span>' : '';
+      h += `<div style="border:1px solid ${bd};border-radius:8px;padding:7px 12px;font-size:12px;background:${bg};opacity:${isDone?0.6:1};cursor:pointer" onclick="openTask('${project.id}','${t.id}')">${pre}${t.id} — ${t.title}</div>`;
     }
-    html += '</div></div>';
+    h += '</div></div>';
   }
-  return html;
+  return h;
 }
 
+function renderModal() {
+  const m = state.modal;
+  if (m.newTask) {
+    return `<div class="modal-overlay" onclick="closeModal(event)"><div class="modal">
+      <button class="modal-close" onclick="state.modal=null;render()">✕</button>
+      <h3>➕ Nouvelle tâche</h3>
+      <label>Titre</label>
+      <input type="text" id="new-title" placeholder="Ex: Rechercher les prix ESP32">
+      <label>Assigner à</label>
+      <select id="new-bot">
+        <option value="">Non assigné</option>
+        <option value="maxbot">🎯 Maxbot</option>
+        <option value="rocbot">⚙️ Rocbot</option>
+        <option value="clobot">🔐 Clobot</option>
+      </select>
+      <label>Remarque</label>
+      <textarea id="new-note" placeholder="Détails, contexte, instructions..."></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="state.modal=null;render()">Annuler</button>
+        <button class="btn btn-primary" onclick="submitNewTask()" ${state.saving?'disabled':''}>
+          ${state.saving ? 'Envoi...' : 'Créer (GitHub Issue)'}
+        </button>
+      </div>
+    </div></div>`;
+  }
+
+  const t = m.task;
+  if (!t) return '';
+  const cfg = t.bot && BOT_CONFIG[t.bot] ? BOT_CONFIG[t.bot] : null;
+
+  return `<div class="modal-overlay" onclick="closeModal(event)"><div class="modal">
+    <button class="modal-close" onclick="state.modal=null;render()">✕</button>
+    <h3>${t.id} — ${t.title}</h3>
+    ${cfg ? `<div style="margin-bottom:12px"><span class="kanban-card-bot" style="background:${cfg.color}20;color:${cfg.color}">${cfg.icon} ${state.data.bots[t.bot]?.name||t.bot}</span></div>` : ''}
+    <label>Statut actuel</label>
+    <div style="padding:8px 12px;background:var(--bg-hover);border-radius:6px;font-size:13px;margin-bottom:4px;color:${t.status==='done'?'var(--green)':t.status==='doing'?'var(--orange)':'var(--text-secondary)'}">
+      ${t.status==='done'?'✅ Terminé':t.status==='doing'?'🔄 En cours':'⬜ À faire'}
+    </div>
+    <label>Changer le statut</label>
+    <select id="edit-status">
+      <option value="todo" ${t.status==='todo'?'selected':''}>⬜ À faire</option>
+      <option value="doing" ${t.status==='doing'?'selected':''}>🔄 En cours</option>
+      <option value="done" ${t.status==='done'?'selected':''}>✅ Terminé</option>
+    </select>
+    <label>Assigner à</label>
+    <select id="edit-bot">
+      <option value="" ${!t.bot?'selected':''}>Non assigné</option>
+      <option value="maxbot" ${t.bot==='maxbot'?'selected':''}>🎯 Maxbot</option>
+      <option value="rocbot" ${t.bot==='rocbot'?'selected':''}>⚙️ Rocbot</option>
+      <option value="clobot" ${t.bot==='clobot'?'selected':''}>🔐 Clobot</option>
+    </select>
+    <label>Ajouter une remarque</label>
+    <textarea id="edit-note" placeholder="Note, instruction, blocage..."></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="state.modal=null;render()">Fermer</button>
+      ${state.ghConnected ? `<button class="btn btn-primary" onclick="submitEdit()" ${state.saving?'disabled':''}>
+        ${state.saving ? 'Envoi...' : 'Envoyer (GitHub Issue)'}
+      </button>` : `<span style="font-size:11px;color:var(--text-muted)">Connecte GitHub pour éditer</span>`}
+    </div>
+  </div></div>`;
+}
+
+// ─── EVENTS ───
 function bindEvents() {
-  document.querySelectorAll("[data-project]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.activeProject = btn.dataset.project;
-      render();
-    });
-  });
-  document.querySelectorAll("[data-view]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.view = btn.dataset.view;
-      render();
-    });
-  });
+  document.querySelectorAll("[data-project]").forEach(b => b.addEventListener("click", () => { state.activeProject = b.dataset.project; render(); }));
+  document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => { state.view = b.dataset.view; render(); }));
 }
 
-// Auto-refresh toutes les 5 minutes
+function closeModal(e) { if (e.target.classList.contains("modal-overlay")) { state.modal = null; render(); } }
+
+window.openTask = function(projectId, taskId) {
+  const p = state.data.projects.find(p => p.id === projectId);
+  const t = p?.tasks.find(t => t.id === taskId);
+  if (t) { state.modal = { task: {...t}, projectId }; render(); }
+};
+
+window.openNewTask = function(projectId) {
+  state.modal = { newTask: true, projectId };
+  render();
+};
+
+window.connectGh = async function() {
+  const token = document.getElementById("gh-token").value.trim();
+  if (!token) { showToast("Entre ton token GitHub", "error"); return; }
+  const ok = await testGithubToken(token);
+  if (ok) {
+    state.ghToken = token;
+    state.ghConnected = true;
+    localStorage.setItem("gh_token_bf", token);
+    showToast("GitHub connecté ✓", "success");
+    render();
+  } else {
+    showToast("Token invalide", "error");
+  }
+};
+
+window.disconnectGh = function() {
+  state.ghToken = "";
+  state.ghConnected = false;
+  localStorage.removeItem("gh_token_bf");
+  render();
+};
+
+window.submitEdit = async function() {
+  const m = state.modal;
+  if (!m?.task) return;
+  const newStatus = document.getElementById("edit-status").value;
+  const newBot = document.getElementById("edit-bot").value;
+  const note = document.getElementById("edit-note").value.trim();
+
+  const statusLabel = { todo: "⬜ À faire", doing: "🔄 En cours", done: "✅ Terminé" };
+  const botName = newBot ? (state.data.bots[newBot]?.name || newBot) : "Non assigné";
+
+  let body = `## Modification demandée par Houcem\n\n`;
+  body += `**Tâche :** ${m.task.id} — ${m.task.title}\n`;
+  body += `**Projet :** ${m.projectId}\n`;
+  body += `**Statut :** ${statusLabel[m.task.status]} → ${statusLabel[newStatus]}\n`;
+  body += `**Assigné à :** ${botName}\n`;
+  if (note) body += `\n**Remarque :**\n${note}\n`;
+  body += `\n---\n_Envoyé depuis le Botfleet Dashboard_`;
+
+  state.saving = true; render();
+  const issue = await createGithubIssue(
+    `[Dashboard] ${m.task.id} — ${m.task.title}`,
+    body,
+    ["dashboard-edit", m.projectId]
+  );
+  state.saving = false;
+
+  if (issue) {
+    showToast(`Issue #${issue.number} créée — Maxbot la traitera`, "success");
+    state.modal = null;
+  }
+  render();
+};
+
+window.submitNewTask = async function() {
+  const title = document.getElementById("new-title").value.trim();
+  const bot = document.getElementById("new-bot").value;
+  const note = document.getElementById("new-note").value.trim();
+  if (!title) { showToast("Titre requis", "error"); return; }
+
+  const botName = bot ? (state.data.bots[bot]?.name || bot) : "Non assigné";
+  let body = `## Nouvelle tâche demandée par Houcem\n\n`;
+  body += `**Titre :** ${title}\n`;
+  body += `**Projet :** ${state.modal.projectId}\n`;
+  body += `**Assigner à :** ${botName}\n`;
+  if (note) body += `\n**Détails :**\n${note}\n`;
+  body += `\n---\n_Envoyé depuis le Botfleet Dashboard_`;
+
+  state.saving = true; render();
+  const issue = await createGithubIssue(
+    `[Nouvelle tâche] ${title}`,
+    body,
+    ["new-task", state.modal.projectId]
+  );
+  state.saving = false;
+
+  if (issue) {
+    showToast(`Issue #${issue.number} créée — Maxbot ajoutera la tâche`, "success");
+    state.modal = null;
+  }
+  render();
+};
+
+// Init
 loadData();
 setInterval(loadData, 5 * 60 * 1000);
+
+// Auto-connect si token sauvé
+if (state.ghToken) {
+  testGithubToken(state.ghToken).then(ok => {
+    state.ghConnected = ok;
+    if (ok) render();
+  });
+}
 </script>
 </body>
 </html>
