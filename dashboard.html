@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botfleet Dashboard — Houcem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #010409;
+    --bg-card: #0D1117;
+    --bg-hover: #161B22;
+    --border: #21262D;
+    --border-light: #30363D;
+    --text-primary: #E6EDF3;
+    --text-secondary: #8B949E;
+    --text-muted: #484F58;
+    --blue: #3B82F6;
+    --green: #3FB950;
+    --orange: #F0883E;
+    --purple: #8B5CF6;
+    --red: #F85149;
+  }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-deep) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header h1 {
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.03em;
+  }
+  .header-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .stat-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+  }
+  .update-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  /* BOT CARDS */
+  .bots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .bot-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .bot-card:hover {
+    border-color: var(--border-light);
+  }
+  .bot-card-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+  .bot-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .bot-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bot-icon { font-size: 24px; }
+  .bot-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .bot-role {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .bot-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .bot-current-task {
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .bot-task-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .bot-idle {
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--bg-hover);
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+  }
+  .bot-done-list {
+    max-height: 90px;
+    overflow-y: auto;
+  }
+  .bot-done-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .project-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: var(--bg-hover);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+  }
+  .tab-badge {
+    margin-left: 6px;
+    background: var(--border-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+  }
+  .view-toggle {
+    display: flex;
+    gap: 3px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .view-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .view-btn.active {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  /* PROJECT BAR */
+  .project-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .project-name {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .project-desc {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .project-phase {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* KANBAN */
+  .kanban {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .kanban {
+      grid-template-columns: 1fr;
+    }
+  }
+  .kanban-col-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+  .kanban-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .kanban-col-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .kanban-count {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+  .kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .kanban-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 13px;
+    border-left: 3px solid var(--border);
+    transition: border-color 0.15s;
+  }
+  .kanban-card:hover {
+    border-color: var(--border-light);
+  }
+  .kanban-card-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .kanban-card-bot {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .kanban-empty {
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  /* AGENT VIEW */
+  .agent-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .agent-section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .agent-tasks-wrap {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .agent-task-chip {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  /* LOADING */
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .loading-spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-box {
+    background: #1c0a0a;
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: var(--red);
+    margin: 40px 20px;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div>Chargement du dashboard...</div>
+  </div>
+</div>
+
+<script>
+const BOT_CONFIG = {
+  maxbot: { icon: "🎯", color: "#3B82F6" },
+  rocbot: { icon: "⚙️", color: "#10B981" },
+  clobot: { icon: "🔐", color: "#8B5CF6" },
+};
+
+let state = {
+  data: null,
+  activeProject: null,
+  view: "kanban",
+  error: null,
+};
+
+async function loadData() {
+  try {
+    const resp = await fetch("dashboard_data.json?" + Date.now());
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    state.data = await resp.json();
+    if (state.data.projects.length > 0 && !state.activeProject) {
+      state.activeProject = state.data.projects[0].id;
+    }
+    render();
+  } catch (e) {
+    state.error = e.message;
+    render();
+  }
+}
+
+function getProject() {
+  if (!state.data) return null;
+  return state.data.projects.find(p => p.id === state.activeProject) || state.data.projects[0];
+}
+
+function getAllTasks() {
+  if (!state.data) return [];
+  return state.data.projects.flatMap(p => p.tasks || []);
+}
+
+function render() {
+  const app = document.getElementById("app");
+
+  if (state.error) {
+    app.innerHTML = `
+      <div class="error-box">
+        <div style="font-size:24px;margin-bottom:10px">⚠️</div>
+        <div style="font-weight:700;margin-bottom:6px">Impossible de charger les données</div>
+        <div style="font-size:12px;color:#8B949E">${state.error}</div>
+        <div style="font-size:11px;color:#484F58;margin-top:10px">Vérifiez que dashboard_data.json est présent</div>
+      </div>`;
+    return;
+  }
+  if (!state.data) {
+    app.innerHTML = '<div class="loading"><div class="loading-spinner"></div><div>Chargement...</div></div>';
+    return;
+  }
+
+  const allTasks = getAllTasks();
+  const doneCount = allTasks.filter(t => t.status === "done").length;
+  const doingCount = allTasks.filter(t => t.status === "doing").length;
+  const todoCount = allTasks.length - doneCount - doingCount;
+  const project = getProject();
+
+  app.innerHTML = `
+    ${renderHeader(doneCount, doingCount, todoCount)}
+    <div class="main">
+      ${renderBots(allTasks)}
+      ${renderTabs()}
+      ${project ? renderProjectBar(project) : ""}
+      ${project ? (state.view === "kanban" ? renderKanban(project) : renderAgentView(project)) : ""}
+    </div>
+  `;
+
+  bindEvents();
+}
+
+function renderHeader(done, doing, todo) {
+  return `
+    <div class="header">
+      <div class="header-inner">
+        <div class="header-title">
+          <span style="font-size:24px">🤖</span>
+          <div>
+            <h1>BOTFLEET DASHBOARD</h1>
+            <div class="header-subtitle">Houcem — Infrastructure Multi-Agents IA</div>
+          </div>
+        </div>
+        <div class="stats-bar">
+          <div class="stat"><div class="stat-value" style="color:var(--green)">${done}</div><div class="stat-label">Faites</div></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><div class="stat-value" style="color:var(--orange)">${doing}</div><div class="stat-label">En cours</div></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><div class="stat-value" style="color:var(--text-secondary)">${todo}</div><div class="stat-label">À faire</div></div>
+        </div>
+        <div class="update-time">Mis à jour : ${state.data.generated_at || "—"}</div>
+      </div>
+    </div>`;
+}
+
+function renderBots(allTasks) {
+  const bots = state.data.bots;
+  let html = '<div class="section-title">Agents</div><div class="bots-grid">';
+
+  for (const [key, bot] of Object.entries(bots)) {
+    const cfg = BOT_CONFIG[key] || { icon: "🤖", color: "#8B949E" };
+    const doing = allTasks.filter(t => t.status === "doing" && t.bot === key);
+    const done = allTasks.filter(t => t.status === "done" && t.bot === key);
+    const isActive = doing.length > 0;
+    const isSleep = key === "clobot" && !isActive;
+    const dotColor = isActive ? "var(--green)" : isSleep ? "var(--text-secondary)" : "var(--orange)";
+    const dotShadow = isActive ? "0 0 8px #3FB95088" : "none";
+
+    html += `
+      <div class="bot-card">
+        <div class="bot-card-bar" style="background:${isActive ? cfg.color : 'var(--border)'};box-shadow:${isActive ? '0 0 20px ' + cfg.color + '66' : 'none'}"></div>
+        <div class="bot-card-header">
+          <div class="bot-info">
+            <span class="bot-icon">${cfg.icon}</span>
+            <div>
+              <div class="bot-name">${bot.name}</div>
+              <div class="bot-role">${bot.role} — ${bot.model}</div>
+            </div>
+          </div>
+          <div class="bot-status-dot" style="background:${dotColor};box-shadow:${dotShadow}"></div>
+        </div>`;
+
+    if (doing.length > 0) {
+      html += `<div class="bot-task-label" style="color:${cfg.color}">En cours</div>`;
+      for (const t of doing) {
+        html += `<div class="bot-current-task" style="background:${cfg.color}15;border:1px solid ${cfg.color}33">
+          <div style="font-size:13px;font-weight:500">${t.id} — ${t.title}</div>
+        </div>`;
+      }
+    } else {
+      html += `<div class="bot-idle">${isSleep ? "😴 En veille — activé sur commande" : "En attente de tâche"}</div>`;
+    }
+
+    if (done.length > 0) {
+      html += `<div class="bot-task-label" style="color:var(--green);margin-top:10px">Complété (${done.length})</div>
+        <div class="bot-done-list">`;
+      for (const t of done.slice(-4)) {
+        html += `<div class="bot-done-item"><span style="color:var(--green)">✓</span><span>${t.id} — ${t.title}</span></div>`;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderTabs() {
+  const projects = state.data.projects;
+  let tabs = '<div class="tabs"><div class="project-tabs">';
+  for (const p of projects) {
+    const active = p.id === state.activeProject ? "active" : "";
+    const done = (p.tasks || []).filter(t => t.status === "done").length;
+    const total = (p.tasks || []).length;
+    const badge = total > 0 ? `<span class="tab-badge">${done}/${total}</span>` : "";
+    tabs += `<button class="tab-btn ${active}" data-project="${p.id}">${p.name || p.id}${badge}</button>`;
+  }
+  tabs += '</div>';
+  tabs += `<div class="view-toggle">
+    <button class="view-btn ${state.view === 'kanban' ? 'active' : ''}" data-view="kanban">Kanban</button>
+    <button class="view-btn ${state.view === 'agents' ? 'active' : ''}" data-view="agents">Par Agent</button>
+  </div></div>`;
+  return tabs;
+}
+
+function renderProjectBar(project) {
+  const isWaiting = (project.phase || "").toLowerCase().includes("attente") || (project.phase || "").toLowerCase().includes("définir");
+  const bgPhase = isWaiting ? "var(--bg-hover)" : "#1C3A5F";
+  const colorPhase = isWaiting ? "var(--text-secondary)" : "#58A6FF";
+  return `
+    <div class="project-bar">
+      <div>
+        <span class="project-name">${project.name || project.id}</span>
+        <span style="color:var(--text-muted);margin:0 8px">—</span>
+        <span class="project-desc">${project.desc || ""}</span>
+      </div>
+      <div class="project-phase" style="background:${bgPhase};color:${colorPhase}">${project.phase || "—"}</div>
+    </div>`;
+}
+
+function renderKanban(project) {
+  const tasks = project.tasks || [];
+  const todo = tasks.filter(t => t.status === "todo");
+  const doing = tasks.filter(t => t.status === "doing");
+  const done = tasks.filter(t => t.status === "done");
+
+  function col(title, dotColor, items) {
+    let html = `<div>
+      <div class="kanban-col-header">
+        <div class="kanban-dot" style="background:${dotColor}"></div>
+        <span class="kanban-col-title">${title}</span>
+        <span class="kanban-count">${items.length}</span>
+      </div>
+      <div class="kanban-cards">`;
+
+    if (items.length === 0) {
+      html += '<div class="kanban-empty">Aucune tâche</div>';
+    }
+    for (const t of items) {
+      const cfg = t.bot && BOT_CONFIG[t.bot] ? BOT_CONFIG[t.bot] : null;
+      const borderColor = cfg ? cfg.color : "var(--border)";
+      html += `<div class="kanban-card" style="border-left-color:${borderColor}">
+        <div class="kanban-card-title">${t.id} — ${t.title}</div>`;
+      if (cfg) {
+        html += `<div class="kanban-card-bot" style="background:${cfg.color}20;color:${cfg.color}">${cfg.icon} ${state.data.bots[t.bot]?.name || t.bot}</div>`;
+      }
+      html += `</div>`;
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  return `<div class="kanban">
+    ${col("À faire", "var(--text-secondary)", todo)}
+    ${col("En cours", "var(--orange)", doing)}
+    ${col("Terminé", "var(--green)", done)}
+  </div>`;
+}
+
+function renderAgentView(project) {
+  const tasks = project.tasks || [];
+  let html = '';
+
+  for (const [key, bot] of Object.entries(state.data.bots)) {
+    const cfg = BOT_CONFIG[key] || { icon: "🤖", color: "#8B949E" };
+    const botTasks = tasks.filter(t => t.bot === key);
+    if (botTasks.length === 0) continue;
+
+    html += `<div class="agent-section" style="border-color:${cfg.color}22">
+      <div class="agent-section-header">
+        <span>${cfg.icon}</span>
+        <span style="font-weight:700;color:${cfg.color}">${bot.name}</span>
+        <span style="color:var(--text-muted);font-size:11px">— ${botTasks.length} tâches</span>
+      </div>
+      <div class="agent-tasks-wrap">`;
+
+    for (const t of botTasks) {
+      const isDone = t.status === "done";
+      const isDoing = t.status === "doing";
+      const bg = isDone ? "var(--bg-card)" : cfg.color + "10";
+      const border = isDone ? "var(--border)" : cfg.color + "33";
+      const opacity = isDone ? "0.6" : "1";
+      const prefix = isDone ? '<span style="color:var(--green);margin-right:5px">✓</span>' :
+                     isDoing ? `<span style="color:var(--orange);margin-right:5px">●</span>` : "";
+      html += `<div class="agent-task-chip" style="background:${bg};border-color:${border};opacity:${opacity}">
+        ${prefix}${t.id} — ${t.title}
+      </div>`;
+    }
+    html += '</div></div>';
+  }
+  return html;
+}
+
+function bindEvents() {
+  document.querySelectorAll("[data-project]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.activeProject = btn.dataset.project;
+      render();
+    });
+  });
+  document.querySelectorAll("[data-view]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.view = btn.dataset.view;
+      render();
+    });
+  });
+}
+
+// Auto-refresh toutes les 5 minutes
+loadData();
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
