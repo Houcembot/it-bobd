@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rapport d'Analyse Complète IT-BOBD</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; line-height: 1.6; }
+  .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); max-width: 960px; margin: auto; }
+  h1 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+  h2 { color: #007bff; margin-top: 25px; border-bottom: 1px solid #007bff; padding-bottom: 5px; }
+  h3 { color: #28a745; margin-top: 20px; }
+  p { margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
+  .note { font-style: italic; color: #666; margin-top: 20px; padding: 10px; background-color: #e9ecef; border-left: 5px solid #0056b3; }
+  li { margin-bottom: 5px; }
+  .code-block { background-color: #e9ecef; border: 1px solid #ddd; padding: 10px; border-radius: 4px; overflow-x: auto; }
+  a { color: #007bff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Rapport d'Analyse Complète IT-BOBD</h1>
+  <p>Ce document agrège l'analyse des protocoles CAN bus et les PIDs par Rocbot, ainsi que la recherche sur les marques automobiles tunisiennes pour le projet IT-BOBD (Robot compagnon émotionnel intelligent pour voiture).</p>
+
+  <h2>1. Contexte du Projet</h2>
+  <ul>
+    <li><strong>Projet :</strong> IT-BOBD (Robot compagnon émotionnel intelligent pour voiture). Note : Ce n'est **pas spécifique aux VW Polo 9N**, mais un produit pour **toutes les voitures depuis l'année 2000 avec un port OBD**. La VW Polo 9N a servi d'exemple de véhicule de test et d'étude.</li>
+    <li><strong>Objectif :</strong> Ajout d'un compagnon au tableau de bord, pas un remplacement.</li>
+    <li><strong>Adaptateur ELM327 :</strong> Basé sur la puce PIC18F25K80.</li>
+    <li><strong>Protocole de Communication :</strong> ISO 14230-4 KWP (Keyword Protocol 2000 Fast Init) et autres protocoles OBD-II standards.</li>
+    <li><strong>Matériel :</strong> ESP32 S3 Zero, câblé directement sur le port OBD2 via un ELM327 avec PIC18F25K80, écran TFT GC9A01 en SPI, module tactile capacitif TTP223B.</li>
+  </ul>
+
+  <h2>2. Analyse des Protocoles CAN bus et PIDs (par Rocbot)</h2>
+  <p>Cette section détaille les commandes AT et les PIDs standards OBD-II essentiels pour le fonctionnement du robot BOB, extraits du document <code>BOBD- Historique Codes..md</code>.</p>
+
+  <h3>2.1. Commandes AT de l'ELM327 (Initialisation et Configuration)</h3>
+  <p>Ces commandes sont utilisées pour établir et maintenir la communication avec l'ECU du véhicule.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Commande</th>
+        <th>Description</th>
+        <th>Notes clés</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>AT Z</code></td>
+        <td>Réinitialise l'adaptateur ELM327.</td>
+        <td>Essentiel pour une réinitialisation propre.</td>
+      </tr>
+      <tr>
+        <td><code>AT E0</code></td>
+        <td>Désactive l'écho des commandes.</td>
+        <td>Optimise le parsing en évitant la répétition des commandes envoyées.</td>
+      </tr>
+      <tr>
+        <td><code>AT SP 5</code></td>
+        <td>Fixe le protocole à ISO 14230-4 KWP.</td>
+        <td>L'Arduino utilise parfois <code>AT SP 0</code> pour l'auto-détection, mais <code>AT SP 5</code> force KWP.</td>
+      </tr>
+      <tr>
+        <td><code>AT SH 81 10 F1</code></td>
+        <td>Définit l'en-tête (Header) d'adressage de l'ECU du moteur (VW).</td>
+        <td><strong>Critique</strong> pour établir la communication avec l'ECU spécifique du véhicule.</td>
+      </tr>
+      <tr>
+        <td><code>ATI</code></td>
+        <td>Demande la version de l'adaptateur ELM327.</td>
+        <td>Utile pour vérifier la bonne communication et la version de l'ELM327.</td>
+      </tr>
+      <tr>
+        <td><code>ATRV</code></td>
+        <td>Lit la tension d'alimentation de l'adaptateur/batterie du véhicule.</td>
+        <td>Permet de surveiller la tension du système.</td>
+      </tr>
+      <tr>
+        <td><code>ATDP</code></td>
+        <td>Affiche le protocole de communication actuellement connecté.</td>
+        <td>Confirme que l'adaptateur utilise le bon protocole (e.g., ISO 14230-4).</td>
+      </tr>
+      <tr>
+        <td><code>ATDPN</code></td>
+        <td>Affiche le numéro du protocole actuellement connecté.</td>
+        <td>Retourne le numéro du protocole (e.g., <code>5</code> pour ISO 14230-4).</td>
+      </tr>
+      <tr>
+        <td><code>AT LP</code></td>
+        <td>Active le mode faible consommation.</td>
+        <td>Met l'adaptateur en veille profonde pour économiser la batterie du véhicule.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2. PIDs Standards OBD-II (Mode 01)</h3>
+  <p>Ces PIDs permettent d'obtenir des données en temps réel sur le fonctionnement du moteur. Le format de réponse général est : <code>41 XX YY [ZZ ...]</code> où <code>41</code> est l'octet de confirmation du Mode 01, <code>XX</code> est le PID demandé, et <code>YY [ZZ ...]</code> sont les octets de données en hexadécimal.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>PID</th>
+        <th>Description</th>
+        <th>Formule de Décodage (Hex -> Décimal)</th>
+        <th>Notes / Cas Limites</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>010C</code></td>
+        <td>Régime Moteur (RPM)</td>
+        <td><code>((A * 256) + B) / 4</code></td>
+        <td><strong>A :</strong> octet suivant <code>410C</code>, <strong>B :</strong> octet suivant A. Résultat en tr/min.</td>
+      </tr>
+      <tr>
+        <td><code>010D</code></td>
+        <td>Vitesse Véhicule (km/h)</td>
+        <td><code>A</code></td>
+        <td><strong>A :</strong> octet suivant <code>410D</code>. Résultat directement en km/h.</td>
+      </tr>
+      <tr>
+        <td><code>0105</code></td>
+        <td>Température Liquide Refroidissement (°C)</td>
+        <td><code>A - 40</code></td>
+        <td><strong>A :</strong> octet suivant <code>4105</code>. Ajustement par -40.</td>
+      </tr>
+      <tr>
+        <td><code>0104</code></td>
+        <td>Charge Moteur Calculée (%)</td>
+        <td><code>(A * 100) / 255</code></td>
+        <td><strong>A :</strong> octet suivant <code>4104</code>. Convertit brute (0-255) en %.</td>
+      </tr>
+      <tr>
+        <td><code>010B</code></td>
+        <td>Pression Admission (kPa)</td>
+        <td><code>A</code></td>
+        <td><strong>A :</strong> octet suivant <code>410B</code>. Pression absolue du collecteur d'admission.</td>
+      </tr>
+      <tr>
+        <td><code>010E</code></td>
+        <td>Avance Allumage (°)</td>
+        <td><code>(A / 2) - 64</code></td>
+        <td><strong>A :</strong> octet suivant <code>410E</code>. Avance à l'allumage en degrés.</td>
+      </tr>
+      <tr>
+        <td><code>010F</code></td>
+        <td>Température Air Admission (°C)</td>
+        <td><code>A - 40</code></td>
+        <td><strong>A :</strong> octet suivant <code>410F</code>.</td>
+      </tr>
+      <tr>
+        <td><code>0111</code></td>
+        <td>Position Papillon (%)</td>
+        <td><code>A / 2.55</code></td>
+        <td><strong>A :</strong> octet suivant <code>4111</code>. Convertit brute (0-255) en %.</td>
+      </tr>
+      <tr>
+        <td><code>012F</code></td>
+        <td>Niveau de Carburant (%)</td>
+        <td><code>A</code></td>
+        <td><strong>A :</strong> octet suivant <code>412F</code>. Pourcentage direct de carburant restant.</td>
+      </tr>
+      <tr>
+        <td><code>015F</code></td>
+        <td>Autonomie Estimée (km)</td>
+        <td><code>(A * 256) + B</code></td>
+        <td><strong>A et B :</strong> octets suivant <code>415F</code>.</td>
+      </tr>
+      <tr>
+        <td><code>015E</code></td>
+        <td>Consommation Instantanée (L/100km)</td>
+        <td><code>(A * 100.0) / 255.0</code></td>
+        <td><strong>A :</strong> octet suivant <code>415E</code>. Valeur approximative, peut varier.</td>
+      </tr>
+      <tr>
+        <td><code>7F XX YY</code></td>
+        <td>PID Non Supporté (Code d'erreur)</td>
+        <td>N/A</td>
+        <td><code>7F XX YY</code> (ex: <code>7F 01 12</code>) indique que le PID <code>XX</code> du Mode <code>01</code> n'est pas supporté par l'ECU. <code>12</code> signifie 'Service Not Supported'.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.3. Codes de Défaut Diagnostic (DTCs - Mode 03)</h3>
+  <p>Le Mode <code>03</code> est utilisé pour lire les codes de défaut stockés dans l'ECU.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Mode</th>
+        <th>Description</th>
+        <th>Format de Réponse</th>
+        <th>Notes / Cas Limites</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>03</code></td>
+        <td>Codes d'erreur (DTCs)</td>
+        <td><code>43 [Byte1 Byte2 Byte3 Byte4 Byte5 Byte6 ...]</code></td>
+        <td><code>43</code> indique la réponse au Mode 03. Chaque paire d'octets suivant encode un DTC.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Recherche sur les Marques Automobiles en Tunisie</h2>
+  <p>Pour évaluer la compatibilité du robot BOB avec le parc automobile tunisien, une analyse des marques les plus vendues et utilisées a été réalisée. Le rapport détaillé peut être consulté via le lien ci-dessous :</p>
+  <p><a href="https://github.com/Houcembot/it-bobd/blob/main/Rapport_Marques_Tunisie_2024.html" target="_blank">Accéder au Rapport HTML des Marques Automobiles en Tunisie (2024)</a></p>
+  <p class="note">Ce rapport liste 13 marques uniques identifiées à partir des 20 modèles les plus vendus en 2024.</p>
+
+  <hr>
+  <p>Ce rapport complet constitue une base solide pour le développement continu du projet IT-BOBD.</p>
+</div>
+
+</body>
+</html>
