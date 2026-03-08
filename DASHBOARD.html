@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard Projet IT-BOBD</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
+  .container { background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 900px; margin: auto; }
+  h1 { color: #2c3e50; text-align: center; margin-bottom: 25px; border-bottom: 2px solid #3498db; padding-bottom: 15px; }
+  h2 { color: #34495e; margin-top: 30px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+  h3 { color: #16a085; margin-top: 20px; }
+  p { margin-bottom: 10px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+  th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: top; }
+  th { background-color: #ecf0f1; font-weight: bold; color: #34495e; }
+  tr:nth-child(even) { background-color: #f9f9f9; }
+  .task-status { width: 30px; text-align: center; }
+  .task-description { flex-grow: 1; }
+  .completed { color: #28a745; font-weight: bold; }
+  .pending { color: #ffc107; font-weight: bold; }
+  .priority-high { color: #dc3545; font-weight: bold; }
+  .priority-medium { color: #ffc107; font-weight: bold; }
+  .priority-low { color: #17a2b8; font-weight: bold; }
+  .date-updated { text-align: right; font-size: 0.9em; color: #7f8c8d; margin-top: 20px; }
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .checkbox.checked {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  .checkbox.checked::after {
+    content: '✓';
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Dashboard Projet IT-BOBD</h1>
+  <p>Robot compagnon émotionnel intelligent pour voiture</p>
+  <p>Ce tableau de bord offre une vue d'ensemble de l'avancement du projet IT-BOBD, avec l'état actuel de chaque tâche.</p>
+
+  <h2>Phase 1 : Fondations (Recherche & Architecture)</h2>
+  <p class="priority-high">Priorité : HAUTE — En cours</p>
+  <table>
+    <thead>
+      <tr>
+        <th class="task-status">Statut</th>
+        <th>Tâche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed">Étude de marché initiale</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed">Identification des références techniques OBD2 (ELM327 / PIC18F)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed">Configuration infrastructure IA (Ollama, dual GPU, Discord bots)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed"><b>1.1</b> Rédiger le cahier des charges technique complet (Specs hardware ESP32: ESP32 S3 Zero, câblé OBD2 via ELM327/PIC18F25K80. Specs interface émotionnelle: Écran TFT GC9A01 en SPI, module tactile TTP223B pour navigation des 20 capteurs.)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed"><b>1.2</b> Choisir l'architecture matérielle finale (ESP32 S3 Zero seul. Connecteur OBD2: ELM327 via PIC18F25K80, câblé. Budget: < 60$ V1, 200$+ V2.)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed"><b>1.3</b> Créer le dépôt GitHub IT-BOBD (Dépôt existant: `it-bobd`.)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox checked"></div></td>
+        <td class="task-description completed"><b>1.4</b> Documenter les protocoles CAN bus pertinents (Rapport d'analyse détaillé et recherche sur les marques auto tunisiennes disponible sur GitHub.)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Phase 2 : Prototype Logiciel</h2>
+  <p class="priority-medium">Priorité : MOYENNE — À venir</p>
+  <table>
+    <thead>
+      <tr>
+        <th class="task-status">Statut</th>
+        <th>Tâche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>2.1</b> Code ESP32 : lecture OBD2 de base</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>2.2</b> Algorithme émotionnel v1</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>2.3</b> Interface IA locale</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>2.4</b> Simulation sans voiture</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Phase 3 : Prototype Physique</h2>
+  <p class="priority-low">Priorité : BASSE — Futur</p>
+  <table>
+    <thead>
+      <tr>
+        <th class="task-status">Statut</th>
+        <th>Tâche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>3.1</b> Design du robot (visage et expressions)</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>3.2</b> Assemblage hardware</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>3.3</b> Tests en conditions réelles</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Phase 4 : Produit</h2>
+  <p class="priority-low">Priorité : FUTURE</p>
+  <table>
+    <thead>
+      <tr>
+        <th class="task-status">Statut</th>
+        <th>Tâche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>4.1</b> Application mobile compagnon</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>4.2</b> Dashboard web de suivi</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>4.3</b> Documentation utilisateur</td>
+      </tr>
+      <tr>
+        <td class="task-status"><div class="checkbox"></div></td>
+        <td class="task-description pending"><b>4.4</b> Pitch deck investisseurs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="date-updated">Dernière mise à jour du dashboard : 2026-03-08</p>
+</div>
+
+</body>
+</html>
