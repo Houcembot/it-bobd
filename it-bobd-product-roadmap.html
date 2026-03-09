@@ -3,116 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-BOBD Product Roadmap (adapté roadmap.sh PM)</title>
+    <title>IT-BOBD Product Roadmap (Style roadmap.sh)</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; }
-        h1 { text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin-bottom: 40px; }
-        .roadmap { display: flex; flex-direction: column; gap: 20px; }
-        .phase { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
-        .phase::before { content: ''; position: absolute; left: -10px; top: 50%; width: 20px; height: 20px; background: #00ff88; border-radius: 50%; transform: translateY(-50%); }
-        .phase:last-child::after { content: ''; position: absolute; right: -10px; top: 50%; width: 20px; height: 20px; background: #ffaa00; border-radius: 50%; transform: translateY(-50%); }
-        .phase-header { display: flex; align-items: center; margin-bottom: 15px; }
-        .phase-title { font-size: 1.5em; font-weight: bold; margin-right: 15px; }
-        .status { padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: white; }
-        .status.done { background: #00ff88; }
-        .status.in-progress { background: #ffaa00; }
-        .status.todo { background: #ff4444; }
-        .steps { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; }
-        .step { padding: 10px; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
-        .step-title { font-weight: bold; margin-bottom: 5px; }
-        .step-check { font-size: 1.2em; margin-right: 8px; }
-        .resources { font-size: 0.85em; color: #666; margin-top: 5px; }
-        footer { text-align: center; margin-top: 40px; color: white; font-size: 0.9em; }
+        body { margin: 0; padding: 20px; background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%); color: white; font-family: 'Segoe UI', sans-serif; overflow-x: auto; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 2.5em; margin-bottom: 40px; background: linear-gradient(45deg, #00ff88, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        svg { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,255,136,0.3); }
+        .node { cursor: pointer; transition: all 0.3s; }
+        .node:hover { filter: brightness(1.3); transform: scale(1.1); }
+        .done { fill: #00ff88; stroke: #00cc66; }
+        .in-progress { fill: #ffaa00; stroke: #ff8800; }
+        .todo { fill: #ff4444; stroke: #cc3333; }
+        .line { stroke-width: 4; stroke-linecap: round; fill: none; stroke-dasharray: 10 5; animation: dash 2s linear infinite; }
+        .line.done { stroke: #00ff88; stroke-dasharray: none; }
+        .line.in-progress { stroke: #ffaa00; }
+        .line.todo { stroke: #666; opacity: 0.5; }
+        @keyframes dash { to { stroke-dashoffset: -15; } }
+        .legend { display: flex; justify-content: center; gap: 30px; margin-top: 20px; font-size: 0.9em; }
+        .legend-item { display: flex; align-items: center; gap: 10px; }
+        .legend-circle { width: 20px; height: 20px; border-radius: 50%; }
+        footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #aaa; }
     </style>
 </head>
 <body>
-    <h1>🚗 IT-BOBD Product Roadmap<br><small>Adapté de roadmap.sh/product-manager pour Robot OBD Companion</small></h1>
-    
-    <div class="roadmap">
-        <!-- Phase 1: Fundamentals/Discovery (Fondations) -->
-        <div class="phase">
-            <div class="phase-header">
-                <div class="phase-title">1. Fondations & Discovery</div>
-                <span class="status done">✅ TERMINÉ</span>
+    <div class="container">
+        <h1>🚗 IT-BOBD Product Roadmap</h1>
+        <svg viewBox="0 0 1200 800">
+            <!-- Main path lines -->
+            <path class="line done" d="M 200 100 L 200 150 L 300 150 L 300 250 L 400 250 L 400 350 L 500 350 L 500 450 L 600 450 L 600 550 L 700 550 L 700 650 L 800 650" stroke-width="6"/>
+            <path class="line in-progress" d="M 200 100 L 100 100 L 100 200 L 200 200" stroke-width="6"/>
+            <path class="line todo" d="M 800 650 L 900 650 L 900 750 L 1000 750" stroke-width="6"/>
+
+            <!-- Phase 1 Nodes (Done - Green) -->
+            <circle class="node done" cx="150" cy="100" r="30"/>
+            <text x="150" y="105" text-anchor="middle" font-size="12" font-weight="bold" fill="white">1</text>
+            <text x="150" y="125" text-anchor="middle" font-size="10" fill="white">Fondations</text>
+            <circle class="node done" cx="250" cy="150" r="25"/>
+            <text x="250" y="155" text-anchor="middle" font-size="9">Étude</text>
+            <text x="250" y="168" text-anchor="middle" font-size="8">Marché</text>
+            <circle class="node done" cx="350" cy="250" r="25"/>
+            <text x="350" y="255" text-anchor="middle" font-size="9">OBD</text>
+            <text x="350" y="268" text-anchor="middle" font-size="8">Research</text>
+            <circle class="node done" cx="450" cy="350" r="25"/>
+            <text x="450" y="355" text-anchor="middle" font-size="9">Specs</text>
+            <text x="450" y="368" text-anchor="middle" font-size="8">HW</text>
+
+            <!-- Phase 2 Nodes (In Progress - Orange) -->
+            <circle class="node in-progress" cx="550" cy="450" r="30"/>
+            <text x="550" y="455" text-anchor="middle" font-size="12" font-weight="bold" fill="white">2</text>
+            <text x="550" y="475" text-anchor="middle" font-size="10" fill="white">Proto Logiciel</text>
+            <circle class="node in-progress" cx="650" cy="550" r="25"/>
+            <text x="650" y="555" text-anchor="middle" font-size="9">Code</text>
+            <text x="650" y="568" text-anchor="middle" font-size="8">ESP32 OBD</text>
+            <circle class="node in-progress" cx="750" cy="650" r="25"/>
+            <text x="750" y="655" text-anchor="middle" font-size="9">Algo</text>
+            <text x="750" y="668" text-anchor="middle" font-size="8">Émotionnel</text>
+
+            <!-- Phase 3 Nodes (Todo - Red) -->
+            <circle class="node todo" cx="850" cy="650" r="30"/>
+            <text x="850" y="655" text-anchor="middle" font-size="12" font-weight="bold" fill="white">3</text>
+            <text x="850" y="675" text-anchor="middle" font-size="10" fill="white">Proto Physique</text>
+            <circle class="node todo" cx="950" cy="550" r="25"/>
+            <text x="950" y="555" text-anchor="middle" font-size="9">Design</text>
+            <text x="950" y="568" text-anchor="middle" font-size="8">Robot</text>
+            <circle class="node todo" cx="1050" cy="450" r="25"/>
+            <text x="1050" y="455" text-anchor="middle" font-size="9">Tests</text>
+            <text x="1050" y="468" text-anchor="middle" font-size="8">Voiture</text>
+
+            <!-- Phase 4 Nodes (Todo - Red) -->
+            <circle class="node todo" cx="1100" cy="750" r="30"/>
+            <text x="1100" y="755" text-anchor="middle" font-size="12" font-weight="bold" fill="white">4</text>
+            <text x="1100" y="775" text-anchor="middle" font-size="10" fill="white">Produit</text>
+            <circle class="node todo" cx="1000" cy="650" r="25"/>
+            <text x="1000" y="655" text-anchor="middle" font-size="9">App</text>
+            <text x="1000" y="668" text-anchor="middle" font-size="8">Mobile</text>
+
+            <!-- Links to resources -->
+            <a xlink:href="obd-marques-progress.html" target="_blank">
+                <circle cx="350" cy="250" r="28" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.8"/>
+            </a>
+            <a xlink:href="BOBO/itbobd_eye_editor_v2.html" target="_blank">
+                <circle cx="750" cy="650" r="28" fill="none" stroke="#ffaa00" stroke-width="2" opacity="0.8"/>
+            </a>
+        </svg>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-circle done"></div> ✅ Terminée
             </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-title"><span class="step-check">✓</span>Étude marché & Users</div>
-                    <div class="resources">13 marques TN (Peugeot/Renault 85% compat)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">✓</span>Research OBD2 (ELM327/PIC)</div>
-                    <div class="resources"><a href="obd-marques-progress.html">Tableau compat</a></div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">✓</span>Specs Hardware (ESP32 S3, GC9A01)</div>
-                    <div class="resources">Budget &lt;60$ V1</div>
-                </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #ffaa00;"></div> 🟡 En cours
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #ff4444;"></div> 🔴 À faire
             </div>
         </div>
 
-        <!-- Phase 2: Strategy/Execution (Proto Logiciel) -->
-        <div class="phase">
-            <div class="phase-header">
-                <div class="phase-title">2. Strategy & Proto Logiciel</div>
-                <span class="status in-progress">🟡 EN COURS</span>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Prioritization Roadmap</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Code ESP32 OBD2 lecture (2.1)</div>
-                    <div class="resources">PIDs std (0C RPM, 0D Vitesse)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Algo émotionnel v1 (2.2)</div>
-                    <div class="resources">Eye Editor v2 <a href="BOBO/itbobd_eye_editor_v2.html">live</a></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Phase 3: Execution (Proto Physique) -->
-        <div class="phase">
-            <div class="phase-header">
-                <div class="phase-title">3. Execution & Proto Physique</div>
-                <span class="status todo">🔴 À VENIR</span>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Design robot (3.1)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Assemblage HW (3.2)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Tests réels voiture (3.3)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Phase 4: Growth (Produit) -->
-        <div class="phase">
-            <div class="phase-header">
-                <div class="phase-title">4. Growth & Produit Final</div>
-                <span class="status todo">🔴 FUTURE</span>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>App mobile (4.1)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Dashboard web (4.2)</div>
-                </div>
-                <div class="step">
-                    <div class="step-title"><span class="step-check">○</span>Pitch investisseurs (4.4)</div>
-                </div>
-            </div>
-        </div>
+        <footer>
+            <p>Adapté style <a href="https://roadmap.sh/product-manager" target="_blank" style="color: #00ff88;">roadmap.sh/product-manager</a> | Phases IT-BOBD | Maxbot 2026-03-09 | <a href="PLAN_PROJET.md">PLAN_PROJET.md</a></p>
+        </footer>
     </div>
-
-    <footer>
-        <p>Adapté par Maxbot de <a href="https://roadmap.sh/product-manager" style="color: #00ff88;">roadmap.sh/product-manager</a> | <a href="PLAN_PROJET.md">PLAN_PROJET.md</a> | Mis à jour: 2026-03-09</p>
-    </footer>
 </body>
 </html>
