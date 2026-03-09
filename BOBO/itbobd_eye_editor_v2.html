@@ -606,6 +606,14 @@ function mainLoop(){
   requestAnimationFrame(mainLoop)
 }
 
+// Keyboard shortcuts (Espace = Toggle Record)
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    toggleRecord();
+  }
+});
+
 // Init
 buildLibrary();refreshExprGrid();selectExpr(0);setSliders();mainLoop();
 </script>
