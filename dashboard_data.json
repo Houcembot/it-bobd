@@ -1,181 +1,34 @@
 {
-  "generated_at": "2026-03-08 16:45",
+  "generated_at": "2026-03-09 17:27",
   "bots": {
     "maxbot": {
       "name": "Maxbot",
       "role": "Orchestrateur",
       "model": "Gemini 2.5 Flash",
-      "fleet_status": {
-        "status": "🟡 Reconfiguration",
-        "last_activity": "2026-03-08"
-      }
+      "fleet_status": {}
     },
     "rocbot": {
       "name": "Rocbot",
       "role": "Exécuteur Local",
       "model": "Qwen (Ollama)",
-      "fleet_status": {
-        "status": "✅ Actif",
-        "last_activity": "2026-03-08"
-      }
+      "fleet_status": {}
     },
     "clobot": {
       "name": "Clobot",
       "role": "Admin On-Call",
       "model": "Claude",
-      "fleet_status": {
-        "status": "😴 En veille",
-        "last_activity": "—"
-      }
+      "fleet_status": {}
     }
   },
   "projects": [
     {
       "id": "it-bobd",
       "name": "IT BOBD",
-      "desc": "Robot compagnon émotionnel intelligent pour voiture",
-      "phase": "Phase 2 : Prototype Logiciel",
-      "tasks": [
-        {
-          "id": "P1",
-          "title": "Étude de marché initiale",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "P2",
-          "title": "Identification des références techniques OBD2 (ELM327 / PIC18F)",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "P3",
-          "title": "Configuration infrastructure IA (Ollama, dual GPU, Discord bots)",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "1.1",
-          "title": "Rédiger le cahier des charges technique complet",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "1.2",
-          "title": "Choisir l'architecture matérielle finale",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "1.3",
-          "title": "Créer le dépôt GitHub IT-BOBD",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "1.4",
-          "title": "Documenter les protocoles CAN bus pertinents",
-          "status": "done",
-          "phase": "Phase 1 : Fondations (Recherche & Architecture)",
-          "bot": null
-        },
-        {
-          "id": "2.1",
-          "title": "Code ESP32 : lecture OBD2 de base",
-          "status": "todo",
-          "phase": "Phase 2 : Prototype Logiciel",
-          "bot": null
-        },
-        {
-          "id": "2.2",
-          "title": "Algorithme émotionnel v1",
-          "status": "todo",
-          "phase": "Phase 2 : Prototype Logiciel",
-          "bot": null
-        },
-        {
-          "id": "2.3",
-          "title": "Interface IA locale",
-          "status": "todo",
-          "phase": "Phase 2 : Prototype Logiciel",
-          "bot": null
-        },
-        {
-          "id": "2.4",
-          "title": "Simulation sans voiture",
-          "status": "todo",
-          "phase": "Phase 2 : Prototype Logiciel",
-          "bot": null
-        },
-        {
-          "id": "3.1",
-          "title": "Design du robot (visage et expressions)",
-          "status": "todo",
-          "phase": "Phase 3 : Prototype Physique",
-          "bot": null
-        },
-        {
-          "id": "3.2",
-          "title": "Assemblage hardware",
-          "status": "todo",
-          "phase": "Phase 3 : Prototype Physique",
-          "bot": null
-        },
-        {
-          "id": "3.3",
-          "title": "Tests en conditions réelles",
-          "status": "todo",
-          "phase": "Phase 3 : Prototype Physique",
-          "bot": null
-        },
-        {
-          "id": "4.1",
-          "title": "Application mobile compagnon",
-          "status": "todo",
-          "phase": "Phase 4 : Produit",
-          "bot": null
-        },
-        {
-          "id": "4.2",
-          "title": "Dashboard web de suivi",
-          "status": "todo",
-          "phase": "Phase 4 : Produit",
-          "bot": null
-        },
-        {
-          "id": "4.3",
-          "title": "Documentation utilisateur",
-          "status": "todo",
-          "phase": "Phase 4 : Produit",
-          "bot": null
-        },
-        {
-          "id": "4.4",
-          "title": "Pitch deck investisseurs",
-          "status": "todo",
-          "phase": "Phase 4 : Produit",
-          "bot": null
-        },
-        {
-          "id": "R-roc",
-          "title": "Recherche en cours de compatibilité OBD-II pour 13 marques auto. Prochaine étape",
-          "status": "doing",
-          "phase": "",
-          "bot": "rocbot"
-        }
-      ],
-      "progress": "7/19",
-      "agent_statuses": {
-        "maxbot": "En attente de la prochaine tâche pour IT-BOBD (2.1 Code ESP32 : lecture OBD2 de base).",
-        "rocbot": "Recherche en cours de compatibilité OBD-II pour 13 marques auto. Prochaine étape : Synthèse des résultats.",
-        "clobot": "Disponible / Inactif sur ce projet."
-      }
+      "desc": "",
+      "phase": "À définir",
+      "tasks": [],
+      "progress": "0/0",
+      "agent_statuses": {}
     },
     {
       "id": "projet2",
