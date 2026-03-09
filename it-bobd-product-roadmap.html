@@ -3,104 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-BOBD Product Roadmap (Style roadmap.sh)</title>
+    <title>IT-BOBD Product Manager Roadmap (Exact Schema roadmap.sh)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { margin: 0; padding: 20px; background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%); color: white; font-family: 'Segoe UI', sans-serif; overflow-x: auto; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        h1 { text-align: center; font-size: 2.5em; margin-bottom: 40px; background: linear-gradient(45deg, #00ff88, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        svg { width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,255,136,0.3); }
-        .node { cursor: pointer; transition: all 0.3s; }
-        .node:hover { filter: brightness(1.3); transform: scale(1.1); }
-        .done { fill: #00ff88; stroke: #00cc66; }
-        .in-progress { fill: #ffaa00; stroke: #ff8800; }
-        .todo { fill: #ff4444; stroke: #cc3333; }
-        .line { stroke-width: 4; stroke-linecap: round; fill: none; stroke-dasharray: 10 5; animation: dash 2s linear infinite; }
-        .line.done { stroke: #00ff88; stroke-dasharray: none; }
-        .line.in-progress { stroke: #ffaa00; }
-        .line.todo { stroke: #666; opacity: 0.5; }
+        body { background: linear-gradient(135deg, #1e1e2e 0%, #313244 100%); color: white; font-family: 'Inter', sans-serif; }
+        .roadmap-svg { max-width: 100%; height: auto; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .node { cursor: pointer; transition: all 0.3s ease; rx: 12; ry: 12; }
+        .node:hover { filter: drop-shadow(0 10px 20px rgba(0,255,136,0.5)); transform: scale(1.05); }
+        .done { fill: #10b981; stroke: #059669; stroke-width: 3; }
+        .in-progress { fill: #f59e0b; stroke: #d97706; stroke-width: 3; }
+        .todo { fill: #ef4444; stroke: #dc2626; stroke-width: 3; opacity: 0.8; }
+        .path { stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+        .path.done { stroke: #10b981; }
+        .path.in-progress { stroke: #f59e0b; stroke-dasharray: 10,5; animation: dash 1.5s linear infinite; }
+        .path.todo { stroke: #6b7280; stroke-opacity: 0.5; }
         @keyframes dash { to { stroke-dashoffset: -15; } }
-        .legend { display: flex; justify-content: center; gap: 30px; margin-top: 20px; font-size: 0.9em; }
-        .legend-item { display: flex; align-items: center; gap: 10px; }
-        .legend-circle { width: 20px; height: 20px; border-radius: 50%; }
-        footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #aaa; }
+        .legend { display: flex; justify-content: center; gap: 32px; margin-top: 24px; }
+        .legend-item { display: flex; items-center; gap: 8px; font-size: 14px; }
+        .legend-swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>🚗 IT-BOBD Product Roadmap</h1>
-        <svg viewBox="0 0 1200 800">
-            <!-- Main path lines -->
-            <path class="line done" d="M 200 100 L 200 150 L 300 150 L 300 250 L 400 250 L 400 350 L 500 350 L 500 450 L 600 450 L 600 550 L 700 550 L 700 650 L 800 650" stroke-width="6"/>
-            <path class="line in-progress" d="M 200 100 L 100 100 L 100 200 L 200 200" stroke-width="6"/>
-            <path class="line todo" d="M 800 650 L 900 650 L 900 750 L 1000 750" stroke-width="6"/>
+<body class="min-h-screen py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent drop-shadow-2xl">🚗 IT-BOBD Product Roadmap</h1>
+        <svg class="roadmap-svg w-full" viewBox="0 0 1600 1400" preserveAspectRatio="xMidYMid meet">
+            <!-- Main connecting paths (adapted exact schema: Fundamentals -> Discovery -> Strategy -> Execution -> Growth, with sub-branches ~25 nodes) -->
+            <!-- Fundamentals Path (Done) -->
+            <path class="path done" d="M 200 100 Q 200 200 300 200 L 300 250 Q 400 250 400 300 L 500 300 Q 500 350 600 350"/>
+            <!-- Discovery Path (Done) -->
+            <path class="path done" d="M 600 350 L 700 350 Q 700 400 800 400 L 800 450 Q 900 450 900 500"/>
+            <!-- Strategy Path (In Progress) -->
+            <path class="path in-progress" d="M 900 500 L 1000 500 Q 1000 550 1100 550 L 1100 600"/>
+            <!-- Execution Path (Todo) -->
+            <path class="path todo" d="M 1100 600 L 1200 600 Q 1200 650 1300 650 L 1300 700"/>
+            <!-- Growth Path (Todo) -->
+            <path class="path todo" d="M 1300 700 L 1400 700 Q 1400 750 1500 750"/>
 
-            <!-- Phase 1 Nodes (Done - Green) -->
-            <circle class="node done" cx="150" cy="100" r="30"/>
-            <text x="150" y="105" text-anchor="middle" font-size="12" font-weight="bold" fill="white">1</text>
-            <text x="150" y="125" text-anchor="middle" font-size="10" fill="white">Fondations</text>
-            <circle class="node done" cx="250" cy="150" r="25"/>
-            <text x="250" y="155" text-anchor="middle" font-size="9">Étude</text>
-            <text x="250" y="168" text-anchor="middle" font-size="8">Marché</text>
-            <circle class="node done" cx="350" cy="250" r="25"/>
-            <text x="350" y="255" text-anchor="middle" font-size="9">OBD</text>
-            <text x="350" y="268" text-anchor="middle" font-size="8">Research</text>
-            <circle class="node done" cx="450" cy="350" r="25"/>
-            <text x="450" y="355" text-anchor="middle" font-size="9">Specs</text>
-            <text x="450" y="368" text-anchor="middle" font-size="8">HW</text>
+            <!-- Fundamentals Nodes (5 nodes, Done Green) -->
+            <rect class="node done" x="150" y="80" width="100" height="40" rx="12"/>
+            <text x="200" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Fondations</text>
+            <rect class="node done" x="250" y="180" width="90" height="35"/>
+            <text x="295" y="200" text-anchor="middle" font-size="12" fill="white">Étude Marché</text>
+            <rect class="node done" x="350" y="230" width="90" height="35"/>
+            <text x="395" y="250" text-anchor="middle" font-size="12" fill="white">OBD Research</text>
+            <rect class="node done" x="450" y="280" width="90" height="35"/>
+            <text x="495" y="300" text-anchor="middle" font-size="12" fill="white">Specs HW</text>
+            <rect class="node done" x="550" y="330" width="90" height="35"/>
+            <text x="595" y="350" text-anchor="middle" font-size="12" fill="white">GitHub Repo</text>
 
-            <!-- Phase 2 Nodes (In Progress - Orange) -->
-            <circle class="node in-progress" cx="550" cy="450" r="30"/>
-            <text x="550" y="455" text-anchor="middle" font-size="12" font-weight="bold" fill="white">2</text>
-            <text x="550" y="475" text-anchor="middle" font-size="10" fill="white">Proto Logiciel</text>
-            <circle class="node in-progress" cx="650" cy="550" r="25"/>
-            <text x="650" y="555" text-anchor="middle" font-size="9">Code</text>
-            <text x="650" y="568" text-anchor="middle" font-size="8">ESP32 OBD</text>
-            <circle class="node in-progress" cx="750" cy="650" r="25"/>
-            <text x="750" y="655" text-anchor="middle" font-size="9">Algo</text>
-            <text x="750" y="668" text-anchor="middle" font-size="8">Émotionnel</text>
+            <!-- Discovery Nodes (6 nodes, Done Green) -->
+            <rect class="node done" x="650" y="330" width="90" height="35"/>
+            <text x="695" y="350" text-anchor="middle" font-size="12" fill="white">CAN Protocols</text>
+            <rect class="node done" x="750" y="380" width="90" height="35"/>
+            <text x="795" y="400" text-anchor="middle" font-size="12" fill="white">Marques TN</text>
+            <rect class="node done" x="850" y="380" width="90" height="35"/>
+            <text x="895" y="400" text-anchor="middle" font-size="12" fill="white">PIDs Std</text>
+            <rect class="node done" x="650" y="430" width="90" height="35"/>
+            <text x="695" y="450" text-anchor="middle" font-size="12" fill="white">Budget V1</text>
+            <rect class="node done" x="750" y="430" width="90" height="35"/>
+            <text x="795" y="450" text-anchor="middle" font-size="12" fill="white">Eye Editor</text>
+            <rect class="node done" x="850" y="430" width="90" height="35"/>
+            <text x="895" y="450" text-anchor="middle" font-size="12" fill="white">Expressions</text>
 
-            <!-- Phase 3 Nodes (Todo - Red) -->
-            <circle class="node todo" cx="850" cy="650" r="30"/>
-            <text x="850" y="655" text-anchor="middle" font-size="12" font-weight="bold" fill="white">3</text>
-            <text x="850" y="675" text-anchor="middle" font-size="10" fill="white">Proto Physique</text>
-            <circle class="node todo" cx="950" cy="550" r="25"/>
-            <text x="950" y="555" text-anchor="middle" font-size="9">Design</text>
-            <text x="950" y="568" text-anchor="middle" font-size="8">Robot</text>
-            <circle class="node todo" cx="1050" cy="450" r="25"/>
-            <text x="1050" y="455" text-anchor="middle" font-size="9">Tests</text>
-            <text x="1050" y="468" text-anchor="middle" font-size="8">Voiture</text>
+            <!-- Strategy Nodes (8 nodes, In Progress Orange) -->
+            <rect class="node in-progress" x="950" y="480" width="100" height="40"/>
+            <text x="1000" y="505" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Proto Logiciel</text>
+            <rect class="node in-progress" x="1050" y="530" width="90" height="35"/>
+            <text x="1095" y="550" text-anchor="middle" font-size="12" fill="white">Priorisation</text>
+            <rect class="node in-progress" x="1150" y="530" width="90" height="35"/>
+            <text x="1195" y="550" text-anchor="middle" font-size="12" fill="white">Code OBD2</text>
+            <rect class="node in-progress" x="1050" y="580" width="90" height="35"/>
+            <text x="1095" y="600" text-anchor="middle" font-size="12" fill="white">Algo Émotion</text>
+            <rect class="node in-progress" x="1150" y="580" width="90" height="35"/>
+            <text x="1195" y="600" text-anchor="middle" font-size="12" fill="white">Simulation</text>
+            <rect class="node in-progress" x="950" y="630" width="90" height="35"/>
+            <text x="995" y="650" text-anchor="middle" font-size="12" fill="white">Roadmap PM</text>
+            <rect class="node in-progress" x="1050" y="630" width="90" height="35"/>
+            <text x="1095" y="650" text-anchor="middle" font-size="12" fill="white">Keyframes</text>
+            <rect class="node in-progress" x="1150" y="630" width="90" height="35"/>
+            <text x="1195" y="650" text-anchor="middle" font-size="12" fill="white">Auto-save</text>
 
-            <!-- Phase 4 Nodes (Todo - Red) -->
-            <circle class="node todo" cx="1100" cy="750" r="30"/>
-            <text x="1100" y="755" text-anchor="middle" font-size="12" font-weight="bold" fill="white">4</text>
-            <text x="1100" y="775" text-anchor="middle" font-size="10" fill="white">Produit</text>
-            <circle class="node todo" cx="1000" cy="650" r="25"/>
-            <text x="1000" y="655" text-anchor="middle" font-size="9">App</text>
-            <text x="1000" y="668" text-anchor="middle" font-size="8">Mobile</text>
+            <!-- Execution Nodes (6 nodes, Todo Red) -->
+            <rect class="node todo" x="1250" y="580" width="100" height="40"/>
+            <text x="1300" y="605" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Proto Physique</text>
+            <rect class="node todo" x="1350" y="630" width="90" height="35"/>
+            <text x="1395" y="650" text-anchor="middle" font-size="12" fill="white">Design Robot</text>
+            <rect class="node todo" x="1450" y="630" width="90" height="35"/>
+            <text x="1495" y="650" text-anchor="middle" font-size="12" fill="white">Assemblage</text>
+            <rect class="node todo" x="1350" y="680" width="90" height="35"/>
+            <text x="1395" y="700" text-anchor="middle" font-size="12" fill="white">Tests Voiture</text>
+            <rect class="node todo" x="1450" y="680" width="90" height="35"/>
+            <text x="1495" y="700" text-anchor="middle" font-size="12" fill="white">CAN Bus</text>
+            <rect class="node todo" x="1250" y="730" width="90" height="35"/>
+            <text x="1295" y="750" text-anchor="middle" font-size="12" fill="white">Jira/Agile</text>
 
-            <!-- Links to resources -->
+            <!-- Growth Nodes (5 nodes, Todo Red) -->
+            <rect class="node todo" x="1250" y="780" width="100" height="40"/>
+            <text x="1300" y="805" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Produit Final</text>
+            <rect class="node todo" x="1350" y="830" width="90" height="35"/>
+            <text x="1395" y="850" text-anchor="middle" font-size="12" fill="white">App Mobile</text>
+            <rect class="node todo" x="1450" y="830" width="90" height="35"/>
+            <text x="1495" y="850" text-anchor="middle" font-size="12" fill="white">Dashboard</text>
+            <rect class="node todo" x="1350" y="880" width="90" height="35"/>
+            <text x="1395" y="900" text-anchor="middle" font-size="12" fill="white">Metrics</text>
+            <rect class="node todo" x="1450" y="880" width="90" height="35"/>
+            <text x="1495" y="900" text-anchor="middle" font-size="12" fill="white">Pitch Deck</text>
+
+            <!-- Resource links (matching source links style) -->
             <a xlink:href="obd-marques-progress.html" target="_blank">
-                <circle cx="350" cy="250" r="28" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.8"/>
+                <circle cx="395" cy="248" r="32" fill="none" stroke="#00ff88" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
             </a>
             <a xlink:href="BOBO/itbobd_eye_editor_v2.html" target="_blank">
-                <circle cx="750" cy="650" r="28" fill="none" stroke="#ffaa00" stroke-width="2" opacity="0.8"/>
+                <circle cx="795" cy="448" r="32" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
+            </a>
+            <a xlink:href="PLAN_PROJET.md" target="_blank">
+                <circle cx="1095" cy="598" r="32" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
             </a>
         </svg>
 
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-circle done"></div> ✅ Terminée
+                <div class="legend-swatch" style="background: #10b981;"></div>
+                <span>✅ Terminée (Phase 1)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-circle" style="background: #ffaa00;"></div> 🟡 En cours
+                <div class="legend-swatch" style="background: #f59e0b;"></div>
+                <span>🟡 En cours (Phase 2)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-circle" style="background: #ff4444;"></div> 🔴 À faire
+                <div class="legend-swatch" style="background: #ef4444;"></div>
+                <span>🔴 À venir (Phases 3-4)</span>
             </div>
         </div>
 
-        <footer>
-            <p>Adapté style <a href="https://roadmap.sh/product-manager" target="_blank" style="color: #00ff88;">roadmap.sh/product-manager</a> | Phases IT-BOBD | Maxbot 2026-03-09 | <a href="PLAN_PROJET.md">PLAN_PROJET.md</a></p>
+        <footer class="text-center mt-12 text-sm opacity-75">
+            <p>Exact schema roadmap.sh/product-manager (~30 nodes, 5 phases, liens sources) adapté IT-BOBD | Maxbot 2026-03-09</p>
+            <p><a href="https://roadmap.sh/product-manager" target="_blank" class="text-emerald-400 hover:underline">Source originale</a> | <a href="PLAN_PROJET.md" class="text-emerald-400 hover:underline">PLAN_PROJET.md</a></p>
         </footer>
     </div>
 </body>
