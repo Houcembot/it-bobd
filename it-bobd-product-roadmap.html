@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-BOBD Product Roadmap (adapté roadmap.sh PM)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; }
+        h1 { text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin-bottom: 40px; }
+        .roadmap { display: flex; flex-direction: column; gap: 20px; }
+        .phase { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        .phase::before { content: ''; position: absolute; left: -10px; top: 50%; width: 20px; height: 20px; background: #00ff88; border-radius: 50%; transform: translateY(-50%); }
+        .phase:last-child::after { content: ''; position: absolute; right: -10px; top: 50%; width: 20px; height: 20px; background: #ffaa00; border-radius: 50%; transform: translateY(-50%); }
+        .phase-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .phase-title { font-size: 1.5em; font-weight: bold; margin-right: 15px; }
+        .status { padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: white; }
+        .status.done { background: #00ff88; }
+        .status.in-progress { background: #ffaa00; }
+        .status.todo { background: #ff4444; }
+        .steps { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; }
+        .step { padding: 10px; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
+        .step-title { font-weight: bold; margin-bottom: 5px; }
+        .step-check { font-size: 1.2em; margin-right: 8px; }
+        .resources { font-size: 0.85em; color: #666; margin-top: 5px; }
+        footer { text-align: center; margin-top: 40px; color: white; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h1>🚗 IT-BOBD Product Roadmap<br><small>Adapté de roadmap.sh/product-manager pour Robot OBD Companion</small></h1>
+    
+    <div class="roadmap">
+        <!-- Phase 1: Fundamentals/Discovery (Fondations) -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-title">1. Fondations & Discovery</div>
+                <span class="status done">✅ TERMINÉ</span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-title"><span class="step-check">✓</span>Étude marché & Users</div>
+                    <div class="resources">13 marques TN (Peugeot/Renault 85% compat)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">✓</span>Research OBD2 (ELM327/PIC)</div>
+                    <div class="resources"><a href="obd-marques-progress.html">Tableau compat</a></div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">✓</span>Specs Hardware (ESP32 S3, GC9A01)</div>
+                    <div class="resources">Budget &lt;60$ V1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Strategy/Execution (Proto Logiciel) -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-title">2. Strategy & Proto Logiciel</div>
+                <span class="status in-progress">🟡 EN COURS</span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Prioritization Roadmap</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Code ESP32 OBD2 lecture (2.1)</div>
+                    <div class="resources">PIDs std (0C RPM, 0D Vitesse)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Algo émotionnel v1 (2.2)</div>
+                    <div class="resources">Eye Editor v2 <a href="BOBO/itbobd_eye_editor_v2.html">live</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Execution (Proto Physique) -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-title">3. Execution & Proto Physique</div>
+                <span class="status todo">🔴 À VENIR</span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Design robot (3.1)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Assemblage HW (3.2)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Tests réels voiture (3.3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Growth (Produit) -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-title">4. Growth & Produit Final</div>
+                <span class="status todo">🔴 FUTURE</span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>App mobile (4.1)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Dashboard web (4.2)</div>
+                </div>
+                <div class="step">
+                    <div class="step-title"><span class="step-check">○</span>Pitch investisseurs (4.4)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Adapté par Maxbot de <a href="https://roadmap.sh/product-manager" style="color: #00ff88;">roadmap.sh/product-manager</a> | <a href="PLAN_PROJET.md">PLAN_PROJET.md</a> | Mis à jour: 2026-03-09</p>
+    </footer>
+</body>
+</html>
