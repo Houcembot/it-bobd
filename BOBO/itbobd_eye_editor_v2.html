@@ -258,6 +258,22 @@ presetNames.forEach((n,i)=>{expressions[i].name=n});
 
 let selectedExpr=0, isRecording=false, recordStart=0, isPlaying=false, playStart=0, playKFs=[];
 
+// Auto-save functions
+function saveExpressions() {
+  localStorage.setItem('itbobd_expressions_v2', JSON.stringify(expressions));
+}
+function loadExpressions() {
+  const saved = localStorage.getItem('itbobd_expressions_v2');
+  if (saved) {
+    try {
+      expressions = JSON.parse(saved);
+      // Ensure 40 slots
+      while(expressions.length < 40) expressions.push({name:'',keyframes:[]});
+      presetNames.forEach((n,i)=>{if(!expressions[i] || !expressions[i].name) expressions[i].name = n;});
+    } catch(e) { console.log('Load failed, using defaults'); }
+  }
+}
+
 // Auto-blink
 let autoBlink=true, blinkSpeed=6, nextBlink=Date.now()+2000, isBlinking=false;
 
@@ -425,7 +441,8 @@ function addKeyframe(){
   const t=isRecording?Math.min(Date.now()-recordStart,15000):(expr.keyframes.length===0?0:15000);
   expr.keyframes.push(captureKF(t));
   expr.keyframes.sort((a,b)=>a.t-b.t);
-  refreshKFList();refreshExprGrid()
+  refreshKFList();refreshExprGrid();
+  saveExpressions();
 }
 function clearKeyframes(){expressions[selectedExpr].keyframes=[];refreshKFList();refreshExprGrid()}
 function deleteKF(i){expressions[selectedExpr].keyframes.splice(i,1);refreshKFList();refreshExprGrid()}
@@ -526,7 +543,8 @@ function quickAnim(type){
   else if(type==='bee')kfs=[{...d,t:0,curious:true},{...d,t:300,x:42,y:75,curious:true},{...d,t:600,x:80,y:95,curious:true},{...d,t:900,x:50,y:105,curious:true},{...d,t:1200,x:85,y:75,curious:true},{...d,t:1500,x:64,y:85,curious:true},{...d,t:2000,curious:true},{...d,t:15000}];
 
   expressions[selectedExpr].keyframes=kfs;
-  refreshKFList();refreshExprGrid();playExpression()
+  refreshKFList();refreshExprGrid();playExpression();
+  saveExpressions();
 }
 
 // === LIBRARY ===
@@ -563,17 +581,18 @@ function refreshExprGrid(){
     const has=expr.keyframes.length>0,sel=i===selectedExpr;
     return`<div class="expr-card ${has?'has-data':''} ${sel?'selected':''}" data-idx="${i}" onclick="selectExpr(${i})">
       <div class="expr-header"><span class="expr-id">#${String(i+1).padStart(2,'0')}</span><span style="font-size:0.5em;color:#666">${expr.keyframes.length}KF</span></div>
-      <div class="expr-name"><input value="${expr.name}" onchange="expressions[${i}].name=this.value" onclick="event.stopPropagation()"></div>
+      <div class="expr-name"><input value="${expr.name}" onchange="expressions[${i}].name=this.value;saveExpressions();" onclick="event.stopPropagation()"></div>
       <div class="expr-kf-bar">${expr.keyframes.map(kf=>`<div class="expr-kf-dot" style="left:${kf.t/30}%"></div>`).join('')}</div>
       <div class="expr-actions">
         <button class="btn" onclick="event.stopPropagation();selectedExpr=${i};playExpression()">▶</button>
         <button class="btn" onclick="event.stopPropagation();dupExpr(${i})">⧉</button>
-        <button class="btn" style="color:#ff4444" onclick="event.stopPropagation();expressions[${i}].keyframes=[];refreshExprGrid();if(selectedExpr===${i})refreshKFList()">✕</button>
-      </div></div>`}).join('')
+        <button class="btn" style="color:#ff4444" onclick="event.stopPropagation();expressions[${i}].keyframes=[];refreshExprGrid();if(selectedExpr===${i})refreshKFList();saveExpressions()">✕</button>
+      </div></div>`}).join('');
+  saveExpressions(); // Auto-save on grid refresh
 }
 function dupExpr(f){const e=expressions.findIndex((x,i)=>i>f&&!x.keyframes.length);if(e===-1)return;
   expressions[e].keyframes=JSON.parse(JSON.stringify(expressions[f].keyframes));
-  expressions[e].name=expressions[f].name+' (2)';refreshExprGrid()}
+  expressions[e].name=expressions[f].name+' (2)';refreshExprGrid();}
 
 // === EXPORT ===
 function exportArduino(){
@@ -614,8 +633,12 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Init
+// Load & periodic save
+loadExpressions();
 buildLibrary();refreshExprGrid();selectExpr(0);setSliders();mainLoop();
+
+// Auto-save every 10s
+setInterval(saveExpressions, 10000);
 </script>
 </body>
 </html>
