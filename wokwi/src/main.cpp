@@ -1,181 +1,291 @@
-#include <Arduino.h>
-#include <SPI.h>
 #include <TFT_eSPI.h>
+#include <SPI.h>
 
-// Initialisation de l'écran TFT
 TFT_eSPI tft = TFT_eSPI();
-TFT_eSprite spr = TFT_eSprite(&tft);
 
-// --- CONFIGURATION ---
-#define SCREEN_W 240
-#define SCREEN_H 240
-#define BGCOLOR TFT_BLACK
-#define EYECOLOR TFT_WHITE
-#define BG_DARK_BLUE 0x0005
-#define V_DARK 0x0110
-#define TFT_YELLOW 0xFFE0
+// --- CONFIGURATION TROUVÉE ---
+#define TX_PIN 8 // GPIO8 - TX vers ELM327
+#define RX_PIN 9 // GPIO9 - RX depuis ELM327
+#define OBD_BAUD 38400
+#define OBD_CONFIG SERIAL_8N1
 
-// Paramètres des Yeux
-int eyeW = 56;
-int eyeH_Max = 56;
-int borderRadius = 16;
-int spaceBetween = 24;
-int blinkThickness = 6;
-int blinkWidth = 64;
-float blinkThreshold = 12.0;
-
-// Variables d'Animation
-float curLx, curLy, curLh;
-float targetLx, targetLy, targetLh;
-unsigned long blinkTimer = 0;
-unsigned long idleTimer = 0;
-unsigned long moodTimer = 0;
-
-enum Mood { NORMAL, TIRED, ANGRY, HAPPY };
-Mood currentMood = NORMAL;
-
-// Variables du Dashboard
-float realRPM = 0, realSPD = 0, realTMP = 0;
-
-// Helper Functions
-void printCentered(String s, int y, int size, uint16_t color) {
-  spr.setTextSize(size);
-  spr.setTextColor(color);
-  int x = 120 - (s.length() * 6 * size / 2);
-  spr.setCursor(x, y);
-  spr.print(s);
-}
-
-// Logique de Dessin des Yeux
-void drawEyesToSprite() {
-  spr.fillSprite(BGCOLOR);
-  int drawW, drawH, drawRadius, finalY;
-  int xL, xR;
-
-  if (curLh < blinkThreshold) {
-    drawW = blinkWidth; drawH = blinkThickness; drawRadius = 3;
-    finalY = (int)curLy + (eyeH_Max / 2) - (blinkThickness / 2);
-    xL = (int)curLx - (blinkWidth - eyeW) / 2;
-    xR = xL + blinkWidth + (spaceBetween - (blinkWidth - eyeW));
-  } else {
-    drawW = eyeW; drawH = (int)curLh; drawRadius = borderRadius;
-    finalY = (int)curLy + (eyeH_Max - drawH) / 2;
-    xL = (int)curLx; xR = xL + eyeW + spaceBetween;
-  }
-
-  spr.fillRoundRect(xL, finalY, drawW, drawH, drawRadius, EYECOLOR);
-  spr.fillRoundRect(xR, finalY, drawW, drawH, drawRadius, EYECOLOR);
-
-  if (curLh >= blinkThreshold) {
-    int mH = drawH / 2;
-    if (currentMood == ANGRY) {
-      spr.fillTriangle(xL, finalY, xL + eyeW, finalY, xL + eyeW, finalY + mH, BGCOLOR);
-      spr.fillTriangle(xR, finalY, xR + eyeW, finalY, xR, finalY + mH, BGCOLOR);
-    } else if (currentMood == TIRED) {
-      spr.fillTriangle(xL, finalY, xL + eyeW, finalY, xL, finalY + mH, BGCOLOR);
-      spr.fillTriangle(xR, finalY, xR + eyeW, finalY, xR + eyeW, finalY + mH, BGCOLOR);
-    } else if (currentMood == HAPPY) {
-      spr.fillRoundRect(xL - 2, finalY + mH, eyeW + 4, eyeH_Max, borderRadius, BGCOLOR);
-      spr.fillRoundRect(xR - 2, finalY + mH, eyeW + 4, eyeH_Max, borderRadius, BGCOLOR);
-    }
-  }
-}
-
-void updateEyesLogic() {
-  unsigned long now = millis();
-  if (now > moodTimer) {
-    if (currentMood == NORMAL) currentMood = TIRED;
-    else if (currentMood == TIRED) currentMood = ANGRY;
-    else if (currentMood == ANGRY) currentMood = HAPPY;
-    else currentMood = NORMAL;
-    moodTimer = now + 4000;
-  }
-  if (now > blinkTimer) { targetLh = 0; blinkTimer = now + random(2000, 5000); }
-  if (now > idleTimer) { targetLx = random(40, 90); targetLy = random(70, 105); idleTimer = now + random(2000, 6000); }
-  float speed = (targetLh == 0 || curLh < 10) ? 0.40 : 0.20;
-  curLx += (targetLx - curLx) * 0.20; curLy += (targetLy - curLy) * 0.20; curLh += (targetLh - curLh) * speed;
-  if (curLh < 1.0) targetLh = eyeH_Max;
-}
-
-// Logique du Dashboard
-uint16_t getSpeedColor(float spd) {
-  if (spd < 40) return TFT_BLUE;
-  if (spd < 80) return TFT_YELLOW;
-  return TFT_GREEN;
-}
-
-uint16_t getRPMColor(float rpm) {
-  if (rpm < 2000) return TFT_YELLOW;
-  if (rpm < 4000) return 0xFA20;
-  return TFT_RED;
-}
-
-void drawDashboard(float rpm, float spd, float tmp) {
-  spr.fillSprite(BG_DARK_BLUE);
-  spr.drawArc(120, 120, 115, 100, 150, 390, V_DARK, BG_DARK_BLUE);
-  spr.drawArc(120, 120, 95, 85, 150, 390, V_DARK, BG_DARK_BLUE);
-
-  int endAngleSpd = 150 + (int)((spd / 120.0) * 240.0);
-  int endAngleRpm = 150 + (int)((rpm / 5000.0) * 240.0);
-
-  if(spd > 0.1) spr.drawArc(120, 120, 115, 100, 150, endAngleSpd, getSpeedColor(spd), BG_DARK_BLUE);
-  if(rpm > 0.1) spr.drawArc(120, 120, 95, 85, 150, endAngleRpm, getRPMColor(rpm), BG_DARK_BLUE);
-
-  spr.setTextColor(TFT_CYAN); spr.setTextSize(3);
-  spr.setCursor(85, 50); spr.print((int)tmp); spr.setTextSize(1); spr.print(" C");
-
-  spr.setTextColor(TFT_WHITE); spr.setTextSize(5);
-  int xRpm = (rpm < 1000) ? 95 : 75;
-  spr.setCursor(xRpm, 100); spr.print((int)rpm);
-
-  spr.setTextColor(TFT_YELLOW); spr.setTextSize(4);
-  int xSpd = (spd < 100) ? 95 : 75;
-  spr.setCursor(xSpd, 160); spr.print((int)spd);
-  spr.setTextSize(1); spr.print(" km/h");
-
-  spr.pushSprite(0, 0);
-}
+// --- COULEURS ---
+#define BACKGROUND 0x0000
+#define WHITE 0xFFFF
+#define RED 0xF800
+#define GREEN 0x07E0
+#define YELLOW 0xFFE0
+#define BLUE 0x001F
+#define CYAN 0x07FF
 
 void setup() {
-  Serial.begin(115200);
-  tft.init();
-  tft.setRotation(0);
-  spr.createSprite(SCREEN_W, SCREEN_H);
-  spr.setSwapBytes(true);
+ Serial.begin(115200);
+ delay(1000);
+ 
+ tft.init();
+ tft.setRotation(0);
+ tft.fillScreen(BACKGROUND);
+ 
+ Serial.println("\n=== CONFIGURATION OBD TROUVÉE ===");
+ Serial.println("Baud: 38400 8N1");
+ Serial.println("TX: GPIO8, RX: GPIO9");
+ 
+ // Afficher configuration
+ tft.setTextColor(GREEN);
+ tft.setTextSize(3);
+ tft.setCursor(20, 20);
+ tft.print("OBD OK!");
+ 
+ tft.setTextSize(2);
+ tft.setCursor(20, 60);
+ tft.print("38400 8N1");
+ 
+ tft.setTextSize(1);
+ tft.setTextColor(WHITE);
+ tft.setCursor(20, 90);
+ tft.print("TX: GPIO8 -> OBD RX");
+ tft.setCursor(20, 110);
+ tft.print("RX: GPIO9 <- OBD TX");
+ 
+ delay(2000);
+ 
+ // Initialiser Serial1
+ Serial1.begin(OBD_BAUD, OBD_CONFIG, RX_PIN, TX_PIN);
+ delay(100);
+ 
+ // Nettoyer buffer
+ while(Serial1.available()) {
+ Serial1.read();
+ }
+ 
+ // Tester la connexion
+ testConnection();
+}
 
-  // Initialisation des cibles Yeux
-  targetLh = eyeH_Max;
-  targetLx = (SCREEN_W - (eyeW * 2 + spaceBetween)) / 2;
-  targetLy = (SCREEN_H - eyeH_Max) / 2;
-  curLx = targetLx; curLy = targetLy; curLh = eyeH_Max;
+void testConnection() {
+ tft.fillRect(0, 130, 240, 110, BACKGROUND);
+ 
+ // Test 1: ATZ (Reset)
+ tft.setTextColor(CYAN);
+ tft.setTextSize(2);
+ tft.setCursor(20, 130);
+ tft.print("1. ATZ...");
+ 
+ Serial1.println("ATZ");
+ delay(800);
+ 
+ String response = readOBDResponse(2000);
+ 
+ tft.setTextSize(1);
+ tft.setCursor(20, 155);
+ 
+ if(response.length() > 0) {
+ tft.setTextColor(YELLOW);
+ tft.print("Reponse: ");
+ 
+ // Nettoyer l'affichage
+ String display = cleanResponse(response);
+ if(display.length() > 20) {
+ tft.print(display.substring(0, 20));
+ } else {
+ tft.print(display);
+ }
+ 
+ Serial.print("ATZ -> ");
+ Serial.println(response);
+ } else {
+ tft.setTextColor(RED);
+ tft.print("Pas de reponse");
+ Serial.println("ATZ -> No response");
+ }
+ 
+ delay(1500);
+ 
+ // Test 2: ATI (Information)
+ tft.fillRect(20, 170, 200, 40, BACKGROUND);
+ tft.setTextColor(CYAN);
+ tft.setTextSize(2);
+ tft.setCursor(20, 170);
+ tft.print("2. ATI...");
+ 
+ Serial1.println("ATI");
+ delay(500);
+ 
+ response = readOBDResponse(1500);
+ 
+ tft.setTextSize(1);
+ tft.setCursor(20, 195);
+ 
+ if(response.length() > 0) {
+ tft.setTextColor(YELLOW);
+ tft.print("Reponse: ");
+ 
+ String display = cleanResponse(response);
+ if(display.length() > 20) {
+ tft.print(display.substring(0, 20));
+ } else {
+ tft.print(display);
+ }
+ 
+ Serial.print("ATI -> ");
+ Serial.println(response);
+ } else {
+ tft.setTextColor(RED);
+ tft.print("Pas de reponse");
+ Serial.println("ATI -> No response");
+ }
+ 
+ delay(1500);
+ 
+ // Test 3: ATRV (Tension batterie)
+ tft.fillRect(20, 210, 200, 40, BACKGROUND);
+ tft.setTextColor(CYAN);
+ tft.setTextSize(2);
+ tft.setCursor(20, 210);
+ tft.print("3. ATRV...");
+ 
+ Serial1.println("ATRV");
+ delay(500);
+ 
+ response = readOBDResponse(1500);
+ 
+ tft.setTextSize(1);
+ tft.setCursor(20, 235);
+ 
+ if(response.length() > 0) {
+ tft.setTextColor(YELLOW);
+ tft.print("Reponse: ");
+ 
+ String display = cleanResponse(response);
+ if(display.length() > 20) {
+ tft.print(display.substring(0, 20));
+ } else {
+ tft.print(display);
+ }
+ 
+ Serial.print("ATRV -> ");
+ Serial.println(response);
+ } else {
+ tft.setTextColor(RED);
+ tft.print("Pas de reponse");
+ Serial.println("ATRV -> No response");
+ }
+ 
+ // Mode prêt
+ delay(2000);
+ tft.fillScreen(BACKGROUND);
+ tft.setTextColor(GREEN);
+ tft.setTextSize(3);
+ tft.setCursor(30, 50);
+ tft.print("PRET!");
+ 
+ tft.setTextSize(2);
+ tft.setTextColor(WHITE);
+ tft.setCursor(30, 100);
+ tft.print("Envoyez commandes");
+ tft.setCursor(50, 130);
+ tft.print("via Serial");
+ 
+ Serial.println("\n=== MODE OBD ACTIF ===");
+ Serial.println("Envoyez commandes OBD:");
+ Serial.println("- ATZ (reset)");
+ Serial.println("- ATI (info)");
+ Serial.println("- ATRV (tension)");
+ Serial.println("- ATSP0 (auto protocol)");
+ Serial.println("- 0100 (test PID)");
+}
 
-  blinkTimer = millis() + 2000;
-  idleTimer = millis() + 4000;
-  moodTimer = millis() + 4000;
+String readOBDResponse(unsigned long timeout) {
+ String response = "";
+ unsigned long start = millis();
+ 
+ while(millis() - start < timeout) {
+ if(Serial1.available()) {
+ char c = Serial1.read();
+ response += c;
+ if(c == '>') {
+ break;
+ }
+ }
+ }
+ 
+ return response;
+}
+
+String cleanResponse(String input) {
+ String output = "";
+ for(int i = 0; i < input.length(); i++) {
+ char c = input[i];
+ if(c == '\r') {
+ output += "\\r";
+ } else if(c == '\n') {
+ output += "\\n";
+ } else if(c == '>') {
+ output += ">";
+ } else if(c >= 32 && c <= 126) {
+ output += c;
+ } else {
+ output += "?";
+ }
+ }
+ return output;
 }
 
 void loop() {
-  static unsigned long switchModeTimer = 0;
-  static bool showDashboard = false;
-
-  // Alterne le mode toutes les 10 secondes pour la démo
-  if (millis() > switchModeTimer) {
-    showDashboard = !showDashboard;
-    switchModeTimer = millis() + 10000;
-  }
-
-  if (showDashboard) {
-    // Simule des données OBD
-    realRPM = random(800, 4800);
-    realSPD = map(realRPM, 800, 4800, 0, 120);
-    realTMP = 92;
-    drawDashboard(realRPM, realSPD, realTMP);
-    delay(50);
-  } else {
-    // Anime les Yeux
-    updateEyesLogic();
-    drawEyesToSprite();
-    spr.pushSprite(0, 0);
-    delay(16);
-  }
+ // Mode commande manuelle
+ if(Serial.available()) {
+ String cmd = Serial.readStringUntil('\n');
+ cmd.trim();
+ 
+ if(cmd.length() > 0) {
+ Serial.print(">>> ");
+ Serial.println(cmd);
+ 
+ // Envoyer à l'ELM327
+ Serial1.println(cmd);
+ delay(200);
+ 
+ // Lire réponse
+ String response = readOBDResponse(3000);
+ Serial.print("<<< ");
+ Serial.println(response);
+ 
+ // Afficher sur écran
+ tft.fillScreen(BACKGROUND);
+ tft.setTextColor(CYAN);
+ tft.setTextSize(2);
+ tft.setCursor(10, 20);
+ tft.print("Commande:");
+ 
+ tft.setTextColor(WHITE);
+ tft.setTextSize(3);
+ tft.setCursor(10, 50);
+ if(cmd.length() > 15) {
+ tft.print(cmd.substring(0, 15));
+ } else {
+ tft.print(cmd);
+ }
+ 
+ tft.setTextColor(YELLOW);
+ tft.setTextSize(2);
+ tft.setCursor(10, 90);
+ tft.print("Reponse:");
+ 
+ tft.setTextSize(1);
+ tft.setCursor(10, 120);
+ 
+ String display = cleanResponse(response);
+ // Afficher en plusieurs lignes si nécessaire
+ int line = 0;
+ for(int i = 0; i < display.length(); i += 30) {
+ int endPos = (i + 30 < display.length()) ? i + 30 : display.length();
+ tft.setCursor(10, 140 + line * 15);
+ tft.print(display.substring(i, endPos));
+ line++;
+ if(line >= 5) break;
+ }
+ }
+ }
+ 
+ delay(10);
 }

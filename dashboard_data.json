@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-11 12:44",
+  "generated_at": "2026-03-11 14:00",
   "bots": {
     "maxbot": {
       "name": "Maxbot",
       "role": "Orchestrateur",
-      "model": "DeepSeek V3",
+      "model": "Llama 3.3 70B",
       "fleet_status": {}
     },
     "rocbot": {
