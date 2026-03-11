@@ -1,23 +1,32 @@
 {
-  "generated_at": "2026-03-11 14:00",
+  "generated_at": "2026-03-11 14:02",
   "bots": {
     "maxbot": {
       "name": "Maxbot",
       "role": "Orchestrateur",
-      "model": "Llama 3.3 70B",
-      "fleet_status": {}
+      "model": "DeepSeek V3",
+      "fleet_status": {
+        "status": "Llama 3.3 70B",
+        "last_activity": "Orchestrateur"
+      }
     },
     "rocbot": {
       "name": "Rocbot",
       "role": "Exécuteur Local",
       "model": "Qwen (Ollama)",
-      "fleet_status": {}
+      "fleet_status": {
+        "status": "Qwen 8B",
+        "last_activity": "Exécuteur local"
+      }
     },
     "clobot": {
       "name": "Clobot",
       "role": "Admin On-Call",
       "model": "Claude",
-      "fleet_status": {}
+      "fleet_status": {
+        "status": "MiniMax M2.5",
+        "last_activity": "Admin technique"
+      }
     }
   },
   "projects": [
