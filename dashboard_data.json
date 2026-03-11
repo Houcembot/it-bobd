@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-09 17:27",
+  "generated_at": "2026-03-11 12:44",
   "bots": {
     "maxbot": {
       "name": "Maxbot",
       "role": "Orchestrateur",
-      "model": "Gemini 2.5 Flash",
+      "model": "DeepSeek V3",
       "fleet_status": {}
     },
     "rocbot": {
@@ -24,8 +24,8 @@
     {
       "id": "it-bobd",
       "name": "IT BOBD",
-      "desc": "",
-      "phase": "À définir",
+      "desc": "Dernière mise à jour : 2026-03-10",
+      "phase": "En attente",
       "tasks": [],
       "progress": "0/0",
       "agent_statuses": {}
