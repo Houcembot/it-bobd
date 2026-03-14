@@ -1,145 +1,690 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-BOBD Product Manager Roadmap (Exact Schema roadmap.sh)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: linear-gradient(135deg, #1e1e2e 0%, #313244 100%); color: white; font-family: 'Inter', sans-serif; }
-        .roadmap-svg { max-width: 100%; height: auto; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-        .node { cursor: pointer; transition: all 0.3s ease; rx: 12; ry: 12; }
-        .node:hover { filter: drop-shadow(0 10px 20px rgba(0,255,136,0.5)); transform: scale(1.05); }
-        .done { fill: #10b981; stroke: #059669; stroke-width: 3; }
-        .in-progress { fill: #f59e0b; stroke: #d97706; stroke-width: 3; }
-        .todo { fill: #ef4444; stroke: #dc2626; stroke-width: 3; opacity: 0.8; }
-        .path { stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-        .path.done { stroke: #10b981; }
-        .path.in-progress { stroke: #f59e0b; stroke-dasharray: 10,5; animation: dash 1.5s linear infinite; }
-        .path.todo { stroke: #6b7280; stroke-opacity: 0.5; }
-        @keyframes dash { to { stroke-dashoffset: -15; } }
-        .legend { display: flex; justify-content: center; gap: 32px; margin-top: 24px; }
-        .legend-item { display: flex; items-center; gap: 8px; font-size: 14px; }
-        .legend-swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT-BOBD — Product Roadmap 2026-2027</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --bg-card-hover: #22272e;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --green: #22c55e;
+      --green-dim: #1a3a27;
+      --orange: #f59e0b;
+      --orange-dim: #3a2a10;
+      --gray: #6b7280;
+      --blue: #58a6ff;
+      --purple: #a78bfa;
+      --cyan: #22d3ee;
+      --pink: #f472b6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 6px 2px rgba(245,158,11,0.3); }
+      50%       { box-shadow: 0 0 22px 7px rgba(245,158,11,0.65); }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(0.6); }
+    }
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-7px); }
+    }
+    @keyframes scan {
+      0%   { top: 0%; }
+      100% { top: 100%; }
+    }
+    @keyframes blink-eye {
+      0%, 88%, 100% { transform: scaleY(1); }
+      93%            { transform: scaleY(0.06); }
+    }
+    @keyframes progress-bar {
+      from { width: 0%; }
+      to   { width: 28%; }
+    }
+
+    /* ---- Hero ---- */
+    .hero-gradient {
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 45%, #1c2128 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero-gradient::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ---- Robot Eye ---- */
+    .robot-eye-wrapper { animation: float 3.2s ease-in-out infinite; }
+    .robot-eye {
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, #1a2a4a 0%, #0a1020 100%);
+      border-radius: 50%;
+      border: 3px solid var(--blue);
+      box-shadow: 0 0 20px rgba(88,166,255,0.4), inset 0 0 20px rgba(88,166,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .robot-iris {
+      width: 38px; height: 38px;
+      background: radial-gradient(circle at 40% 35%, #60a5fa 0%, #1d4ed8 50%, #1e3a8a 100%);
+      border-radius: 50%;
+      animation: blink-eye 4s ease-in-out infinite;
+      position: relative;
+      box-shadow: 0 0 12px rgba(96,165,250,0.6);
+    }
+    .robot-iris::after {
+      content: '';
+      position: absolute; top: 20%; left: 25%;
+      width: 30%; height: 30%;
+      background: rgba(255,255,255,0.72);
+      border-radius: 50%;
+    }
+    .scan-line {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(88,166,255,0.8), transparent);
+      animation: scan 2.1s linear infinite;
+    }
+
+    /* ---- Progress ---- */
+    .progress-track {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 9999px; height: 14px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 9999px;
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 40%, #f59e0b 70%, #d97706 100%);
+      background-size: 200% auto;
+      animation: progress-bar 1.8s cubic-bezier(.4,0,.2,1) forwards, shimmer 3s linear infinite;
+    }
+
+    /* ---- Phase Cards ---- */
+    .phase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      animation: fade-in-up .5s ease both;
+      position: relative; overflow: hidden;
+    }
+    .phase-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 12px 12px 0 0;
+    }
+    .phase-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(88,166,255,0.3);
+      box-shadow: 0 10px 32px rgba(0,0,0,0.45);
+    }
+    .phase-card.done::before   { background: var(--green); }
+    .phase-card.active::before { background: var(--orange); }
+    .phase-card.todo::before   { background: var(--gray); }
+    .phase-card.active { animation: fade-in-up .5s ease both, pulse-glow 2.6s ease-in-out infinite; }
+    .phase-card.todo { opacity: .78; }
+    .phase-card.todo:hover { opacity: 1; }
+    .phase-card:nth-child(1) { animation-delay:.05s; }
+    .phase-card:nth-child(2) { animation-delay:.10s; }
+    .phase-card:nth-child(3) { animation-delay:.15s; }
+    .phase-card:nth-child(4) { animation-delay:.20s; }
+    .phase-card:nth-child(5) { animation-delay:.25s; }
+    .phase-card:nth-child(6) { animation-delay:.30s; }
+    .phase-card:nth-child(7) { animation-delay:.35s; }
+
+    /* ---- Badges ---- */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 9999px;
+      font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    }
+    .badge-done   { background: rgba(34,197,94,.15);  color: var(--green);  border: 1px solid rgba(34,197,94,.3); }
+    .badge-active { background: rgba(245,158,11,.15); color: var(--orange); border: 1px solid rgba(245,158,11,.3); }
+    .badge-todo   { background: rgba(107,114,128,.15); color: var(--gray);  border: 1px solid rgba(107,114,128,.3); }
+    .pulse-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: currentColor;
+      animation: pulse-dot 1.4s ease-in-out infinite;
+    }
+
+    /* ---- Tasks ---- */
+    .task-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 4px 0; font-size: 13px;
+    }
+    .task-item.done-task   { color: var(--text-secondary); }
+    .task-item.active-task { color: #fcd34d; font-weight: 500; }
+    .task-item.todo-task   { color: var(--text-muted); }
+    .task-icon { flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .deadline-tag {
+      display: inline-block;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      color: var(--orange);
+      background: rgba(245,158,11,.1);
+      border: 1px solid rgba(245,158,11,.2);
+      border-radius: 4px; padding: 1px 5px; margin-left: 4px;
+      white-space: nowrap;
+    }
+
+    /* ---- Stats ---- */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; text-align: center;
+      transition: border-color .2s, transform .2s;
+    }
+    .stat-card:hover { border-color: rgba(88,166,255,.3); transform: translateY(-2px); }
+    .stat-number {
+      font-size: 2.2rem; font-weight: 800; line-height: 1.1;
+      background: linear-gradient(135deg, #58a6ff, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ---- Tech chips ---- */
+    .tech-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-secondary);
+      transition: border-color .2s, color .2s, transform .2s;
+      white-space: nowrap;
+    }
+    .tech-chip:hover { border-color: var(--blue); color: var(--text-primary); transform: translateY(-2px); }
+    .tech-chip .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* ---- Section titles ---- */
+    .section-title {
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--text-primary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ---- Phase number circles ---- */
+    .phase-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px; flex-shrink: 0;
+    }
+
+    /* ---- Generated badge ---- */
+    .gen-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .phases-grid { grid-template-columns: 1fr !important; }
+      .stats-grid  { grid-template-columns: 1fr 1fr !important; }
+      .hero-title  { font-size: 1.8rem !important; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
 </head>
-<body class="min-h-screen py-12 px-4">
-    <div class="max-w-7xl mx-auto">
-        <h1 class="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent drop-shadow-2xl">🚗 IT-BOBD Product Roadmap</h1>
-        <svg class="roadmap-svg w-full" viewBox="0 0 1600 1400" preserveAspectRatio="xMidYMid meet">
-            <!-- Main connecting paths (adapted exact schema: Fundamentals -> Discovery -> Strategy -> Execution -> Growth, with sub-branches ~25 nodes) -->
-            <!-- Fundamentals Path (Done) -->
-            <path class="path done" d="M 200 100 Q 200 200 300 200 L 300 250 Q 400 250 400 300 L 500 300 Q 500 350 600 350"/>
-            <!-- Discovery Path (Done) -->
-            <path class="path done" d="M 600 350 L 700 350 Q 700 400 800 400 L 800 450 Q 900 450 900 500"/>
-            <!-- Strategy Path (In Progress) -->
-            <path class="path in-progress" d="M 900 500 L 1000 500 Q 1000 550 1100 550 L 1100 600"/>
-            <!-- Execution Path (Todo) -->
-            <path class="path todo" d="M 1100 600 L 1200 600 Q 1200 650 1300 650 L 1300 700"/>
-            <!-- Growth Path (Todo) -->
-            <path class="path todo" d="M 1300 700 L 1400 700 Q 1400 750 1500 750"/>
+<body>
 
-            <!-- Fundamentals Nodes (5 nodes, Done Green) -->
-            <rect class="node done" x="150" y="80" width="100" height="40" rx="12"/>
-            <text x="200" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Fondations</text>
-            <rect class="node done" x="250" y="180" width="90" height="35"/>
-            <text x="295" y="200" text-anchor="middle" font-size="12" fill="white">Étude Marché</text>
-            <rect class="node done" x="350" y="230" width="90" height="35"/>
-            <text x="395" y="250" text-anchor="middle" font-size="12" fill="white">OBD Research</text>
-            <rect class="node done" x="450" y="280" width="90" height="35"/>
-            <text x="495" y="300" text-anchor="middle" font-size="12" fill="white">Specs HW</text>
-            <rect class="node done" x="550" y="330" width="90" height="35"/>
-            <text x="595" y="350" text-anchor="middle" font-size="12" fill="white">GitHub Repo</text>
+<!-- ======================================================= HERO -->
+<header class="hero-gradient py-12 px-6">
+  <div class="max-w-7xl mx-auto">
 
-            <!-- Discovery Nodes (6 nodes, Done Green) -->
-            <rect class="node done" x="650" y="330" width="90" height="35"/>
-            <text x="695" y="350" text-anchor="middle" font-size="12" fill="white">CAN Protocols</text>
-            <rect class="node done" x="750" y="380" width="90" height="35"/>
-            <text x="795" y="400" text-anchor="middle" font-size="12" fill="white">Marques TN</text>
-            <rect class="node done" x="850" y="380" width="90" height="35"/>
-            <text x="895" y="400" text-anchor="middle" font-size="12" fill="white">PIDs Std</text>
-            <rect class="node done" x="650" y="430" width="90" height="35"/>
-            <text x="695" y="450" text-anchor="middle" font-size="12" fill="white">Budget V1</text>
-            <rect class="node done" x="750" y="430" width="90" height="35"/>
-            <text x="795" y="450" text-anchor="middle" font-size="12" fill="white">Eye Editor</text>
-            <rect class="node done" x="850" y="430" width="90" height="35"/>
-            <text x="895" y="450" text-anchor="middle" font-size="12" fill="white">Expressions</text>
-
-            <!-- Strategy Nodes (8 nodes, In Progress Orange) -->
-            <rect class="node in-progress" x="950" y="480" width="100" height="40"/>
-            <text x="1000" y="505" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Proto Logiciel</text>
-            <rect class="node in-progress" x="1050" y="530" width="90" height="35"/>
-            <text x="1095" y="550" text-anchor="middle" font-size="12" fill="white">Priorisation</text>
-            <rect class="node in-progress" x="1150" y="530" width="90" height="35"/>
-            <text x="1195" y="550" text-anchor="middle" font-size="12" fill="white">Code OBD2</text>
-            <rect class="node in-progress" x="1050" y="580" width="90" height="35"/>
-            <text x="1095" y="600" text-anchor="middle" font-size="12" fill="white">Algo Émotion</text>
-            <rect class="node in-progress" x="1150" y="580" width="90" height="35"/>
-            <text x="1195" y="600" text-anchor="middle" font-size="12" fill="white">Simulation</text>
-            <rect class="node in-progress" x="950" y="630" width="90" height="35"/>
-            <text x="995" y="650" text-anchor="middle" font-size="12" fill="white">Roadmap PM</text>
-            <rect class="node in-progress" x="1050" y="630" width="90" height="35"/>
-            <text x="1095" y="650" text-anchor="middle" font-size="12" fill="white">Keyframes</text>
-            <rect class="node in-progress" x="1150" y="630" width="90" height="35"/>
-            <text x="1195" y="650" text-anchor="middle" font-size="12" fill="white">Auto-save</text>
-
-            <!-- Execution Nodes (6 nodes, Todo Red) -->
-            <rect class="node todo" x="1250" y="580" width="100" height="40"/>
-            <text x="1300" y="605" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Proto Physique</text>
-            <rect class="node todo" x="1350" y="630" width="90" height="35"/>
-            <text x="1395" y="650" text-anchor="middle" font-size="12" fill="white">Design Robot</text>
-            <rect class="node todo" x="1450" y="630" width="90" height="35"/>
-            <text x="1495" y="650" text-anchor="middle" font-size="12" fill="white">Assemblage</text>
-            <rect class="node todo" x="1350" y="680" width="90" height="35"/>
-            <text x="1395" y="700" text-anchor="middle" font-size="12" fill="white">Tests Voiture</text>
-            <rect class="node todo" x="1450" y="680" width="90" height="35"/>
-            <text x="1495" y="700" text-anchor="middle" font-size="12" fill="white">CAN Bus</text>
-            <rect class="node todo" x="1250" y="730" width="90" height="35"/>
-            <text x="1295" y="750" text-anchor="middle" font-size="12" fill="white">Jira/Agile</text>
-
-            <!-- Growth Nodes (5 nodes, Todo Red) -->
-            <rect class="node todo" x="1250" y="780" width="100" height="40"/>
-            <text x="1300" y="805" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Produit Final</text>
-            <rect class="node todo" x="1350" y="830" width="90" height="35"/>
-            <text x="1395" y="850" text-anchor="middle" font-size="12" fill="white">App Mobile</text>
-            <rect class="node todo" x="1450" y="830" width="90" height="35"/>
-            <text x="1495" y="850" text-anchor="middle" font-size="12" fill="white">Dashboard</text>
-            <rect class="node todo" x="1350" y="880" width="90" height="35"/>
-            <text x="1395" y="900" text-anchor="middle" font-size="12" fill="white">Metrics</text>
-            <rect class="node todo" x="1450" y="880" width="90" height="35"/>
-            <text x="1495" y="900" text-anchor="middle" font-size="12" fill="white">Pitch Deck</text>
-
-            <!-- Resource links (matching source links style) -->
-            <a xlink:href="obd-marques-progress.html" target="_blank">
-                <circle cx="395" cy="248" r="32" fill="none" stroke="#00ff88" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
-            </a>
-            <a xlink:href="BOBO/itbobd_eye_editor_v2.html" target="_blank">
-                <circle cx="795" cy="448" r="32" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
-            </a>
-            <a xlink:href="PLAN_PROJET.md" target="_blank">
-                <circle cx="1095" cy="598" r="32" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,5" opacity="0.9"/>
-            </a>
-        </svg>
-
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-swatch" style="background: #10b981;"></div>
-                <span>✅ Terminée (Phase 1)</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-swatch" style="background: #f59e0b;"></div>
-                <span>🟡 En cours (Phase 2)</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-swatch" style="background: #ef4444;"></div>
-                <span>🔴 À venir (Phases 3-4)</span>
-            </div>
+    <div class="flex flex-wrap items-center justify-between gap-6 mb-8">
+      <div class="flex items-center gap-6">
+        <div class="robot-eye-wrapper">
+          <div class="robot-eye">
+            <div class="scan-line"></div>
+            <div class="robot-iris"></div>
+          </div>
         </div>
-
-        <footer class="text-center mt-12 text-sm opacity-75">
-            <p>Exact schema roadmap.sh/product-manager (~30 nodes, 5 phases, liens sources) adapté IT-BOBD | Maxbot 2026-03-09</p>
-            <p><a href="https://roadmap.sh/product-manager" target="_blank" class="text-emerald-400 hover:underline">Source originale</a> | <a href="PLAN_PROJET.md" class="text-emerald-400 hover:underline">PLAN_PROJET.md</a></p>
-        </footer>
+        <div>
+          <div class="flex flex-wrap items-center gap-3 mb-2">
+            <h1 class="hero-title text-3xl md:text-4xl font-black tracking-tight text-white">
+              🚗 IT-BOBD
+            </h1>
+            <span class="badge badge-active">
+              <span class="pulse-dot"></span> Phase 3 / 7 — EN COURS
+            </span>
+          </div>
+          <p class="text-base md:text-lg text-gray-400 font-medium">Robot compagnon voiture émotionnel intelligent</p>
+          <p class="text-sm text-gray-500 mt-1">ESP32-S3 Zero · OBD2 CAN Bus (MCP2515) · Écran GC9A01 Round TFT 240×240</p>
+        </div>
+      </div>
+      <div class="flex flex-col items-end gap-2">
+        <div class="gen-badge">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm.75 4.75a.75.75 0 00-1.5 0v3.5l-2 1.15a.75.75 0 00.75 1.3l2.25-1.3a.75.75 0 00.5-.65v-4z"/></svg>
+          Généré le 2026-03-14
+        </div>
+        <div class="gen-badge">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          FreBot — BotFleet
+        </div>
+      </div>
     </div>
+
+    <!-- Progress -->
+    <div class="bg-gray-900 bg-opacity-50 rounded-xl border border-gray-800 p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Progression globale</p>
+          <p class="text-2xl font-black text-white">28% <span class="text-base font-normal text-gray-500">— 2 phases terminées sur 7</span></p>
+        </div>
+        <div class="flex flex-wrap gap-4 text-sm">
+          <div class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded-full bg-green-500"></span><span class="text-gray-400">Terminé (2)</span></div>
+          <div class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded-full bg-amber-400"></span><span class="text-gray-400">En cours (1)</span></div>
+          <div class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded-full bg-gray-600"></span><span class="text-gray-400">À faire (4)</span></div>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="flex justify-between text-xs text-gray-600 font-mono mt-2">
+        <span>Jan 2026</span>
+        <span>Mars 2026 ← vous êtes ici</span>
+        <span>Fin 2027</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ======================================================= MAIN -->
+<main class="max-w-7xl mx-auto px-4 py-10">
+
+  <!-- ---- PHASES ---- -->
+  <h2 class="section-title mb-6">
+    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+    Roadmap — 7 Phases
+  </h2>
+
+  <div class="phases-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 mb-12">
+
+    <!-- P1 -->
+    <div class="phase-card done p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-green-900 text-green-400 border border-green-800">1</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-500 font-mono">Janvier 2026</p>
+          <h3 class="font-bold text-white text-sm">Fondations</h3>
+        </div>
+        <span class="badge badge-done flex-shrink-0">✅ Terminé</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Étude de marché (Blazexel, Dasai, concurrents)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Choix hardware : ESP32-S3 Zero + ELM327</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Breakthrough handshake VW <code style="font-size:11px;color:#58a6ff;background:rgba(88,166,255,.1);padding:1px 4px;border-radius:3px">AT SH 81 10 F1</code></span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Première lecture RPM stable</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Dashboard OBD Python (Raspberry Pi)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Tactile TTP223 (0.15s réactivité)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Gestion énergie (AT LP zero drain)</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full" style="width:100%"></div></div>
+        <p class="text-xs text-gray-600 mt-1 text-right font-mono">7 / 7 tâches</p>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="phase-card done p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-green-900 text-green-400 border border-green-800">2</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-500 font-mono">Février 2026</p>
+          <h3 class="font-bold text-white text-sm">Intégration Visuelle</h3>
+        </div>
+        <span class="badge badge-done flex-shrink-0">✅ Terminé</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Animations yeux (NORMAL, TIRED, ANGRY, HAPPY)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Migration ESP32-S3 Zero + GC9A01 Round LCD</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Simulation Wokwi complète (diagram.json)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Interface OBD + Yeux fusionnée</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Documentation archivée (50+ docs)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Rapport HTML publié sur GitHub Pages</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full" style="width:100%"></div></div>
+        <p class="text-xs text-gray-600 mt-1 text-right font-mono">6 / 6 tâches</p>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="phase-card active p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-amber-900 text-amber-400 border border-amber-700">3</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-500 font-mono">Mars – Mai 2026</p>
+          <h3 class="font-bold text-white text-sm">CAN Bus + Production</h3>
+        </div>
+        <span class="badge badge-active flex-shrink-0"><span class="pulse-dot"></span> En cours</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Stabiliser CAN bus (MCP2515 + SN65HVD230)<span class="deadline-tag">21 mars</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>PIDs OBD2 (RPM, Temp, Vitesse, Batterie)<span class="deadline-tag">24 mars</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Repo GitHub public (README + licence)<span class="deadline-tag">17 mars</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Code Arduino modulaire<span class="deadline-tag">31 mars</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Intégrer écran TFT GC9A01 (SPI)<span class="deadline-tag">15 avril</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Lier expressions aux données OBD2<span class="deadline-tag">30 avril</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Post "Jour 1" réseaux sociaux<span class="deadline-tag">28 mars</span></span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width:10%"></div></div>
+        <p class="text-xs text-amber-700 mt-1 text-right font-mono">0 / 7 — en progression</p>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="phase-card todo p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-gray-800 text-gray-500 border border-gray-700">4</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-600 font-mono">Juin – Août 2026</p>
+          <h3 class="font-bold text-gray-300 text-sm">Audio &amp; Voix</h3>
+        </div>
+        <span class="badge badge-todo flex-shrink-0">📅 À faire</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Module micro INMP441</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Module HP MAX98357A</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Assistant vocal bidirectionnel</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Détection acoustique pannes</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width:0%"></div></div>
+        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 4 tâches</p>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="phase-card todo p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-gray-800 text-gray-500 border border-gray-700">5</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-600 font-mono">Sept – Oct 2026</p>
+          <h3 class="font-bold text-gray-300 text-sm">Miniaturisation &amp; PCB</h3>
+        </div>
+        <span class="badge badge-todo flex-shrink-0">📅 À faire</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Conception PCB custom</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Alimentation batterie intégrée</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Boîtier imprimé 3D</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Réduction taille finale</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width:0%"></div></div>
+        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 4 tâches</p>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="phase-card todo p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-gray-800 text-gray-500 border border-gray-700">6</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-600 font-mono">Nov – Déc 2026</p>
+          <h3 class="font-bold text-gray-300 text-sm">App Mobile</h3>
+        </div>
+        <span class="badge badge-todo flex-shrink-0">📅 À faire</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>App mobile (Flutter ou React Native)</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Connexion BLE / WiFi</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Alertes pannes push notification</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Dashboard mobile</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width:0%"></div></div>
+        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 4 tâches</p>
+      </div>
+    </div>
+
+    <!-- P7 -->
+    <div class="phase-card todo p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="phase-num bg-gray-800 text-gray-500 border border-gray-700">7</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-600 font-mono">2027</p>
+          <h3 class="font-bold text-gray-300 text-sm">Commercialisation</h3>
+        </div>
+        <span class="badge badge-todo flex-shrink-0">📅 À faire</span>
+      </div>
+      <div class="space-y-0.5">
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Certification CE</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Partenaire manufacturing (Tunisie → Europe)</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Crowdfunding (Kickstarter / Indiegogo)</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Distribution e-commerce</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-gray-800">
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width:0%"></div></div>
+        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 4 tâches</p>
+      </div>
+    </div>
+
+  </div><!-- /phases-grid -->
+
+  <!-- ---- TIMELINE ---- -->
+  <h2 class="section-title mb-6">
+    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+    Timeline 2026 – 2027
+  </h2>
+  <div class="bg-gray-900 bg-opacity-40 border border-gray-800 rounded-xl p-6 overflow-x-auto mb-12">
+    <div class="min-w-[700px]">
+      <div class="grid text-xs text-gray-600 font-mono mb-3" style="grid-template-columns:130px repeat(12,1fr)">
+        <div></div>
+        <div class="text-center">Jan</div>
+        <div class="text-center">Fév</div>
+        <div class="text-center">Mar</div>
+        <div class="text-center">Avr</div>
+        <div class="text-center">Mai</div>
+        <div class="text-center">Juin</div>
+        <div class="text-center">Juil</div>
+        <div class="text-center">Août</div>
+        <div class="text-center">Sep</div>
+        <div class="text-center">Oct</div>
+        <div class="text-center">Nov</div>
+        <div class="text-center">Déc</div>
+      </div>
+      <div class="space-y-2">
+        <!-- Row helper macro via HTML -->
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-green-400 font-semibold">P1 Fondations</span>
+          <div class="col-span-1 h-7 bg-green-700 rounded flex items-center justify-center text-xs text-white">✅</div>
+          <div class="col-span-11"></div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-green-400 font-semibold">P2 Visuelle</span>
+          <div></div>
+          <div class="col-span-1 h-7 bg-green-700 rounded flex items-center justify-center text-xs text-white">✅</div>
+          <div class="col-span-10"></div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-amber-400 font-semibold">P3 CAN Bus</span>
+          <div class="col-span-2"></div>
+          <div class="col-span-3 h-7 rounded flex items-center justify-center text-xs text-white font-bold"
+               style="background:repeating-linear-gradient(45deg,#d97706,#d97706 5px,#f59e0b 5px,#f59e0b 10px)">🔄 en cours</div>
+          <div class="col-span-7"></div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-gray-500 font-semibold">P4 Audio</span>
+          <div class="col-span-5"></div>
+          <div class="col-span-3 h-7 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500 opacity-60">📅 juin–août</div>
+          <div class="col-span-4"></div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-gray-500 font-semibold">P5 PCB</span>
+          <div class="col-span-8"></div>
+          <div class="col-span-2 h-7 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500 opacity-60">📅 sep–oct</div>
+          <div class="col-span-2"></div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-gray-500 font-semibold">P6 App Mobile</span>
+          <div class="col-span-10"></div>
+          <div class="col-span-2 h-7 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500 opacity-60">📅 nov–déc</div>
+        </div>
+        <div class="grid items-center gap-1" style="grid-template-columns:130px repeat(12,1fr)">
+          <span class="text-xs text-gray-500 font-semibold">P7 Commercia.</span>
+          <div class="col-span-12 h-7 bg-gray-900 border border-gray-700 rounded flex items-center justify-center text-xs text-gray-600 opacity-60">📅 2027 — Certification CE · Crowdfunding · Distribution</div>
+        </div>
+      </div>
+      <!-- Today marker -->
+      <div class="grid mt-2" style="grid-template-columns:130px repeat(12,1fr)">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="flex flex-col items-start">
+          <div class="w-px h-3 bg-blue-400 ml-0.5"></div>
+          <span class="text-xs text-blue-400 font-mono">▲ mars</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- STATS ---- -->
+  <h2 class="section-title mb-6">
+    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    Métriques du projet
+  </h2>
+  <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+    <div class="stat-card"><div class="stat-number">73</div><p class="text-sm text-gray-500 mt-1 font-medium">Jours de dev</p><p class="text-xs text-gray-600 mt-0.5">Jan → Mar 2026</p></div>
+    <div class="stat-card"><div class="stat-number">50+</div><p class="text-sm text-gray-500 mt-1 font-medium">Docs archivées</p><p class="text-xs text-gray-600 mt-0.5">HTML + Markdown</p></div>
+    <div class="stat-card"><div class="stat-number">13</div><p class="text-sm text-gray-500 mt-1 font-medium">Tâches terminées</p><p class="text-xs text-gray-600 mt-0.5">Phases 1 + 2</p></div>
+    <div class="stat-card"><div class="stat-number">200h+</div><p class="text-sm text-gray-500 mt-1 font-medium">Heures estimées</p><p class="text-xs text-gray-600 mt-0.5">R&amp;D + prototypage</p></div>
+  </div>
+
+  <!-- ---- STACK ---- -->
+  <h2 class="section-title mb-6">
+    <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+    Stack Technique
+  </h2>
+  <div class="grid md:grid-cols-2 gap-6 mb-12">
+    <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
+      <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">🔧 Hardware</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="tech-chip"><span class="dot" style="background:#22d3ee"></span>ESP32-S3 Zero</span>
+        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>MCP2515 (CAN bus)</span>
+        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>SN65HVD230</span>
+        <span class="tech-chip"><span class="dot" style="background:#a78bfa"></span>GC9A01 Round TFT 240×240</span>
+        <span class="tech-chip"><span class="dot" style="background:#f59e0b"></span>TTP223 (tactile)</span>
+        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>INMP441 (micro)</span>
+        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>MAX98357A (HP)</span>
+        <span class="tech-chip"><span class="dot" style="background:#6b7280"></span>ELM327 → remplacé CAN</span>
+      </div>
+    </div>
+    <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
+      <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">💻 Software</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="tech-chip"><span class="dot" style="background:#58a6ff"></span>Arduino C++</span>
+        <span class="tech-chip"><span class="dot" style="background:#22d3ee"></span>Arduino GFX Library</span>
+        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>Python (OBD dashboard)</span>
+        <span class="tech-chip"><span class="dot" style="background:#f59e0b"></span>Wokwi (simulation)</span>
+        <span class="tech-chip"><span class="dot" style="background:#a78bfa"></span>GitHub Pages</span>
+        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>Flutter / React Native</span>
+        <span class="tech-chip"><span class="dot" style="background:#6b7280"></span>BLE + WiFi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- PERSONA ---- -->
+  <h2 class="section-title mb-6">
+    <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    Persona &amp; Positionnement
+  </h2>
+  <div class="grid md:grid-cols-3 gap-5 mb-12">
+    <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
+      <h3 class="font-bold text-white mb-3">👤 Cible — Clara</h3>
+      <ul class="space-y-2 text-sm text-gray-400">
+        <li class="flex items-center gap-2"><span class="text-amber-400">→</span> 28–45 ans, conductrice urbaine</li>
+        <li class="flex items-center gap-2"><span class="text-amber-400">→</span> Tech-savvy, sensible au design</li>
+        <li class="flex items-center gap-2"><span class="text-amber-400">→</span> Cherche sécurité + compagnon</li>
+        <li class="flex items-center gap-2"><span class="text-amber-400">→</span> Marché FR + Tunisie</li>
+      </ul>
+    </div>
+    <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
+      <h3 class="font-bold text-white mb-3">🎯 Positionnement</h3>
+      <ul class="space-y-2 text-sm text-gray-400">
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Outil de sécurité premium</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Pas un gadget — vraiment utile</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Prix cible : 100–200 €</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Prototype → Produit fin 2026</li>
+      </ul>
+    </div>
+    <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
+      <h3 class="font-bold text-white mb-3">⚔️ Concurrents</h3>
+      <ul class="space-y-2 text-sm text-gray-400">
+        <li class="flex items-center gap-2"><span class="text-red-400">●</span> Blazexel</li>
+        <li class="flex items-center gap-2"><span class="text-red-400">●</span> Dasai Mochi</li>
+        <li class="flex items-center gap-2"><span class="text-red-400">●</span> Niko Robot</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">✦</span> Avantage : émotions + OBD2</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ---- FOOTER ---- -->
+  <footer class="border-t border-gray-800 pt-8 pb-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="text-white font-bold text-lg mb-1">🚗 IT-BOBD</p>
+        <p class="text-gray-500 text-sm">Robot compagnon voiture émotionnel intelligent — 2026–2027</p>
+        <p class="text-gray-600 text-xs mt-1 font-mono">Généré automatiquement par FreBot le 2026-03-14</p>
+      </div>
+      <div class="flex flex-col gap-2 items-end">
+        <a href="https://github.com/Houcembot/it-bobd" target="_blank" rel="noopener"
+           class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium group">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          github.com/Houcembot/it-bobd
+        </a>
+        <a href="https://houcembot.github.io/it-bobd" target="_blank" rel="noopener"
+           class="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          houcembot.github.io/it-bobd
+        </a>
+      </div>
+    </div>
+    <div class="mt-6 pt-4 border-t border-gray-900 text-center text-xs text-gray-700 font-mono">
+      IT-BOBD Product Roadmap v1.0 · 2026-03-14 · Powered by FreBot / BotFleet
+    </div>
+  </footer>
+
+</main>
 </body>
 </html>
