@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IT-BOBD Node Graph</title>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>body{margin:0;font-family:Arial;background:#0d1117;color:#e6edf3;}#network{width:100%;height:100vh;border:1px solid #30363d;}.node-label{font-weight:bold;color:#58a6ff;}.node-meta{font-size:12px;color:#8b949e;}</style>
+</head>
+<body>
+  <div id="network"></div>
+  <script>
+    const nodes=new vis.DataSet([{id:1,label:"ESP32-S3 Zero",group:"mcu",title:"Microcontrôleur principal\nDouble coeur 240MHz"},{id:2,label:"GC9A01\n(Écran TFT)",group:"display",title:"Écran rond 1.28\"\nInterface SPI"},{id:3,label:"ELM327\nPIC18F25K80",group:"obd",title:"40+ codes OBD2 validés\nInterface UART"}]);
+    const edges=new vis.DataSet([{from:1,to:2,label:"SPI",color:{color:"#3a5a7a"}},{from:3,to:1,label:"TX/RX",color:{color:"#3a5a7a"}}]);
+    new vis.Network(document.getElementById("network"),{nodes,edges},{nodes:{shape:"box",margin:10,shadow:true},edges:{arrows:{to:{enabled:true}},smooth:{type:"cubicBezier"}},groups:{mcu:{color:{background:"#1a3a27",border:"#22c55e"}},display:{color:{background:"#3a2a10",border:"#f59e0b"}},obd:{color:{background:"#1a3050",border:"#58a6ff"}}}});
+  </script>
+</body>
+</html>
