@@ -86,7 +86,7 @@ canvas { display:block; }
     <p>ROBOT COMPAGNON VOITURE — GRAPHE DE DÉPENDANCES</p>
   </div>
   <div id="stats">
-    <div class="stat"><div class="n" style="color:#00cc66" id="s-done">14</div><div class="l">COMPLÉTÉS</div></div>
+    <div class="stat"><div class="n" style="color:#00cc66" id="s-done">19</div><div class="l">COMPLÉTÉS</div></div>
     <div class="stat"><div class="n" style="color:#ff9944" id="s-active">4</div><div class="l">EN COURS</div></div>
     <div class="stat"><div class="n" style="color:#3a5a7a" id="s-future">11</div><div class="l">À FAIRE</div></div>
     <div class="stat"><div class="n" style="color:#6677bb" id="s-doc">10</div><div class="l">DOCUMENTS</div></div>
@@ -179,11 +179,17 @@ let nodes = [
   { id:"wokwi",        label:["Wokwi","Simulation"],     group:2, status:"done",   x:495, y:564, w:90,  h:42, url:"simulation_preview.html",                desc:"26 Fév 2026 🔄\nESP32-S3 Zero + GC9A01\ndiagram.json + platformio" },
   { id:"rapport",      label:["Rapport","État Projet"],  group:2, status:"done",   x:618, y:550, w:98,  h:42, url:"rapport_etat_projet_it_bobd.html",       desc:"26 Fév 2026 📊\nRapport état projet\nGitHub Pages live" },
   // Phase 3
-  { id:"phase3",       label:["PHASE 3","ESP32-S3"],     group:3, status:"active", x:722, y:220, w:100, h:48, url:null, desc:"Mars–Mai 2026 ⚙️\nMigration hardware finale\nESP32-S3 Zero + CAN bus" },
-  { id:"canbus",       label:["CAN Bus","MCP2515"],      group:3, status:"active", x:848, y:154, w:92,  h:42, url:null, desc:"En cours 🔧\nMCP2515 + SN65HVD230\nStabilisation lecture" },
-  { id:"gc9a01",       label:["GC9A01","TFT Round"],     group:3, status:"active", x:848, y:258, w:92,  h:42, url:null, desc:"En cours 🖥️\n1.28\" écran rond SPI\nExpressions yeux finales" },
-  { id:"pids_obd",     label:["PIDs OBD2"],              group:3, status:"active", x:968, y:198, w:90,  h:36, url:null, desc:"En cours 📋\n010C RPM / 010D SPD\n0105 TEMP / ATRV Batterie" },
+  { id:"phase3",       label:["PHASE 3","Expressions"],  group:3, status:"active", x:722, y:220, w:100, h:48, url:null, desc:"Mars–Mai 2026 ⚙️\nExpressions yeux ↔ OBD\nESP32-S3 Zero + ELM327" },
+  { id:"breadboard",   label:["Prototype","Breadboard"], group:3, status:"done",   x:848, y:118, w:98,  h:42, url:null, desc:"Fév 2026 ✅\nESP32-S3 + GC9A01 SPI\nELM327 PIC18F25K80 OK" },
+  { id:"cable5fils",   label:["Câble 5 fils","RX/TX"],   group:3, status:"done",   x:975, y:100, w:94,  h:42, url:null, desc:"Fév 2026 ✅\nRX/TX identifiés\nConnexion directe ELM327" },
+  { id:"test_polo",    label:["Test VW","Polo 9N"],      group:3, status:"done",   x:1090,y:118, w:90,  h:42, url:null, desc:"Fév 2026 ✅\nOBD2 validé sur voiture réelle\nRPM + vitesse + temp eau" },
+  { id:"codes_doc",    label:["Codes OBD","GitHub Doc"], group:3, status:"done",   x:975, y:185, w:102, h:42, url:"BOBD- Historique Codes..md", desc:"Fév 2026 ✅\nHistorique codes fonctionnels\nDocumenté sur GitHub" },
+  { id:"pause_fleet",  label:["Pause Fleet","IA Setup"],  group:3, status:"done",   x:848, y:200, w:98,  h:42, url:null, desc:"10 Fév → 15 Mars 2026 ⏸️\nConfiguration flotte IA\nFreBot + OpenClaw activé" },
+  { id:"gc9a01",       label:["GC9A01","TFT Round"],     group:3, status:"done",   x:848, y:290, w:92,  h:42, url:null, desc:"Fait ✅\n1.28\" écran rond SPI\nFusionné avec ELM327" },
+  { id:"params40",     label:["40+ Paramètres","OBD2"],  group:3, status:"active", x:975, y:265, w:102, h:42, url:null, desc:"En cours 🔄\nClassifier + afficher\n40+ PIDs documentés" },
+  { id:"expr_obd",     label:["Expressions","↔ OBD"],    group:3, status:"active", x:1090,y:248, w:100, h:42, url:"expressions_et_animations_it_bobd.html", desc:"En cours 🔄\nLier yeux aux données\nNORMAL/ANGRY/HAPPY…" },
   { id:"github_pub",   label:["GitHub","Public"],        group:3, status:"active", x:722, y:358, w:85,  h:42, url:null, desc:"En cours 📁\nREADME + Licence\nCLAUDE.md + docs" },
+  { id:"frebot",       label:["FreBot","Planification"],  group:3, status:"active", x:975, y:355, w:95,  h:42, url:"AGENT_DASHBOARD.html", desc:"Actif ✅ — BotFleet\nPlanif + Doc + Marketing\nRecherche technique" },
   // Phase 4
   { id:"phase4",       label:["PHASE 4","Audio"],        group:4, status:"future", x:1002,y:112, w:95,  h:48, url:null, desc:"Futur 🎵\nSon + Voix\nAssistant parlant" },
   { id:"max98357",     label:["MAX98357A","Speaker"],     group:4, status:"future", x:1112,y:70,  w:98,  h:42, url:null, desc:"À faire\nOutput audio I2S\nSynthèse vocale" },
@@ -228,8 +234,11 @@ let edges = [
   {s:"phase2",   t:"openclaw"},{s:"obd_eyes", t:"wokwi"},    {s:"phase2",   t:"rapport"},
   {s:"wokwi",    t:"rapport"}, {s:"wokwi",    t:"phase3"},
   // Ph3
-  {s:"phase3",   t:"canbus"},  {s:"phase3",   t:"gc9a01"},   {s:"canbus",   t:"pids_obd"},
-  {s:"phase3",   t:"github_pub"},{s:"gc9a01",  t:"phase4"},  {s:"gc9a01",   t:"phase5"},
+  {s:"phase3",   t:"breadboard"},{s:"breadboard",t:"cable5fils"},{s:"cable5fils",t:"test_polo"},
+  {s:"breadboard",t:"pause_fleet"},{s:"pause_fleet",t:"frebot"},{s:"test_polo",t:"codes_doc"},
+  {s:"codes_doc", t:"params40"},{s:"params40",  t:"expr_obd"},{s:"phase3",   t:"gc9a01"},
+  {s:"gc9a01",   t:"expr_obd"},{s:"phase3",   t:"github_pub"},{s:"gc9a01",   t:"phase4"},
+  {s:"gc9a01",   t:"phase5"},  {s:"expr_obd", t:"phase4"},
   // Ph4
   {s:"phase4",   t:"max98357"},{s:"phase4",   t:"inmp441"},  {s:"max98357", t:"voice"},
   {s:"inmp441",  t:"voice"},   {s:"voice",    t:"phase7"},

@@ -64,7 +64,7 @@
     }
     @keyframes progress-bar {
       from { width: 0%; }
-      to   { width: 28%; }
+      to   { width: 35%; }
     }
 
     /* ---- Hero ---- */
@@ -288,13 +288,13 @@
             </span>
           </div>
           <p class="text-base md:text-lg text-gray-400 font-medium">Robot compagnon voiture émotionnel intelligent</p>
-          <p class="text-sm text-gray-500 mt-1">ESP32-S3 Zero · OBD2 CAN Bus (MCP2515) · Écran GC9A01 Round TFT 240×240</p>
+          <p class="text-sm text-gray-500 mt-1">ESP32-S3 Zero · ELM327 PIC18F25K80 (AT commands) · Écran GC9A01 Round TFT 240×240</p>
         </div>
       </div>
       <div class="flex flex-col items-end gap-2">
         <div class="gen-badge">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm.75 4.75a.75.75 0 00-1.5 0v3.5l-2 1.15a.75.75 0 00.75 1.3l2.25-1.3a.75.75 0 00.5-.65v-4z"/></svg>
-          Généré le 2026-03-14
+          Mis à jour le 2026-03-15
         </div>
         <div class="gen-badge">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -308,7 +308,7 @@
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div>
           <p class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Progression globale</p>
-          <p class="text-2xl font-black text-white">28% <span class="text-base font-normal text-gray-500">— 2 phases terminées sur 7</span></p>
+          <p class="text-2xl font-black text-white">35% <span class="text-base font-normal text-gray-500">— 2 phases terminées + Phase 3 en cours</span></p>
         </div>
         <div class="flex flex-wrap gap-4 text-sm">
           <div class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded-full bg-green-500"></span><span class="text-gray-400">Terminé (2)</span></div>
@@ -380,10 +380,14 @@
         <div class="task-item done-task"><span class="task-icon">✅</span><span>Interface OBD + Yeux fusionnée</span></div>
         <div class="task-item done-task"><span class="task-icon">✅</span><span>Documentation archivée (50+ docs)</span></div>
         <div class="task-item done-task"><span class="task-icon">✅</span><span>Rapport HTML publié sur GitHub Pages</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Prototype breadboard complet (ESP32-S3 + GC9A01 SPI + ELM327)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Câble 5 fils identifié — RX/TX trouvés sur ELM327</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Test validé sur OBD2 VW Polo 9N (RPM, vitesse, temp eau)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Codes OBD fonctionnels documentés sur GitHub</span></div>
       </div>
       <div class="mt-4 pt-3 border-t border-gray-800">
         <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full" style="width:100%"></div></div>
-        <p class="text-xs text-gray-600 mt-1 text-right font-mono">6 / 6 tâches</p>
+        <p class="text-xs text-gray-600 mt-1 text-right font-mono">10 / 10 tâches</p>
       </div>
     </div>
 
@@ -393,22 +397,24 @@
         <div class="phase-num bg-amber-900 text-amber-400 border border-amber-700">3</div>
         <div class="flex-1 min-w-0">
           <p class="text-xs text-gray-500 font-mono">Mars – Mai 2026</p>
-          <h3 class="font-bold text-white text-sm">CAN Bus + Production</h3>
+          <h3 class="font-bold text-white text-sm">Expressions & OBD Avancé</h3>
         </div>
         <span class="badge badge-active flex-shrink-0"><span class="pulse-dot"></span> En cours</span>
       </div>
       <div class="space-y-0.5">
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Stabiliser CAN bus (MCP2515 + SN65HVD230)<span class="deadline-tag">21 mars</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>PIDs OBD2 (RPM, Temp, Vitesse, Batterie)<span class="deadline-tag">24 mars</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Repo GitHub public (README + licence)<span class="deadline-tag">17 mars</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Code Arduino modulaire<span class="deadline-tag">31 mars</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Intégrer écran TFT GC9A01 (SPI)<span class="deadline-tag">15 avril</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Lier expressions aux données OBD2<span class="deadline-tag">30 avril</span></span></div>
-        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Post "Jour 1" réseaux sociaux<span class="deadline-tag">28 mars</span></span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Proto physique ELM327 fonctionnel (AT commands via câble 5 fils)</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>RPM, vitesse, température eau lus en temps réel</span></div>
+        <div class="task-item done-task"><span class="task-icon">✅</span><span>Codes OBD classés &amp; documentés (GitHub Historique)</span></div>
+        <div class="task-item done-task"><span class="task-icon">⏸️</span><span>Pause 10 Fév → 15 Mars : setup flotte IA (FreBot / OpenClaw)<span class="deadline-tag">Terminé</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Classifier 40+ paramètres OBD2 (affichage brut &amp; expressions)<span class="deadline-tag">Avril</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Créer expressions yeux liées aux commandes OBD<span class="deadline-tag">Avril</span></span></div>
+        <div class="task-item active-task"><span class="task-icon">🔄</span><span>Code Arduino modulaire + repo GitHub public<span class="deadline-tag">31 mars</span></span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Documentation DIY + post "Jour 1" réseaux sociaux<span class="deadline-tag">Mai</span></span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Pipeline contenu vidéo (makers, IoT, mécanique)</span></div>
       </div>
       <div class="mt-4 pt-3 border-t border-gray-800">
-        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width:10%"></div></div>
-        <p class="text-xs text-amber-700 mt-1 text-right font-mono">0 / 7 — en progression</p>
+        <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width:44%"></div></div>
+        <p class="text-xs text-amber-700 mt-1 text-right font-mono">4 / 9 — en progression</p>
       </div>
     </div>
 
@@ -483,20 +489,21 @@
       <div class="flex items-center gap-3 mb-4">
         <div class="phase-num bg-gray-800 text-gray-500 border border-gray-700">7</div>
         <div class="flex-1 min-w-0">
-          <p class="text-xs text-gray-600 font-mono">2027</p>
+          <p class="text-xs text-gray-600 font-mono">Déc 2026 → 2027</p>
           <h3 class="font-bold text-gray-300 text-sm">Commercialisation</h3>
         </div>
         <span class="badge badge-todo flex-shrink-0">📅 À faire</span>
       </div>
       <div class="space-y-0.5">
-        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Certification CE</span></div>
-        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Partenaire manufacturing (Tunisie → Europe)</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Tuto DIY complet (vidéo + doc) — Déc 2026</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Vente en ligne V1 (kit makers) — Déc 2026</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Certification CE + manufacturing</span></div>
         <div class="task-item todo-task"><span class="task-icon">📅</span><span>Crowdfunding (Kickstarter / Indiegogo)</span></div>
-        <div class="task-item todo-task"><span class="task-icon">📅</span><span>Distribution e-commerce</span></div>
+        <div class="task-item todo-task"><span class="task-icon">📅</span><span>V2 — Intégration Intelligence Artificielle (2027)</span></div>
       </div>
       <div class="mt-4 pt-3 border-t border-gray-800">
         <div class="w-full bg-gray-800 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width:0%"></div></div>
-        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 4 tâches</p>
+        <p class="text-xs text-gray-700 mt-1 text-right font-mono">0 / 5 tâches</p>
       </div>
     </div>
 
@@ -601,13 +608,13 @@
       <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">🔧 Hardware</h3>
       <div class="flex flex-wrap gap-2">
         <span class="tech-chip"><span class="dot" style="background:#22d3ee"></span>ESP32-S3 Zero</span>
-        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>MCP2515 (CAN bus)</span>
-        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>SN65HVD230</span>
+        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>ELM327 PIC18F25K80</span>
+        <span class="tech-chip"><span class="dot" style="background:#58a6ff"></span>Câble 5 fils (AT commands)</span>
         <span class="tech-chip"><span class="dot" style="background:#a78bfa"></span>GC9A01 Round TFT 240×240</span>
         <span class="tech-chip"><span class="dot" style="background:#f59e0b"></span>TTP223 (tactile)</span>
-        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>INMP441 (micro)</span>
-        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>MAX98357A (HP)</span>
-        <span class="tech-chip"><span class="dot" style="background:#6b7280"></span>ELM327 → remplacé CAN</span>
+        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>INMP441 (micro — futur)</span>
+        <span class="tech-chip"><span class="dot" style="background:#f472b6"></span>MAX98357A (HP — futur)</span>
+        <span class="tech-chip"><span class="dot" style="background:#22c55e"></span>VW Polo 9N (véhicule test)</span>
       </div>
     </div>
     <div class="bg-gray-900 bg-opacity-50 border border-gray-800 rounded-xl p-5">
@@ -665,7 +672,7 @@
       <div>
         <p class="text-white font-bold text-lg mb-1">🚗 IT-BOBD</p>
         <p class="text-gray-500 text-sm">Robot compagnon voiture émotionnel intelligent — 2026–2027</p>
-        <p class="text-gray-600 text-xs mt-1 font-mono">Généré automatiquement par FreBot le 2026-03-14</p>
+        <p class="text-gray-600 text-xs mt-1 font-mono">Mis à jour par FreBot le 2026-03-15</p>
       </div>
       <div class="flex flex-col gap-2 items-end">
         <a href="https://github.com/Houcembot/it-bobd" target="_blank" rel="noopener"
@@ -681,7 +688,7 @@
       </div>
     </div>
     <div class="mt-6 pt-4 border-t border-gray-900 text-center text-xs text-gray-700 font-mono">
-      IT-BOBD Product Roadmap v1.0 · 2026-03-14 · Powered by FreBot / BotFleet
+      IT-BOBD Product Roadmap v1.1 · 2026-03-15 · Powered by FreBot / BotFleet
     </div>
   </footer>
 
