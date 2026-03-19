@@ -4,7 +4,7 @@
     "maxbot": {
       "name": "Maxbot",
       "role": "Orchestrateur",
-      "model": "DeepSeek V3",
+      "model": "step-3.5-flash",
       "fleet_status": {
         "status": "openrouter/google/gemini-2.0-flash-001",
         "last_activity": "Orchestrateur"
